@@ -43,7 +43,7 @@ begin
     
 ; check if three points are along a line
     lineFlag = 0
-    tolerance = 1.e-1*pi/pideg
+    tolerance = 1.e-2*pi/pideg
     
     delta1 = T2-T1
     delta2 = T3-T2
@@ -68,7 +68,7 @@ begin
     if ( lineFlag .eq. 1 ) then
 
       circC(:,j) = circC@_FillValue
-      
+      print ( j + " lineflag =1 " )
     else
     
       D12 = 1. - cos(T1)*cos(T2)*cos(N2-N1) - sin(T1)*sin(T2)
@@ -91,7 +91,7 @@ begin
       
       
 ; if radius is too large or too small, set to missing
-;    print (j + " -- " + R + " " + sqrt(temp))
+   ; print (j + " -- " + R + " " + sqrt(temp))
 ;----------------------------------------------------------------------------------------      
       if ( .not.ismissing(R) ) then
         if ( R .gt. 20.e6 .or. R .lt. 1.e3 ) then

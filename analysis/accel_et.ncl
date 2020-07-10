@@ -24,10 +24,9 @@
 begin
 ;  
 ; user inputs
-  startYear = 1979
-  endYear   = 2018
+  startYear = 1980
+  endYear   = 2019
   nYears    = endYear - startYear + 1
-  basinAnalysis = "NA"
 
   print ( "Start Year = " + startYear + " end year = " + endYear)
 
@@ -64,10 +63,8 @@ begin
   Lon   = fileIn->lon
   numobs      = fileIn->numobs
   nature      = fileIn->nature
-;  basin       = fileIn->basin
   dims        = dimsizes(time)
   nStorms     = dims(0)
-
   
   if ( speed@units .eq. "m/s" ) then
     speed = speed*3.6 ; now km/hr per day
@@ -144,7 +141,7 @@ begin
           ;curvAccel  :=  runave (accelC(i,0:numobs(i)-1)  , nave, opt)
           
           stormSpeed := speed(i,0:numobs(i)-1)    ;speed for this track
-          dates:=  time(i,0:numobs(i)-1)    ;dates along the track
+          dates:=  time(i,0:numobs(i)-1)          ;dates along the track
 
           speedAccel!0    = "time"
           speedAccel&time = dates
@@ -157,7 +154,7 @@ begin
           do j = 0, numobs(i)-1
          
 ; apply the relevant checks
-            ;if ( chartostring(basin(i,j,:)) .eq. basinAnalysis) then
+
               if ( Lat(i,j) .ge. latS .and. Lat(i,j) .le. latN ) then  
                 totCount = totCount+1
 
@@ -192,7 +189,6 @@ begin
                 
                 
               end if ; lat              
-            ;end if ;basin
           end do ; j
           
         end if
@@ -218,7 +214,7 @@ begin
     yMin = -20.
     yMax =  20.
     
-    wks = gsn_open_wks("pdf", "lagAS")                ; create postscript file
+    wks = gsn_open_wks("pdf", "ET_relative_accel_speed")                ; create postscript file
     
 ; resources for "left" variable
     resL                        = True 
@@ -231,12 +227,12 @@ begin
     
     resL@pmLegendDisplayMode    = "Always"            ; turn on legend
     resL@pmLegendSide           = "Top"               ; Change location of 
-    resL@pmLegendParallelPosF   = .8                  ; move units right
-    resL@pmLegendOrthogonalPosF = -0.3                ; move units down
-    resL@pmLegendWidthF         = 0.15                ; Change width and
-    resL@pmLegendHeightF        = 0.16                ; height of legend.
+    resL@pmLegendParallelPosF   = .22                  ; move units right
+    resL@pmLegendOrthogonalPosF = -0.18                ; move units down
+    resL@pmLegendWidthF         = 0.12                ; Change width and
+    resL@pmLegendHeightF        = 0.10                ; height of legend.
     resL@lgPerimOn              = False               ; turn off box around
-    resL@lgLabelFontHeightF     = .01                 ; label font height
+    resL@lgLabelFontHeightF     = .013                 ; label font height
     resL@lgItemOrder  = (/1,0/)   ; Reorder the legends
     
     
@@ -250,15 +246,12 @@ begin
     resR@xyExplicitLegendLabels =  (/"Forward Speed          "/)         ; create explicit labels
     resR@pmLegendDisplayMode    = "Always"            ; turn on legend
     resR@pmLegendSide           = "Top"               ; Change location of 
-    resR@pmLegendParallelPosF   = .8                  ; move units right
-    resR@pmLegendOrthogonalPosF = -0.3                ; move units down
-    resR@pmLegendWidthF         = 0.15                ; Change width and
-    resR@pmLegendHeightF        = 0.16                ; height of legend.
+    resR@pmLegendParallelPosF   = .87                  ; move units right
+    resR@pmLegendOrthogonalPosF = -0.15                ; move units down
+    resR@pmLegendWidthF         = 0.12                ; Change width and
+    resR@pmLegendHeightF        = 0.10                ; height of legend.
     resR@lgPerimOn              = False               ; turn off box around
-    resR@lgLabelFontHeightF     = .01                 ; label font height
-    
-    
-    
+    resR@lgLabelFontHeightF     = .013                 ; label font height
     
     
     resL@trXMinF = -1*lagH
@@ -291,13 +284,13 @@ begin
     resp@gsLineThicknessF = 1.0                       ; thickness of lines
     resp@gsLineLabelString= "ET"                    ; adds a line label string
     
-    xx = (/ 0., 0./)
-    yy = (/-8., 20. /)
-    
-    
-    resL@xyLineColors= (/"black", "gray"/)        ; set polymarker color
-    plot = gsn_csm_xy2(wks,hours,meanA(:,:),meanS,resL,resR)
-    
+      
+    resL@xyLineColors= (/"black", "black"/)        ; set polymarker color
+    resR@xyLineColors= (/"gray", "gray"/)        ; set polymarker color
+
+     plot = gsn_csm_xy2(wks,hours,meanA(:,:),meanS,resL,resR)
+    ;plot = gsn_csm_xy2(wks,hours,medianA(:,:),medianS,resL,resR)
+
 
     ; draw a vertical line to mark ET which is x=0 line
     resp                  = True                      ; polyline mods desired
@@ -305,7 +298,7 @@ begin
     resp@gsLineThicknessF = 2.0                       ; thickness of lines
     resp@gsLineLabelString= "ET"                    ; adds a line label string
     xx = (/ 0., 0./)
-    yy = (/-10., 25. /)
+    yy = (/-10., 50. /)
     dum=gsn_add_polyline(wks,plot,xx,yy,resp)      
     
     draw(plot)

@@ -90,8 +90,8 @@ begin
 
   speed       = short2flt(fileIn->storm_speed)
   name        =  chartostring(fileIn->name)
-  print (cd_calendar(time(indices,0),-3) + " " + name(indices) + " " + sid(indices) + " " + indices )
- 
+  
+  print (cd_calendar(time(indices,0),-3) +  " " + sid(indices) + " " + sprinti("%6.0i",indices) + " " + name(indices))
 
 ;-----------------------------------------------------------------------------  
 ; Now subset only the ones that we need   
@@ -255,8 +255,7 @@ begin
 
 ; at this time, we have the speeds
 
-       ;print ( cd_calendar(time(i,0:ntimes-1),-3) + " " + speed(i,0:ntimes-1) + " " + speedC(i,0:ntimes-1) )
-
+;       print ( cd_calendar(time(i,0:ntimes-1),-3) + " " + speed(i,0:ntimes-1) + " " + speedC(i,0:ntimes-1) )
 ;
 ;       do ip = 0,ntimes-1
 ;         masterBias  = masterBias*masterCount/(masterCount + 1.) + (speed(i,ip)-speedC(i,ip))/(masterCount + 1.)
@@ -319,11 +318,12 @@ begin
        j=ntimes-2
        ac_term2(j+1) = (stormSpeed(j+1)*stormSpeed(j+1)/R(j))*24.*3600.  
 
-       print ( "storm " + i + " " + max(ac_term1) + " " + min (ac_term1) )
-       print ( "storm " + i + " " + max(ac_term2) + " " + min (ac_term2) )
-       print (cd_calendar(time(i,0:ntimes-1),-3) + " " + tointeger(R(0:ntimes-1)*1.e-3) + " " + tofloat(ac_term1(0:ntimes-1)) + " " + tofloat(ac_term2(0:ntimes-1)))
-       print ( " " )
-     
+       print ( "storm " + i + " " + sprintf("%6.2f",max(ac_term2)) + " " + sprintf("%6.2f",min(ac_term2)) )
+       out1 := sprinti("%7.0i",tointeger(R(0:ntimes-1)*1.e-3)) + " "  + sprintf("%6.2f",tofloat(ac_term1(0:ntimes-1)))
+       out2 := sprintf("%6.2f",tofloat(ac_term2(0:ntimes-1))) + " " +  sprintf("%6.2f",tofloat(lat(i,0:ntimes-1)))
+       out3 := sprintf("%6.2f",tofloat(lon(i,0:ntimes-1))) 
+       print (  cd_calendar(time(i,0:ntimes-1),-3) + " " + out1 + " " + out2 + " "  + out3 )
+       
 ;.............................................................................................................
 ; Now store all accel curv values in the large array
      accelCurve(i,0:ntimes-1) = (/ac_term2(0:ntimes-1)/)      

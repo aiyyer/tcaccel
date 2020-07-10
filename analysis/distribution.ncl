@@ -16,10 +16,8 @@ begin
   
   
 ; user inputs
-  startYear = 1979
+  startYear = 1980
   endYear   = 2018
-  basinAnalysis = "NA"
-;
 ;  
 ; choose the latitude bands
   latS =   5.
@@ -80,7 +78,7 @@ begin
     
     
     if ( var .eq. "speed" ) then
-      Amax = 30.*3.6
+      Amax = 60.*3.6
       if ( dat@units .eq. "m/s" ) then
         dat := dat*3.6 ; now km/hr per day
         dat@units = "km/hr per day" 
@@ -91,7 +89,7 @@ begin
       yTitle = "Speed (km/hr)"
     end if  
     if ( var .eq. "accelSpeed" .or. var .eq.  "accelCurve" ) then
-      Amax = 30.*3.6
+      Amax = 60.*3.6
       if ( dat@units .eq. "m/s per day" ) then
         dat := dat*3.6 ; now km/hr per day
         dat@units = "km/hr per day" 
@@ -101,7 +99,7 @@ begin
       end if
     end if
     
-    title = basinAnalysis  
+    title = " " 
     
 ;..................................................................
     do i = 0,nStorms-1
@@ -121,20 +119,16 @@ begin
 
 
               if ( chartostring(nature(i,j,:)) .eq. "TS") then
-                ;if ( chartostring(basin(i,j,:)) .eq. basinAnalysis) then
                   if ( (Lat(i,j) .ge. latS) .and. (Lat(i,j) .le. latN) ) 
 
 ; ignore spuriously large values of accel
 ; this is controlled by the xmax value
                     if (.not.ismissing(A) .and. abs(A) .le. Amax ) then
-
-
                       iBin  = tointeger ((Lat(i,j)-latS)/dlat)
                       ;print ( i + " " + j + " " + A  + " " + iBin + " " +   histoCount(iBin))               
                       histoDat(iBin,histoCount(iBin)) = A
                       histoCount(iBin) =  histoCount(iBin) + 1                     
                     end if   
-                  ;end if  
                 end if
               end if
               
