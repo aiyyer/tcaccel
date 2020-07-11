@@ -285,8 +285,8 @@ begin
     resp@gsLineLabelString= "ET"                    ; adds a line label string
     
       
-    resL@xyLineColors= (/"black", "black"/)        ; set polymarker color
-    resR@xyLineColors= (/"gray", "gray"/)        ; set polymarker color
+    resL@xyLineColors= (/"black", "purple"/)        ; set polymarker color
+    resR@xyLineColors= (/"green", "purple"/)        ; set polymarker color
 
      plot = gsn_csm_xy2(wks,hours,meanA(:,:),meanS,resL,resR)
     ;plot = gsn_csm_xy2(wks,hours,medianA(:,:),medianS,resL,resR)

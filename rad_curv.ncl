@@ -25,6 +25,110 @@ begin
   Rearth = todouble(6.3781e6)  ;in m
   pi     = 4.0*atan(todouble(1.))
   pideg = todouble(180.0)
+  circC= new(N,"double")
+  circC@_FillValue = Lat@_FillValue
+  circC=circC@_FillValue
+  
+  R = todouble(0.)
+  R@_FillValue =Lat@_FillValue
+  
+  do j = 1,N-2
+
+    N3 = Lon(j+1)*pi/pideg
+    N2 = Lon(j)  *pi/pideg
+    N1 = Lon(j-1)*pi/pideg
+    T3 = Lat(j+1)*pi/pideg
+    T2 =   Lat(j)*pi/pideg
+    T1 = Lat(j-1)*pi/pideg
+
+    
+; check if three points are along a line
+    lineFlag = 0
+    tolerance = 1.e-2*pi/pideg
+    
+    delta1 = T2-T1
+    delta2 = T3-T2
+    if ( abs(delta2) .le. tolerance .and. abs(delta1) .le. tolerance  )then
+      lineFlag = 1
+    end if
+    delta1 = N2-N1
+    if (abs(delta1) .gt. pi ) then
+      sgndelta =delta1/abs(delta1)
+      delta1 = delta1 - sgndelta*2*pi
+    end if
+    delta2 = N3-N2
+    if (abs(delta2) .gt. pi ) then
+      sgndelta =delta2/abs(delta2)
+      delta2 = delta2 - sgndelta*2*pi
+    end if
+    if ( abs(delta2) .le. tolerance .and. abs(delta1) .le. tolerance  )then
+      lineFlag = 1
+    end if
+    
+;---------------------------------------------------------------------------    
+    if ( lineFlag .eq. 1 ) then
+      circC(j) = circC@_FillValue
+      print ( j + " lineflag =1 " )
+    else
+    
+      D12 = 1. - cos(T1)*cos(T2)*cos(N2-N1) - sin(T1)*sin(T2)
+      D13 = 1. - cos(T1)*cos(T3)*cos(N3-N1) - sin(T1)*sin(T3)
+      D23 = 1. - cos(T2)*cos(T3)*cos(N3-N2) - sin(T2)*sin(T3)
+      
+      Term1 = 2.*D12*D13*D23
+      Term2A = (D12 + D13 + D23)^2
+      Term2B = 2.*(D12^2 + D13^2 + D23^2)
+      Term2  = Term2A - Term2B
+      
+      R = R@_FillValue
+      
+      if ( Term2 .ne. 0. ) then
+        temp = sqrt(Term1/Term2)
+        if ( abs(temp) .le. 1.0) then
+          R = Rearth*asin(temp)
+        end if
+      end if
+      
+      
+; if radius is too large or too small, set to missing
+   ; print (j + " -- " + R + " " + sqrt(temp))
+
+;----------------------------------------------------------------------------------------      
+      if ( .not.ismissing(R) ) then
+        if ( R .gt. 20.e6 .or. R .lt. 1.e3 ) then
+          print ("R is too small or big (km): " + tointeger(R*1.e-3) )       
+        else
+          circC(j)  = R
+        end if
+      end if
+;----------------------------------------------------------------------------------------
+
+    end if
+  end do
+
+; the first and last values are assigned now
+  circC(0)   = circC(1)
+  circC(N-1) = circC(N-2)
+
+  return(circC)
+
+end
+
+;****************************************************************************************
+;****************************************************************************************
+;****************************************************************************************
+; this function returns the radius of curvature and the center of the
+; fitted circle
+;-------------------------------------------------------------------------
+;-------------------------------------------------------------------------
+undef ("rad_curv_circle")
+function rad_curv_circle(Lat,Lon,N)
+
+
+begin 
+  Rearth = todouble(6.3781e6)  ;in m
+  pi     = 4.0*atan(todouble(1.))
+  pideg = todouble(180.0)
   circC= new( (/3,N/),"double")
   circC@_FillValue = Lat@_FillValue
   circC=circC@_FillValue

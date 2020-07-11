@@ -303,8 +303,7 @@ begin
        ac_term2  =ac_term2@_FillValue
  
        R        := ac_term2
-       circParams := rad_curv(lat(i,:),lon(i,:),ntimes)
-       R(0:ntimes-1) = circParams(2,:)
+       R(0:ntimes-1) = rad_curv(lat(i,:),lon(i,:),ntimes)
        
        ;print ("ntimes = " + ntimes)
        ac_term2(0:ntimes-1) = stormSpeed(0:ntimes-1)*stormSpeed(0:ntimes-1)/R(0:ntimes-1) ; m/s per s 
@@ -318,7 +317,7 @@ begin
        j=ntimes-2
        ac_term2(j+1) = (stormSpeed(j+1)*stormSpeed(j+1)/R(j))*24.*3600.  
 
-       print ( "storm " + i + " " + sprintf("%6.2f",max(ac_term2)) + " " + sprintf("%6.2f",min(ac_term2)) )
+       print ( "storm min max acc" + i + " " + sprintf("%6.2f",max(ac_term1)) + " " + sprintf("%6.2f",max(ac_term2)) )
        out1 := sprinti("%7.0i",tointeger(R(0:ntimes-1)*1.e-3)) + " "  + sprintf("%6.2f",tofloat(ac_term1(0:ntimes-1)))
        out2 := sprintf("%6.2f",tofloat(ac_term2(0:ntimes-1))) + " " +  sprintf("%6.2f",tofloat(lat(i,0:ntimes-1)))
        out3 := sprintf("%6.2f",tofloat(lon(i,0:ntimes-1))) 
