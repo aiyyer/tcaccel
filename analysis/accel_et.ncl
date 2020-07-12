@@ -65,6 +65,8 @@ begin
   nature      = fileIn->nature
   dims        = dimsizes(time)
   nStorms     = dims(0)
+
+  print ( "Num Storms in file process = " + nStorms)
   
   if ( speed@units .eq. "m/s" ) then
     speed = speed*3.6 ; now km/hr per day
@@ -91,7 +93,7 @@ begin
 
 ; bin size in hours
   lagH = 72
-  dh   = 6
+  dh   = 3
   nn   = 250
   nh   = 2*lagH/dh + 1
   nh2  = (nh-1)/2
@@ -133,16 +135,17 @@ begin
 ; temporarily store the speed and accel for this TC in
 ; new arrays          
           speedAccel := accelS(i,0:numobs(i)-1)    ;accel for this track
-          curvAccel := accelC(i,0:numobs(i)-1)    ;accel for this track
+          curvAccel  := accelC(i,0:numobs(i)-1)    ;accel for this track
 
-          ; smooth the curvature accel?
-          ;opt   = 0
-          ;nave  = 5
-          ;curvAccel  :=  runave (accelC(i,0:numobs(i)-1)  , nave, opt)
-          
+          ; smooth the accel?
+          opt   = 0
+         
+          nave  = 5
+          curvAccel  :=  runave (accelC(i,0:numobs(i)-1)  , nave, opt)
+          speedAccel :=  runave (accelS(i,0:numobs(i)-1)  , nave, opt)
+
           stormSpeed := speed(i,0:numobs(i)-1)    ;speed for this track
           dates:=  time(i,0:numobs(i)-1)          ;dates along the track
-
           speedAccel!0    = "time"
           speedAccel&time = dates
           curvAccel!0     = "time"
@@ -199,7 +202,7 @@ begin
 
     d1 = -nh2*dh
     d2 =  nh2*dh
-    hours = fspan(d1,d2,nh)
+    hours   = fspan(d1,d2,nh)
     meanA   =    dim_avg_n( accelET,1 )
     medianA = dim_median_n( accelET,1 )
     meanS   =    dim_avg_n( speedET,0 )
@@ -264,12 +267,12 @@ begin
     resL@tmXBMode        = "Manual"	
     resL@tmXBTickStartF  =  -1*lagH
     resL@tmXBTickEndF    = 1*lagH
-    resL@tmXBTickSpacingF= dh*3
+    resL@tmXBTickSpacingF= dh*4
     
     resR@tmXBMode        = "Manual"	
     resR@tmXBTickStartF  =  -1*lagH
-    resR@tmXBTickEndF    = 1*lagH
-    resR@tmXBTickSpacingF= dh*3
+    resR@tmXBTickEndF    =  1*lagH
+    resR@tmXBTickSpacingF= resL@tmXBTickSpacingF
     
                                 ;resL@tmXBMode        = "Explicit"	
                                 ;resL@tmXBValues      = ispan(-1*lagH, 1*lagH,dh)
@@ -288,8 +291,8 @@ begin
     resL@xyLineColors= (/"black", "purple"/)        ; set polymarker color
     resR@xyLineColors= (/"green", "purple"/)        ; set polymarker color
 
-     plot = gsn_csm_xy2(wks,hours,meanA(:,:),meanS,resL,resR)
-    ;plot = gsn_csm_xy2(wks,hours,medianA(:,:),medianS,resL,resR)
+     ;plot = gsn_csm_xy2(wks,hours,meanA(:,:),meanS,resL,resR)
+    plot = gsn_csm_xy2(wks,hours,medianA(:,:),medianS,resL,resR)
 
 
     ; draw a vertical line to mark ET which is x=0 line
