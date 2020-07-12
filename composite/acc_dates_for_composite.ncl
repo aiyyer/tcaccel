@@ -22,7 +22,7 @@ begin
 ;---------------------------------------------------------------------------  
 ; user inputs
   startYear = 1980
-  endYear   = 2016
+  endYear   = 2019
   nYears    = endYear - startYear + 1
 
   LatS =  30
@@ -32,7 +32,7 @@ begin
   basinAnalysis = "NA"  ;WP
 
 ; sdev threshold factor
-  sfac  = 1.5
+  sfac  = 2.0
 
   
   print ( "sfac  = " + sfac )
@@ -41,7 +41,7 @@ begin
 ; thresh = mean +/- sfac*sdev  
 ;--------------------------------------------------------------------------  
     
-  fileName = "../dat/tcSpeed.nc"
+  fileName = "../tcSpeed.nc"
   fileIn = addfile( fileName, "r" )
   time        = fileIn->time
 ; we expect time units to be in days
@@ -76,22 +76,22 @@ begin
   
   numobs      = fileIn->numobs
   nature      = fileIn->nature
-  basin       = fileIn->basin
+  ;basin       = fileIn->basin
 ;
   dims  = dimsizes(time)
   nStorms  = dims(0)
 
   xmax   =  30.*3.6
 ; create array to store all accel data for some more stats
-  datA   = new (60000,"float")
+  datA   = new (60000,typeof(dat))
   icount = 0
 
 ; define output arrays  
   N = 2000
 
        iHigh = 0
-   speedHigh   = new (N, "float")
-   accelHigh   = new (N, "float")
+   speedHigh   = new (N,  typeof(Lat))
+   accelHigh   = new (N,   typeof(dat))
      LatHigh     = new (N, typeof(Lat))
      LonHigh     = new (N, typeof(Lon))
     timeHigh    = new (N, typeof(time))
@@ -99,8 +99,8 @@ begin
   jStormHigh  = new (N, "integer")
 
    iLow = 0
-   speedLow   = new (N, "float")
-   accelLow   = new (N, "float")
+   speedLow   = new (N,  typeof(speed))
+   accelLow   = new (N,  typeof(dat))
      LatLow     = new (N, typeof(Lat))
      LonLow     = new (N, typeof(Lon))
     timeLow    = new (N, typeof(time))
@@ -108,8 +108,8 @@ begin
   jStormLow  = new (N, "integer")
 
        iZero = 0
-   speedZero   = new (N, "float")
-   accelZero   = new (N, "float")
+   speedZero   = new (N, typeof(speed))
+   accelZero   = new (N, typeof(dat))
      LatZero  = new (N, typeof(Lat))
      LonZero  = new (N, typeof(Lon))
     timeZero = new (N, typeof(time))
@@ -139,7 +139,7 @@ begin
                                 ;print ( i + " " + j + " " + A + " " +  chartostring(nature(i,j,:)))
 ; apply the relevant checks
       if ( time(i,0) .ge. startTime .and. time(i,0) .le. endTime ) then
-        if ( chartostring(basin(i,j,:)) .eq. basinAnalysis) then
+       ; if ( chartostring(basin(i,j,:)) .eq. basinAnalysis) then
           if ( Lat(i,j) .ge. LatS .and. Lat(i,j) .le. LatN ) then
             if ( Lon(i,j) .ge. LonW .and. Lon(i,j) .le. LonE ) then              
               Nat = chartostring(nature(i,j,:))
@@ -160,7 +160,7 @@ begin
               
             end if
           end if         
-        end if
+        ;end if
       end if
     end do
   end do
@@ -180,7 +180,7 @@ begin
       A = dat(i,j)
 ; apply the relevant checks
       if ( time(i,0) .ge. startTime .and. time(i,0) .le. endTime ) then
-        if ( chartostring(basin(i,j,:)) .eq. basinAnalysis) then
+        ;if ( chartostring(basin(i,j,:)) .eq. basinAnalysis) then
           if ( Lat(i,j) .ge. LatS .and. Lat(i,j) .le. LatN ) then
             if ( Lon(i,j) .ge. LonW .and. Lon(i,j) .le. LonE ) then              
               Nat = chartostring(nature(i,j,:))
@@ -211,14 +211,11 @@ begin
                       iStormLow(iLow)  = i
                       jStormLow(iLow)  = origJ(i,j)
                                  iLow = iLow + 1  
- 
-
                       
                     end if
 
 ; for ZERO accel go to ave plus minus 10% of mean
-
-                    if ( A .ge. (ave-(std*.05)) .and.  A .le. (ave+(std*.05)) ) then 
+                    if ( A .ge. (ave-(std*.025)) .and.  A .le. (ave+(std*.025)) ) then 
                       speedZero(iZero)   = speed(i,j)
                        accelZero(iZero)   = A
                          LatZero(iZero)  = Lat(i,j)
@@ -233,7 +230,7 @@ begin
                 end if
               end if
             end if
-          end if
+          ;end if
         end if
       end if
     end do
