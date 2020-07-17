@@ -235,7 +235,10 @@ begin
   
   ;res@lbLabelBarOn = False  
   
-  diri   = "./"                             ; input directory     
+
+  diri = "~/data50/data/tcaccel/one/tang/" ;  "../../dat/one/tang/"
+  ;diri = "~/data50/data/tcaccel/one/curv/" ;  "../../dat/one/tang/"
+
   
   types = (/"High","Zero","Low"/)
  
@@ -298,21 +301,23 @@ begin
   
      
   pltDir  = "../"                        ; directory for plot output
-  diri    = "../dat/"
 
   do imain = 0,2
     type = types(imain)
-    fili   = "laggedComp_"+type+"_-120_0_40_30_NA.nc"
+    fili   = "laggedComp_"+type+"_-180_180_40_30_NA.nc"
 
      f      = addfile (diri+fili, "r")
 
      ; read the location of the composite storm
-     cenLon=f->cenLon
-     cenLat=f->cenLat
+     varTemp = "cenLon"+types(imain)
+     cenLon=f->$varTemp$
+     varTemp = "cenLat"+types(imain)
+     cenLat=f->$varTemp$
+     delete(varTemp)
      
 ;     ilag=2
      hour = -12 + ilag*6
-
+     
 
      if ( iuber.eq.0 ) then
        res@tiMainString         = titles(imain)
@@ -320,8 +325,6 @@ begin
        res@tiMainString         = " "
      end if
      
-     ;+ " "  + level ;+ " hPa" ; for hour " + hour
-
      dat2 = f->compZ(ilag,{level},:,:)
      dat1 = f->compAnomZ(ilag,{level},:,:)
      dat1 = dat1*.01 ;in dam 

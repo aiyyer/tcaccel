@@ -1,15 +1,16 @@
-;==================================================================================================
-;==================================================================================================
-;==================================================================================================
+;================================================================
 ;
 ;NCSU Tropical Dynamics
 ;A. Aiyyer 06/19/2019
 ;
+;updated 07/15/2020
 ;
-;==================================================================================================
+;================================================================
+;================================================================
+;================================================================
 ;
-
-
+;
+;
 ;***************************************************************
 ; code adapted from ncl examples
 ;***************************************************************
@@ -159,11 +160,28 @@ begin
 ;***************************************************************
 
 
-  diri = "../../dat/two/tang/"
-  diri = "~/data50/data/tcaccel/two/tang/" ;  "../../dat/one/tang/"
-  diri = "~/data50/data/tcaccel/two/curv/" ;  "../../dat/one/tang/"
+
+  flag = 1 ; for tang
+ ; flag = 2 ; for curv
 
 
+  if (flag .eq. 1 ) then
+    diri = "~/data50/data/tcaccel/one/tang/" ;  "../../dat/one/tang/"
+    plot = new(9,"graphic")
+    types = (/"High","Zero","Low"/)
+    titles = (/"Rapid Tangential Acceleration","Near Zero Tangential Acceleration","Rapid Tangential Deceleration"/)    
+    nmain = 3
+  else
+    diri = "~/data50/data/tcaccel/one/curv/" ;  "../../dat/one/tang/"
+    plot = new(6,"graphic")
+    types = (/"High","Zero"/)  
+    titles = (/"Rapid Curvature Acceleration","Near Zero Curvature Acceleration"/)
+    nmain = 2
+  end if
+
+
+
+  
 
   pltName = "composite"                    ; netCDF name output
   pltType = "pdf"                       ; send graphics to PNG file
@@ -237,21 +255,13 @@ begin
 ;resAnom@lbLabelBarOn = False  
 
 
-;  plot = new(9,"graphic")
-;  types = (/"High","Zero","Low"/)
-;  titles = (/"Rapid Tangential Acceleration","Near Zero Tangential Acceleration","Rapid Tangential Deceleration"/)
-
-  plot = new(6,"graphic")
-  types = (/"High","Zero"/)  
-  titles = (/"Rapid Curvature Acceleration","Near Zero Curvature Acceleration"/)
 
 
 
   levels = (/300,500,700,850/)
   iLevel = 0
+
   ic = 0    
-
-
 ; record the center of the TC 
 
   compLon = new( (/3,3/),"float")
@@ -265,8 +275,6 @@ begin
     day  = -2 + ilag     ;hard coded
     
     level = levels(iLevel)
-
-
     if (level .eq. 300 ) then
       resAnom@cnMinLevelValF  = -10.			; set the minimum contour level
       resAnom@cnMaxLevelValF  =  10.			; set the maximum contour level
@@ -275,9 +283,6 @@ begin
       resC@cnMaxLevelValF  = 1600.			; set the maximum contour level
       resC@cnLevelSpacingF = 12.			; set the interval between contours
     end if
-
-
-
     if (level .eq. 500 ) then
       resAnom@cnMinLevelValF  = -6			; set the minimum contour level
       resAnom@cnMaxLevelValF  =  6.			; set the maximum contour level
@@ -287,9 +292,6 @@ begin
       resC@cnMaxLevelValF  = 584.			; set the maximum contour level
       resC@cnLevelSpacingF = 4.			; set the interval between contours
     end if
-
-
-
     if (level .eq. 700 ) then
       resAnom@cnMinLevelValF  = -6			; set the minimum contour level
       resAnom@cnMaxLevelValF  =  6.			; set the maximum contour level
@@ -298,8 +300,6 @@ begin
       resC@cnMaxLevelValF  = 330.			; set the maximum contour level
       resC@cnLevelSpacingF = 3.			; set the interval between contours
     end if
-
-
     if (level .eq. 850 ) then
       resAnom@cnMinLevelValF  = -6			; set the minimum contour level
       resAnom@cnMaxLevelValF  =  6.			; set the maximum contour level
@@ -308,19 +308,15 @@ begin
       resC@cnMaxLevelValF  = 180.			; set the maximum contour level
       resC@cnLevelSpacingF = 3.			; set the interval between contours
     end if
-
-
-
     res1000@cnMinLevelValF  = -10.			; set the minimum contour level
     res1000@cnMaxLevelValF  =  10.			; set the maximum contour level
     res1000@cnLevelSpacingF =  1.			; set the interval between contours
     
     
 ; loop over types
-    do imain = 0,1
+    do imain = 0,nmain-1
       type = types(imain)
-      fili   = "laggedComp_"+type+"_-180_180_40_30_NA.nc"
-      
+      fili   = "laggedComp_"+type+"_-180_180_40_30_NA.nc"      
       print ("--------------------------------")
       print (imain + " " + type + " day = " + day )
 
@@ -334,49 +330,61 @@ begin
       cenLat=f->$varTemp$
       delete(varTemp)
 
-      
-      if ( ic .eq. 0 .or. ic .eq. 1 .or. ic .eq. 2 ) then
-        resAnom@tiMainString         = titles(imain)
+
+     
+      if ( flag .eq. 1 ) then      
+        if ( ic .eq. 0 .or. ic .eq. 1 .or. ic .eq. 2 ) then
+          resAnom@tiMainString         = titles(imain)
+        else
+          resAnom@tiMainString         = " "
+        end if
       else
-        resAnom@tiMainString         = " "
+        if ( ic .eq. 0 .or. ic .eq. 1 ) then
+          resAnom@tiMainString         = titles(imain)
+        else
+          resAnom@tiMainString         = " "
+        end if
       end if
       
-
 ;---------------------------------------------------------
-      dat2 = f->compZ(ilag,{level},:,:)
-      dat1 = f->compAnomZ(ilag,{level},:,:)
-      dat1 = dat1*.01 ;in dam 
-      dat2 = dat2*.01 ;in dam 
-      dat1@long_name = " " 
-      dat1@units  = ""
-      dat2@long_name = " "      
-      dat2@units  = ""
+      composite = f->compZ(ilag,{level},:,:)
+      anomaly = f->compAnomZ(ilag,{level},:,:)
+      anomaly = anomaly*.01 ;in dam 
+      composite = composite*.01 ;in dam 
+      anomaly@long_name = " " 
+      anomaly@units  = ""
+      composite@long_name = " "      
+      composite@units  = ""
 
 ; now change the size of the left and center string labels
       resAnom@gsnStringFontHeightF = 0.017
-      resAnom@gsnRightString       = level + "hPa"
+      resAnom@gsnRightString       = " " ;level + "hPa"
       resAnom@gsnLeftString        = labels(ic)
       resAnom@gsnCenterString        =  " Day = " + day
 
-      lonArray = dat1&lon
+      lonArray = anomaly&lon
       lonArray = lonArray - cenLon
-      dat1&lon = lonArray
-      dat2&lon = lonArray
+      anomaly&lon = lonArray
+      composite&lon = lonArray
       cenLon = 0.0
-; create filled plot for anomalies
-      plot1    = gsn_csm_contour_map(wks,dat1, resAnom)
-      plot2    = gsn_csm_contour(wks,dat2, resC)
+
+      
+; create filled plot for composite anomalies
+      plot1    = gsn_csm_contour_map(wks,anomaly, resAnom)
+
+; now contours for the composite
+      plot2    = gsn_csm_contour(wks,composite, resC)
       
 ;---------------------------------------------------------
-; now add the 1000 hPa contours
-
-      dat2 := f->compAnomZ(ilag,{1000.},:,:)
-      dat2  = dat2*.01 ;in dam 
-      dat2@long_name = " "      
-      dat2@units  = ""
-      dat2&lon = lonArray
+; now add the 1000 hPa anomaly contours
+      composite := f->compAnomZ(ilag,{1000.},:,:)
+      composite  = composite*.01 ;in dam 
+      composite@long_name = " "      
+      composite@units  = ""
+      composite&lon = lonArray
+      
 ; locate the minimum (that is the composite storm center)
-      dtemp = dat2({cenLat-10:cenLat+10}, {cenLon-10:cenLon+10} )
+      dtemp = composite({cenLat-10:cenLat+10}, {cenLon-10:cenLon+10} )
       a1D      = ndtooned(dtemp)
       dsizes_a = dimsizes(dtemp)
       inds  = ind_resolve(minind(a1D),dsizes_a)
@@ -385,17 +393,15 @@ begin
       latMin = dtemp&lat(ilat)
       lonMin = dtemp&lon(ilon)
 
-                                ; write out the 1000 hPa anomalies in dam
-      
 ; change color of contours
-      
-      res1000@cnLineColor = "purple"
+      res1000@cnLineColor      = "purple"
       res1000@cnMonoLineColor = "True"
 
-
-      plot3    = gsn_csm_contour(wks,dat2, res1000)
+      plot3    = gsn_csm_contour(wks,composite, res1000)
       overlay(plot1,plot2)
       overlay(plot1,plot3)
+
+
 ;---Attach latitude labels
       lat_spacing = 20   ; use integers here
       lon_spacing = 20
@@ -421,7 +427,7 @@ begin
 
 
 
-      print ( latMin + " " + lonMin  +  " " + cenLat+ " " + cenLon +  " " + dat2({cenLat},{0.}) + " " + dat2({latMin},{lonMin}) )    
+      print ( latMin + " " + lonMin  +  " " + cenLat+ " " + cenLon +  " " + composite({cenLat},{0.}) + " " + composite({latMin},{lonMin}) )    
 
       add_lc_labels(wks,plot1,minlat,maxlat,minlon,maxlon,lat_spacing,lon_spacing)
       
@@ -437,9 +443,10 @@ begin
   resP@lbLabelFontHeightF  = 0.007               ; make labels smaller
   resP@gsnPanelYWhiteSpacePercent = 5
   resP@gsnPanelXWhiteSpacePercent = 5
+
   
-;  gsn_panel(wks,plot,(/3,3/),resP) 
-   gsn_panel(wks,plot,(/3,2/),resP) 
+  gsn_panel(wks,plot,(/3,nmain/),resP) 
+  ;gsn_panel(wks,plot,(/3,2/),resP) 
 
 
  
