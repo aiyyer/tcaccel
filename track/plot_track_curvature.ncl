@@ -29,8 +29,8 @@ begin
 ; choose the stormNumber to plot
 ; KATRINA 11886 HUGO 10135 IRMA 13087
 
-  StormNum=  11895
-  ;StormNum=  13099
+  ;StormNum=  11895
+  StormNum=  13099
 
 
 ; the ibtracs file
@@ -60,7 +60,6 @@ begin
   time2 = time
   lat2  = Lat
   lon2  = Lon
-
   
   is = 0
   do j = 0,N-1
@@ -90,9 +89,10 @@ begin
 ;-----------------------------------------------------------------------  
 ;
 
+  print (N)
 
   circC= new( (/3,N/),"double")  
-  circC = rad_curv(Lat,Lon,N)
+  circC = rad_curv_circle(Lat,Lon,N)
   LatC= circC(1,:)
   LonC= circC(0,:)  
   RadC= circC(2,:)  
