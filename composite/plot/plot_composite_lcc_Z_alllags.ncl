@@ -162,7 +162,7 @@ begin
 
 
   flag = 1 ; for tang
- ; flag = 2 ; for curv
+  flag = 2 ; for curv
 
 
   if (flag .eq. 1 ) then
@@ -203,7 +203,6 @@ begin
   resC@cnLineLabelsOn       =  False    ; Turn off contour lines   
   
   
-  resAnom@cnLevelSelectionMode = "ManualLevels"	; manually set the contour levels with the following 3 resources
   
 
   minlat             =  20.                ; min lat to mask
@@ -275,6 +274,12 @@ begin
     day  = -2 + ilag     ;hard coded
     
     level = levels(iLevel)
+
+
+
+    resAnom@cnLevelSelectionMode = "ManualLevels"	; manually set the contour levels with the following 3 resources
+       resC@cnLevelSelectionMode = "ManualLevels"	; manually set the contour levels with the following 3 resources
+
     if (level .eq. 300 ) then
       resAnom@cnMinLevelValF  = -10.			; set the minimum contour level
       resAnom@cnMaxLevelValF  =  10.			; set the maximum contour level
@@ -356,6 +361,8 @@ begin
       composite@long_name = " "      
       composite@units  = ""
 
+
+      
 ; now change the size of the left and center string labels
       resAnom@gsnStringFontHeightF = 0.017
       resAnom@gsnRightString       = " " ;level + "hPa"

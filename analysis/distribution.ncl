@@ -31,7 +31,7 @@ begin
   histoCount = new (nBin, "integer" )
   
 ;--------------------------------------------------------------------------  
-  wks = gsn_open_wks("pdf","box")               ; send graphics to PNG file
+  wks = gsn_open_wks("pdf","distribution")               ; send graphics to PNG file
   res            = True                         ; plot mods desired
   plot = new(3,graphic)                          ; create a plot array
   dum  = new(3,graphic)                          ; create a plot array
@@ -197,12 +197,16 @@ begin
     
     res@tiYAxisString =  yTitle
     res@tiXAxisString = "Center Latitude of Each Bin" 
-    
+
+    ; plot the box and whisker plot
     plot(ivar) = boxplot(wks,x(0:nBin-2),hist(0:nBin-2,:),False,res,False)
     mres               = True                     ; marker mods desired
     mres@gsMarkerIndex = 16                        ; polymarker style
     mres@gsMarkerSizeF = 4.                      ; polymarker size
     mres@gsMarkerColor = "gray"                    ; polymarker color
+
+
+;   add a dot to indicate the mean    
     dum(ivar) = gsn_add_polymarker(wks,plot(ivar),x(0:nBin-2),ave(0:nBin-2),mres) 
     
     
