@@ -46,16 +46,23 @@ begin
   pi     = 4.*atan(todouble(1.))
 ;
 ;   
-; the ibtracs file  
-  fileName = "IBTrACS.ALL.v04r00.nc"
-  fileIn = addfile( fileName, "r" )
+; the ibtracs file
 
+  dirName  = "/home/anant/data50/data/ibtracs/"
+  fileName = dirName + "IBTrACS.since1980.v04r00.nc" 
+  ;fileName = dirName + "IBTrACS.ALL.v04r00.nc"
+
+
+   fileIn = addfile( fileName, "r" )
+
+
+  print ( "reading IBTrACS data from : "  + fileName)
 ;-----------------------------------------------------------------------------  
 ; read time stamp for the first record for each TC from ibtracs
   time        = fileIn->time(:,0)
   basin       = chartostring(fileIn->basin)
-  printVarSummary(basin)
-    
+  nature      = fileIn->nature
+  
 ; we expect time units to be in days
   unitsExpected  = "days since 1858-11-17 00:00:00"
   if (time@units .ne. unitsExpected ) then
@@ -65,10 +72,22 @@ begin
     exit
   end if
 ;
-; Locate the record for 1950 onwards
+  wind    = fileIn->usa_wind
+  printVarSummary(wind)
+  if (wind@units .eq. "kts" ) then
+    WindThresh = 34.  ; threshold for TC
+  else
+    print ("Units of wind not kts. Unexpected error! Terminating Code")
+    exit
+  end if
+  maxSpeed = dim_max_n(wind,1)
   dateBeg = dble2flt(cd_inv_calendar(1980,1,1,0,0,0,time@units, 0))
-  indices   :=  ind(basin(:,0) .eq. "NA" .and. time .ge. dateBeg )
 
+
+
+
+
+  indices   :=  ind(basin(:,0) .eq. "NA" .and. time .ge. dateBeg .and. maxSpeed .ge. WindThresh)
   
 ; base is now the storm number for the first storm in 1950
   delete(time)
@@ -82,7 +101,6 @@ begin
   lon         = flt2dble(fileIn->lon )  
   numobs      = toint(short2flt(fileIn->numobs))
   basin       = chartostring(fileIn->basin)
-  nature      = fileIn->nature
   sid         = chartostring(fileIn->sid)
 
 
@@ -91,7 +109,6 @@ begin
   speed       = short2flt(fileIn->storm_speed)
   name        =  chartostring(fileIn->name)
   
-  print (cd_calendar(time(indices,0),-3) +  " " + sid(indices) + " " + sprinti("%6.0i",indices) + " " + name(indices))
 
 ;-----------------------------------------------------------------------------  
 ; Now subset only the ones that we need   
@@ -101,11 +118,15 @@ begin
   numobs      :=   numobs(indices)
   basin       :=    basin(indices,:)
   nature      :=   nature(indices,:,:)
-; read the speed from IBTracs
-  speed       :=    speed(indices,:)
+  wind        :=  fileIn->usa_wind(indices,:)
+  
+; read the motion speed from IBTracs
+  speed       :=    speed(indices,:)  
   name        :=     name(indices)
-  sid        :=     sid(indices)
+  sid         :=     sid(indices)
 
+  printVarSummary(speed)
+  print (cd_calendar(time(:,0),-3) +  " " + sid + " " + " " + name)
 
 ;
 ;------------------------------------------------------------------
@@ -147,9 +168,35 @@ begin
 ; Loop over all storms  
   do i = 0, nStorms-1
 
+
+
+    
 ;......................................................................    
 ; first extract only 3 hourly reports at synoptic hours 0,3,6...21    
     ntimes     = numobs(i)
+    
+    TSFlag = 0 ; a flag that keeps track of whether a storm was a named TS
+    SSFlag = 0 ; a flag that keeps track of whether a storm was a named Subtropical
+    do j = 0,ntimes-1
+      StypeA = chartostring(nature(i,j,:))
+      if ( StypeA .eq. "TS" .and. TSFlag .eq. 0) then
+        TSFlag = 1
+      end if
+                                ; if the TS was classified as a sub-tropical storm any time
+      if ( StypeA .eq. "SS" ) then
+        SSFlag = 1
+      end if
+    end do
+; Now first we check whether a storm was classified as SS but never as TS
+; If so, we will omit this storm from our stats
+    
+    flagForward = 1
+    if ( SSFlag .eq. 1 .and. TSFlag .eq. 0 ) then
+      stormFlag = 0
+      ETFlag    = 0
+      flagForward = 0
+    end if      
+    
     ntimes_old = ntimes    
 ; create new temporary arrays for dates,lat,lon
     stormTime   :=   time(i,0:ntimes-1)
@@ -188,7 +235,7 @@ begin
     end if
     
 ;............................................................
-    if ( numDays .ge. 2. ) then ; storm must live at least 2 days
+    if ( numDays .ge. 2. .and. flagForward .eq. 1) then ; storm must live at least 2 days
 
       print (cd_calendar(time(i,0),-3) + " " + name(i) )
 ; loop over each track point      
@@ -317,11 +364,11 @@ begin
        j=ntimes-2
        ac_term2(j+1) = (stormSpeed(j+1)*stormSpeed(j+1)/R(j))*24.*3600.  
 
-       print ( "storm min max acc" + i + " " + sprintf("%6.2f",max(ac_term1)) + " " + sprintf("%6.2f",max(ac_term2)) )
+       ;print ( "storm min max acc" + i + " " + sprintf("%6.2f",max(ac_term1)) + " " + sprintf("%6.2f",max(ac_term2)) )
        out1 := sprinti("%7.0i",tointeger(R(0:ntimes-1)*1.e-3)) + " "  + sprintf("%6.2f",tofloat(ac_term1(0:ntimes-1)))
        out2 := sprintf("%6.2f",tofloat(ac_term2(0:ntimes-1))) + " " +  sprintf("%6.2f",tofloat(lat(i,0:ntimes-1)))
        out3 := sprintf("%6.2f",tofloat(lon(i,0:ntimes-1))) 
-       print (  cd_calendar(time(i,0:ntimes-1),-3) + " " + out1 + " " + out2 + " "  + out3 )
+       ;print (  cd_calendar(time(i,0:ntimes-1),-3) + " " + out1 + " " + out2 + " "  + out3 )
        
 ;.............................................................................................................
 ; Now store all accel curv values in the large array

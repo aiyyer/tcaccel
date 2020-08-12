@@ -125,8 +125,8 @@ begin
       if ( numobs(i) .ne. 0 ) then
         numDays = todouble(time(i,numobs(i)-1) - time(i,0))
         
-;storm must live at least 1 days
-      if (  numDays .ge. 1 ) then
+;storm must live at least 2 days
+      if (  numDays .ge. 2 ) then
         if ( time(i,0) .ge. startTime .and. time(i,0) .le. endTime ) then
 
 ; initialize flag          

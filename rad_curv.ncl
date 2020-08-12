@@ -68,7 +68,7 @@ begin
 ;---------------------------------------------------------------------------    
     if ( lineFlag .eq. 1 ) then
       circC(j) = circC@_FillValue
-      print ( j + " lineflag =1 " )
+      ;print ( j + " lineflag =1 " )
     else
     
       D12 = 1. - cos(T1)*cos(T2)*cos(N2-N1) - sin(T1)*sin(T2)

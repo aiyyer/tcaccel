@@ -1,13 +1,11 @@
 ; a program to:
 ;             calculate some basic stats related to speed/accel of storms 
 ;             classified as ET
-;
-;
-;
+;----------------------------------------------------------------------------
 ; NCSU Tropical Dynamics Group
 ; A. Aiyyer
 ; Dec 5, 2019
-; Aug 9. 2020 UNDER EDITS!!!
+; Aug 9. 2020 
 ;----------------------------------------------------------------------------
 
 begin
@@ -41,22 +39,19 @@ begin
   startTime = cd_inv_calendar(startYear,1,1,0,0,0,time@units,  0)
   endTime   = cd_inv_calendar(endYear,12,31,24,0,0,time@units, 0)
 ;
-
-
   
   accelS   = fileIn->accelSpeed
   accelC   = fileIn->accelCurve
   speed    = fileIn->speed  
-  time  = fileIn->time
-  Lat   = fileIn->lat
-  Lon   = fileIn->lon
-  numobs      = fileIn->numobs
-  nature      = fileIn->nature
+  time     = fileIn->time
+  Lat      = fileIn->lat
+  Lon      = fileIn->lon
+  numobs   = fileIn->numobs
+  nature   = fileIn->nature
   ;basin       = fileIn->basin
-  dims        = dimsizes(time)
-  nStorms     = dims(0)
-
-  
+  dims     = dimsizes(time)
+  nStorms  = dims(0)
+;  
   if ( speed@units .eq. "m/s" ) then
     speed = speed*3.6 ; now km/hr per day
     speed@units = "km/hr per day" 
@@ -78,10 +73,9 @@ begin
     print ("Units unexpected! Terminating code!")
     exit
   end if
-
+;
 
   nn=3500
-
   accelET:= new( (/2,nn/),typeof(accelS) )
   accelET = accelS@_FillValue
   speedET = new( (/nn/),typeof(accelS) )
@@ -89,29 +83,23 @@ begin
 ;======================================================================================
 ; first establish some basic stats for this lat-bin
 ; create array to store all accel data for some more stats
-    icount    = 0
-    ETCount = 0
-
-
+  icount    = 0
+  ETCount = 0
 ;
-
-    
-    
-   iSormCount = 0
+  iSormCount = 0
 ; loop over storms  
-    do i = 0,nStorms-1
-      if ( numobs(i) .ne. 0 ) then
+  do i = 0,nStorms-1
+
+    if ( numobs(i) .ne. 0 ) then
+      numDays = todouble(time(i,numobs(i)-1) - time(i,0))
+      
+;   storm must live at least 2 days
+      if (  numDays .ge. 2 ) then
         
-        numDays = todouble(time(i,numobs(i)-1) - time(i,0))
         
-        
-;   storm must live at least 3 days
-        if (  numDays .ge. 2 ) then
-          iSormCount = iSormCount+1
          
           if ( time(i,0) .ge. startTime .and. time(i,0) .le. endTime ) then
-            
-            
+            iSormCount = iSormCount+1
             do j = 1, numobs(i)-2
               
 ; apply the relevant checks
@@ -121,15 +109,11 @@ begin
                     accelET(0,ETCount) = accelS(i,j)
                     accelET(1,ETCount) = accelC(i,j)
                     speedET(ETCount)   = speed(i,j)
-
-
                     ;print ( ETCount + " " + accelET(0,ETCount) + " "  + speedET(ETCount)  )
                     ETCount=ETCount+1
                   end if
-                  
                 end if
               ;end if
-            
             end do
           end if
         end if ;numdays

@@ -13,11 +13,10 @@ begin
 
   variable = (/"speed","accelSpeed","accelCurve"/)
   
-  
-  
+ 
 ; user inputs
   startYear = 1980
-  endYear   = 2018
+  endYear   = 2019
 ;  
 ; choose the latitude bands
   latS =   5.
@@ -31,8 +30,8 @@ begin
   histoCount = new (nBin, "integer" )
   
 ;--------------------------------------------------------------------------  
-  wks = gsn_open_wks("pdf","distribution")               ; send graphics to PNG file
-  res            = True                         ; plot mods desired
+  wks = gsn_open_wks("pdf","distribution")       ; send graphics to PNG file
+  res            = True                          ; plot mods desired
   plot = new(3,graphic)                          ; create a plot array
   dum  = new(3,graphic)                          ; create a plot array
 
@@ -49,6 +48,9 @@ begin
   ;basin       = fileIn->basin
   dims        = dimsizes(time)
   nStorms     = dims(0)
+
+  print ("Number of Storms = " + nStorms)
+  
 ; we expect time units to be in days
   unitsExpected  = "days since 1858-11-17 00:00:00"
   
@@ -69,13 +71,10 @@ begin
 ; initialize arrays
     histoCount = 0
     histoDat = histoDat@_FillValue
-    
     var = variable(ivar)    
     dat := fileIn->$var$
 
-
-    printVarSummary(dat)
-    
+    ;printVarSummary(dat)
     
     if ( var .eq. "speed" ) then
       Amax = 60.*3.6
@@ -100,27 +99,23 @@ begin
     end if
     
     title = " " 
-    
+
+
+    stormCount = 0
 ;..................................................................
     do i = 0,nStorms-1
-        
+
       if ( numobs(i) .gt. 0 ) then
-        
-; apply the relevant checks
-        
         if ( time(i,0) .ge. startTime .and. time(i,0) .le. endTime ) then
           numDays = tofloat(time(i,numobs(i)-1) - time(i,0))
+
 ;   storm must live at least 1 days
-          if (  numDays .ge. 1 ) then
-            
-            
+          if (  numDays .ge. 2 ) then
+            stormCount=stormCount+1
             do j = 0, numobs(i)-1
               A= dat(i,j)
-
-
               if ( chartostring(nature(i,j,:)) .eq. "TS") then
                   if ( (Lat(i,j) .ge. latS) .and. (Lat(i,j) .le. latN) ) 
-
 ; ignore spuriously large values of accel
 ; this is controlled by the xmax value
                     if (.not.ismissing(A) .and. abs(A) .le. Amax ) then
@@ -131,19 +126,16 @@ begin
                     end if   
                 end if
               end if
-              
             end do ;j
-            
-            
           end if ;numdays
         end if ;time
-
       end if ;numobs
-      
     end do ;i
 ;..................................................................
 ;
 ;
+
+    print ("StormCount = " + stormCount)
     print ( histoCount )
     
     

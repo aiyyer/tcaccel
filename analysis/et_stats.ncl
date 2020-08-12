@@ -43,7 +43,7 @@ begin
   numobs      = toint(short2flt(fileIn->numobs))
   basin       = fileIn->basin
   nature      = fileIn->nature
-  wmo_wind    = fileIn->wmo_wind
+  wmo_wind    = fileIn->usa_wind ;use usa instead of wmo for ATL
 ;--------------------------------------------------------------------------        
   if ( wmo_wind@units .eq. "kts" ) then
     WindThresh = 34.  ; threshold for TC
@@ -70,13 +70,14 @@ begin
   yearlyETCount = 0   ; how many storms per year in the domain chosen became ET?
 
 ; Array to hold latitudes of all ETs identified here
-  N = 500
+  N = 600
   
   ETLat = new(N,"float") ;keep track of latitudes of each ET event
 ; a counter to keep track of ETs for filling the ETLat array
   iET =0
 ;--------------------------------------------------------------------------
 
+  print ( "nStorms  " + nStorms)
   
 ; loop over each storm in ibtracs
   do i = 0, nStorms-1
@@ -92,7 +93,7 @@ begin
 ;    
 ; storm must live at least 1 day
     numDays = tofloat(time(i,numobs(i)-1) - time(i,0))
-    if (  numDays .lt. 1 ) then 
+    if (  numDays .lt. 2 ) then 
       flag=0
     end if
 ;    
