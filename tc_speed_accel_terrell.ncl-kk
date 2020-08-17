@@ -85,7 +85,7 @@ begin
 
 
   
-  indices   :=  ind(basin(:,0) .eq. "NA" .and. time .ge. dateBeg) 
+  indices   :=  ind(basin(:,0) .eq. "WP" .and. time .ge. dateBeg) 
 ; base is now the storm number for the first storm in 1950
   delete(time)
   delete(basin)
@@ -158,10 +158,10 @@ begin
 
   origJ = tointeger(lat)
   origJ = origJ@_FillValue
-
+  
 ;============================================================================================
 ; Loop over all storms  
-  do i = 0,nStorms-1
+  do i = 0,10 ;nStorms-1
     
 ;......................................................................    
 ; first extract only 3 hourly reports at synoptic hours 0,3,6...21    
@@ -169,7 +169,11 @@ begin
     
 ;;TSFlag = 0 ; a flag that keeps track of whether a storm was a named TS
 ;;SSFlag = 0 ; a flag that keeps track of whether a storm was a named Subtropical
-;;    do j = 0,ntimes-1
+
+
+    do j = 0,ntimes-1
+
+
 ;;     ; print ( i + " " + j +  chartostring(nature(i,j,:)))
 ;;      StypeA = chartostring(nature(i,j,:))
 ;;      if ( StypeA .eq. "TS" .and. TSFlag .eq. 0) then
@@ -180,7 +184,6 @@ begin
 ;;        SSFlag = 1
 ;;      end if
 ;;    end do
-
 ;; Now first we check whether a storm was classified as SS but never as TS
 ;; If so, we will omit this storm from our stats
    
@@ -383,9 +386,6 @@ begin
      accelCurve(i,:)=accelCurve@_FillValue
      
    end if
-
-
-   
 end do ; loop over storms
 
 ;===========================================================================================  
@@ -398,7 +398,7 @@ accelSpeed@units = "m/s per day"
 accelCurve@units = "m/s per day"
 
 
-fileName = "tcSpeed_na_1950_2019.nc"
+fileName = "tcSpeed_wp_1950_2019.nc"
 system( "rm " + fileName )
 setfileoption("nc", "format", "NETCDF4") 
 outFile = addfile( fileName, "c" )

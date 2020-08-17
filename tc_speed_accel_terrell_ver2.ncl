@@ -11,7 +11,8 @@
 ;
 ; Aug 28, 2019
 ; 
-; 
+; THIS VERSION CHECKS A FEW OTHER THINGS SUCH AS WIND SPEED
+; NATURE ETC.
 ;............................................................................
 ; Updates
 ;
@@ -85,7 +86,7 @@ begin
 
 
   
-  indices   :=  ind(basin(:,0) .eq. "NA" .and. time .ge. dateBeg) 
+  indices   :=  ind(basin(:,0) .eq. "WP" .and. time .ge. dateBeg) 
 ; base is now the storm number for the first storm in 1950
   delete(time)
   delete(basin)
@@ -158,39 +159,40 @@ begin
 
   origJ = tointeger(lat)
   origJ = origJ@_FillValue
-
+  
 ;============================================================================================
 ; Loop over all storms  
-  do i = 0,nStorms-1
+  do i = 0, 10 ;nStorms-1
     
 ;......................................................................    
 ; first extract only 3 hourly reports at synoptic hours 0,3,6...21    
     ntimes     = numobs(i)
     
-;;TSFlag = 0 ; a flag that keeps track of whether a storm was a named TS
-;;SSFlag = 0 ; a flag that keeps track of whether a storm was a named Subtropical
-;;    do j = 0,ntimes-1
-;;     ; print ( i + " " + j +  chartostring(nature(i,j,:)))
-;;      StypeA = chartostring(nature(i,j,:))
-;;      if ( StypeA .eq. "TS" .and. TSFlag .eq. 0) then
-;;        TSFlag = 1
-;;      end if
-;; if the TS was classified as a sub-tropical storm any time
-;;      if ( StypeA .eq. "SS" ) then
-;;        SSFlag = 1
-;;      end if
-;;    end do
+    TSFlag = 0 ; a flag that keeps track of whether a storm was a named TS
+    SSFlag = 0 ; a flag that keeps track of whether a storm was a named Subtropical
+    do j = 0,ntimes-1
 
-;; Now first we check whether a storm was classified as SS but never as TS
-;; If so, we will omit this storm from our stats
-   
-      flagForward = 1
 
-;;    if ( SSFlag .eq. 1 .and. TSFlag .eq. 0 ) then
-;;      stormFlag = 0
-;;      ETFlag    = 0
-;;      flagForward = 0
-;;    end if      
+     ; print ( i + " " + j +  chartostring(nature(i,j,:)))
+      StypeA = chartostring(nature(i,j,:))
+      if ( StypeA .eq. "TS" .and. TSFlag .eq. 0) then
+        TSFlag = 1
+      end if
+; if the TS was classified as a sub-tropical storm any time
+      if ( StypeA .eq. "SS" ) then
+        SSFlag = 1
+      end if
+    end do
+
+; Now first we check whether a storm was classified as SS but never as TS
+; If so, we will omit this storm from our stats
+    
+    flagForward = 1
+    if ( SSFlag .eq. 1 .and. TSFlag .eq. 0 ) then
+      stormFlag = 0
+      ETFlag    = 0
+      flagForward = 0
+    end if      
     
     ntimes_old = ntimes    
 ; create new temporary arrays for dates,lat,lon
@@ -229,9 +231,7 @@ begin
       numDays = 0.
     end if
     
-;............................................................
-;
-    flagForward=1  ; this bypasses the checks on the storm nature 
+;............................................................    
     if ( numDays .ge. 2. .and. flagForward .eq. 1) then ; storm must live at least 2 days
 
       print (cd_calendar(time(i,0),-3) + " " + name(i) )
@@ -301,12 +301,11 @@ begin
 
 ;       print ( cd_calendar(time(i,0:ntimes-1),-3) + " " + speed(i,0:ntimes-1) + " " + speedC(i,0:ntimes-1) )
 ;
-       do ip = 0,ntimes-1
-         masterBias  = masterBias*masterCount/(masterCount + 1.) + (speed(i,ip)-speedC(i,ip))/(masterCount + 1.)
-         masterRMS   = masterRMS*masterCount/(masterCount + 1.) +   ((speed(i,ip)-speedC(i,ip))^2)/(masterCount + 1.)
-         masterCount = masterCount + 1       
-      end do
-
+;       do ip = 0,ntimes-1
+;         masterBias  = masterBias*masterCount/(masterCount + 1.) + (speed(i,ip)-speedC(i,ip))/(masterCount + 1.)
+;         masterRMS   = masterRMS*masterCount/(masterCount + 1.) +   ((speed(i,ip)-speedC(i,ip))^2)/(masterCount + 1.)
+;         masterCount = masterCount + 1       
+;       end do
 ;---------------------------------------------------------------------------------------
 
 ; 
@@ -383,9 +382,6 @@ begin
      accelCurve(i,:)=accelCurve@_FillValue
      
    end if
-
-
-   
 end do ; loop over storms
 
 ;===========================================================================================  
@@ -398,7 +394,7 @@ accelSpeed@units = "m/s per day"
 accelCurve@units = "m/s per day"
 
 
-fileName = "tcSpeed_na_1950_2019.nc"
+fileName = "tcSpeed_wp_1950_2019.nc"
 system( "rm " + fileName )
 setfileoption("nc", "format", "NETCDF4") 
 outFile = addfile( fileName, "c" )
@@ -418,10 +414,8 @@ print ( "*************************************************" )
 print ( "*****   Normal Code Termination  ****************" )
 print ( "*************************************************" )
 
-print ("bias and rms for speeds:")
-print ("count = " + masterCount + " " + masterBias + " " + sqrt(masterRMS))
-
-
+;  print ("bias and rms for speeds:")
+;  print ("count = " + masterCount + " " + masterBias + " " + sqrt(masterRMS))
 ;===========================================================================================
 
 end
