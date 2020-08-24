@@ -10,9 +10,9 @@
 
 begin
 
-; user inputs
+; user input
   
-startYear = 1980
+startYear = 1965
 endYear   = 2019
 nYears    = endYear - startYear + 1
 
@@ -39,8 +39,9 @@ res            = True                         ; plot mods desired
 
 ;--------------------------------------------------------------------------      
 
+fileName = "../tcSpeed_" + basinAnalysis + "_1950_2019.nc"
 
-fileName = "../tcSpeed.nc"
+
 fileIn = addfile( fileName, "r" )
 time        = fileIn->time
 ; we expect time units to be in days
@@ -135,7 +136,7 @@ do imain = 0,nn-1
 ; apply the relevant checks
           
                                 ;if ( chartostring(basin(i,j,:)) .eq. basinAnalysis) then
-          if ( time(i,0) .ge. startTime .and. time(i,0) .le. endTime ) then
+          if ( time(i,0) .ge. startTime .and. time(i,numobs(i)-2) .le. endTime ) then
             if ( Lat(i,j) .ge. latS .and. Lat(i,j) .le. latN ) then                
               if ( chartostring(nature(i,j,:)) .eq. "TS" ) then
                 

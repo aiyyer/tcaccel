@@ -14,25 +14,25 @@ begin
 ; user inputs
 
  variable = (/"speed","accelSpeed","accelCurve"/)
- ivar = 0
- threshFlag = 0
- sfac       = 1.0
+ ivar = 1
+ threshFlag = 1
+ sfac       = 1.
  var = variable(ivar)
 
 ; choose the latitude band
- latS = 10. ; 5.0
- dlat = 20.  ;10. ;10.0
- latN = latS + dlat    
- nn   = 7
+; latS = 10. ; 5.0
+; dlat = 20.  ;10. ;10.0
+; latN = latS + dlat    
+; nn   = 7
 
 ; entire basin
- latS =  0. ; 5.0
- dlat =  60.  ;10. ;10.0
+ latS =  30. ; 5.0
+ dlat =  20.  ;10. ;10.0
  latN = latS + dlat    
  nn = 1
 
   
-  startYear = 1950
+  startYear = 1965
   endYear   = 2019
   nYears    = endYear - startYear + 1
 
@@ -61,7 +61,7 @@ begin
   latNorth=clat
 
 ;--------------------------------------------------------------------------      
-  fileName = "../tcSpeed_na_1950_2019.nc"
+  fileName = "../tcSpeed_wp_1950_2019.nc"
   
   fileIn = addfile( fileName, "r" )
   time        = fileIn->time
@@ -214,7 +214,6 @@ begin
 ; use this if threshold needed
       yearlyThresh =  yearlyThresh@_FillValue
       yearlyThresh = where ( yearly .gt. thresh, yearly, yearly@_FillValue)
-
     end if
     
     ;print ( "icount = " + icount + " " + sum(ycount) + " " + sum(yearlyThresh) )

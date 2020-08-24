@@ -12,10 +12,11 @@
 begin
 
   variable = (/"speed","accelSpeed","accelCurve"/)
-  
+  basinAnalysis = "WP"
+
  
 ; user inputs
-  startYear = 1980
+  startYear = 1965
   endYear   = 2019
 ;  
 ; choose the latitude bands
@@ -25,7 +26,7 @@ begin
 
   nBin = tointeger( (latN-latS)/dlat ) + 1
   x = fspan(latS,latN,nBin) + .5*dlat
-  nmax = 12000
+  nmax = 80000
   histoDat   = new ((/nBin,nmax/), "double" )
   histoCount = new (nBin, "integer" )
   
@@ -35,7 +36,9 @@ begin
   plot = new(3,graphic)                          ; create a plot array
   dum  = new(3,graphic)                          ; create a plot array
 
-  fileName = "../tcSpeed.nc"
+
+
+  fileName = "../tcSpeed_" + basinAnalysis + "_1950_2019.nc"
   fileIn = addfile( fileName, "r" )
     
   time = fileIn->time

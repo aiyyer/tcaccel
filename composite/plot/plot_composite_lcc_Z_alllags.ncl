@@ -31,7 +31,8 @@ begin
 ;---Pick some "nice" values for the latitude labels.
   lat_values = ispan(toint(minlat),toint(maxlat),lat_spacing) * 1.
   nlat       = dimsizes(lat_values)
-;
+;wp
+  
 ; We need to get the slope of the left and right min/max longitude lines.
 ; Use NDC coordinates to do this.
 ;
@@ -162,17 +163,25 @@ begin
 
 
   flag = 1 ; for tang
-  flag = 2 ; for curv
+
+; flag = 2 ; for curv
+
+
+  LatS =  30
+  LatN =  40
+  basinAnalysis = "NA" 
 
 
   if (flag .eq. 1 ) then
-    diri = "~/data50/data/tcaccel/one/tang/" ;  "../../dat/one/tang/"
+    accelType     = "tang"
+    dir = "~/data50/data/tcaccel/one/tang/" 
     plot = new(9,"graphic")
     types = (/"High","Zero","Low"/)
     titles = (/"Rapid Tangential Acceleration","Near Zero Tangential Acceleration","Rapid Tangential Deceleration"/)    
     nmain = 3
   else
-    diri = "~/data50/data/tcaccel/one/curv/" ;  "../../dat/one/tang/"
+    accelType     = "curv"
+    dir = "~/data50/data/tcaccel/one/curv/" 
     plot = new(6,"graphic")
     types = (/"High","Zero"/)  
     titles = (/"Rapid Curvature Acceleration","Near Zero Curvature Acceleration"/)
@@ -181,21 +190,32 @@ begin
 
 
 
-  
-
-  pltName = "composite"                    ; netCDF name output
+  pltName = "composite_" + accelType  + "_" + LatN + "_" + LatS+"_"+ basinAnalysis
   pltType = "pdf"                       ; send graphics to PNG file
 
 
   wks    = gsn_open_wks(pltType,pltName)
   resAnom                      = True     ; plot mods desired
-  gsn_define_colormap(wks,"GreenMagenta16" ) ;CBR_coldhot") ;BlueWhiteOrangeRed")
-  gsn_reverse_colormap(wks)      
+
+
+ ; gsn_define_colormap(wks,"GreenMagenta16" )
+;gsn_define_colormap(wks,"NCV_blu_red") 
+
+  gsn_define_colormap(wks,"temp_diff_18lev")
+  ;gsn_define_colormap(wks,"sunshine_diff_12lev")
+
+  ;gsn_define_colormap(wks,"hotcolr_19lev")
+  
+;  gsn_reverse_colormap(wks)      
+
+
   resAnom@cnFillOn            =  True    ; turn on color fill
   resAnom@cnLinesOn           =  False       ; Turn off contour lines
   resAnom@cnLineLabelsOn      =  False       ; Turn off contour lines   
   resAnom@gsnDraw             = False       ; Don't draw plots
   resAnom@gsnFrame            = False       ; Don't advance frame
+
+
   
   resC = resAnom
   resC@cnFillOn             =  False    ; turn on color fill
@@ -281,21 +301,21 @@ begin
        resC@cnLevelSelectionMode = "ManualLevels"	; manually set the contour levels with the following 3 resources
 
     if (level .eq. 300 ) then
-      resAnom@cnMinLevelValF  = -10.			; set the minimum contour level
-      resAnom@cnMaxLevelValF  =  10.			; set the maximum contour level
-      resAnom@cnLevelSpacingF =   2.			; set the interval between contours
+      resAnom@cnMinLevelValF  = -9.			; set the minimum contour level
+      resAnom@cnMaxLevelValF  =  9.			; set the maximum contour level
+      resAnom@cnLevelSpacingF =  1.			; set the interval between contours
       resC@cnMinLevelValF  = 680.			; set the minimum contour level
       resC@cnMaxLevelValF  = 1600.			; set the maximum contour level
       resC@cnLevelSpacingF = 12.			; set the interval between contours
     end if
     if (level .eq. 500 ) then
-      resAnom@cnMinLevelValF  = -6			; set the minimum contour level
-      resAnom@cnMaxLevelValF  =  6.			; set the maximum contour level
+      resAnom@cnMinLevelValF  = -5			; set the minimum contour level
+      resAnom@cnMaxLevelValF  =  5.			; set the maximum contour level
       resAnom@cnLevelSpacingF =  1.			; set the interval between contours
       
       resC@cnMinLevelValF  = 496.			; set the minimum contour level
       resC@cnMaxLevelValF  = 584.			; set the maximum contour level
-      resC@cnLevelSpacingF = 4.			; set the interval between contours
+      resC@cnLevelSpacingF = 4.			        ; set the interval between contours
     end if
     if (level .eq. 700 ) then
       resAnom@cnMinLevelValF  = -6			; set the minimum contour level
@@ -321,11 +341,14 @@ begin
 ; loop over types
     do imain = 0,nmain-1
       type = types(imain)
-      fili   = "laggedComp_"+type+"_-180_180_40_30_NA.nc"      
+      fili = "laggedComp_" + accelType + "_"  + type  + "_" + LatN + "_" + LatS+"_"+ basinAnalysis + ".nc"
+
+      print (fili)
+
       print ("--------------------------------")
       print (imain + " " + type + " day = " + day )
 
-      f      = addfile (diri+fili, "r")
+      f      = addfile (dir + fili, "r")
       
                                 ; read the location of the composite storm
 
@@ -389,7 +412,9 @@ begin
       composite@long_name = " "      
       composite@units  = ""
       composite&lon = lonArray
-      
+
+      printVarSummary(composite)
+
 ; locate the minimum (that is the composite storm center)
       dtemp = composite({cenLat-10:cenLat+10}, {cenLon-10:cenLon+10} )
       a1D      = ndtooned(dtemp)
@@ -446,7 +471,7 @@ begin
   end do
 
   resP                     = True                ; modify the panel plot    
- ; resP@gsnPanelLabelBar    = True                ; add common colorbar
+  resP@gsnPanelLabelBar    = True                ; add common colorbar
   resP@lbLabelFontHeightF  = 0.007               ; make labels smaller
   resP@gsnPanelYWhiteSpacePercent = 5
   resP@gsnPanelXWhiteSpacePercent = 5
