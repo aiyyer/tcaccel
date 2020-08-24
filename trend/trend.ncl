@@ -11,10 +11,12 @@
 begin
 
 
-; user inputs
-
+;user inputs
+ fileName = "../tcSpeed_WP_1950_2019.nc"
+ startYear = 1965
+ endYear   = 2019
  variable = (/"speed","accelSpeed","accelCurve"/)
- ivar = 1
+ ivar = 2
  threshFlag = 1
  sfac       = 1.
  var = variable(ivar)
@@ -27,41 +29,16 @@ begin
 
 ; entire basin
  latS =  30. ; 5.0
- dlat =  20.  ;10. ;10.0
+ dlat =  15.  ;10. ;10.0
  latN = latS + dlat    
  nn = 1
 
   
-  startYear = 1965
-  endYear   = 2019
+
   nYears    = endYear - startYear + 1
-
-
-;----------Change this number to test the sensitivity
-
   print ( "Start Year = " + startYear + " end year = " + endYear + " " + nYears)
 
-;=====================================================================
-  
-  clat  = new(nn,"double")
-  trend = new(nn,"double")
-  signi = new(nn,"double")
-  trendL = new(nn,"double")
-  signiL = new(nn,"double")
 
-  latCount = new(nn,"integer")
-
-  latAve = clat
-  latMed = clat
-  latSD  = clat
-  latSouth = clat
-  latNorth = clat
-
-  latSouth=clat
-  latNorth=clat
-
-;--------------------------------------------------------------------------      
-  fileName = "../tcSpeed_wp_1950_2019.nc"
   
   fileIn = addfile( fileName, "r" )
   time        = fileIn->time
@@ -79,11 +56,11 @@ begin
 ;
   
   dat := fileIn->$var$  
-
+  
   if ( var .eq. "speed" ) then
     Amax = 60.*3.6
     if ( dat@units .eq. "m/s" ) then
-     dat := dat*3.6 ; now km/hr per day
+      dat := dat*3.6 ; now km/hr per day
       dat@units = "km/hr per day" 
     else
       print ("Units unexpected! Terminating code!")
@@ -107,12 +84,28 @@ begin
   Lon   = fileIn->lon
   numobs      = fileIn->numobs
   nature      = fileIn->nature
-
-  
   dims        = dimsizes(time)
   nStorms     = dims(0)
-  
   datYaLL := new( (/nn,nYears/),"double")
+  datYaLL@_FillValue = dat@_FillValue
+
+;===================================================================== 
+  clat     = new(nn,"double")
+  trend    = new(nn,"double")
+  signi    = new(nn,"double")
+  trendL   = new(nn,"double")
+  signiL   = new(nn,"double")
+  latCount = new(nn,"integer")
+  latAve   = clat
+  latMed   = clat
+  latSD    = clat
+  latSouth = clat
+  latNorth = clat
+  latSouth = clat
+  latNorth = clat
+;===================================================================== 
+
+  
   
   
   do imain = 0,nn-1
@@ -122,20 +115,29 @@ begin
 ; first establish some basic stats for this lat-bin
 ; create array to store all accel data for some more stats
     datA     := new (300000,"double")
-
+    datA@_FillValue = dat@_FillValue
+    
     icount    = 0
     nrCount   = 0
     totCount  = 0
     tsCount   = 0
+
     datA = datA@_FillValue
 
     latSouth(imain) = latS
     latNorth(imain) = latN
     yearly := new((/nYears,4000/),"double")
     ycount := new((/nYears/),"integer")
+    yearly@_FillValue = dat@_FillValue
     ycount = 0
     yearly = yearly@_FillValue    
 
+
+    print ( yearly@_FillValue )
+    print ( datA@_FillValue )
+
+    printVarSummary(yearly)
+    
     ic     = 0
     count  = 0.
     stormCount = 0
@@ -146,6 +148,7 @@ begin
       if ( numobs(i) .gt. 0 ) then
         if ( time(i,0) .ge. startTime .and. time(i,numobs(i)-1) .le. endTime ) then
           numDays = todouble(time(i,numobs(i)-1) - time(i,0))        
+
 ;   storm must live at least 1 days
           if (  numDays .ge. 2 ) then          
             stormCount = stormCount + 1
@@ -163,7 +166,7 @@ begin
                   nrCount = nrCount + 1
                 end if
                 
-                ;;if ( chartostring(nature(i,j,:)) .eq. "TS" ) 
+                if ( chartostring(nature(i,j,:)) .eq. "TS" ) 
 
 ; ignore spuriously large values of accel
 ; this is controlled by the Amax value                  
@@ -178,19 +181,15 @@ begin
                     yearly(iy,ii) = A
                     ycount(iy) =  ycount(iy) + 1
                   end if
-                ;;end if ; nature
-                
+                end if ; nature                
               end if ; lat
-              
-
-          end do ; j
-
-        end if ;numdays
-      end if ;time
-      
-    end if ;numobs 
-  end do ;i
-
+            end do ; j
+          end if ;numdays
+        end if ;time
+        
+      end if ;numobs 
+    end do ;i
+    
     ave = avg(datA(0:icount-1) )
     std = stddev(datA(0:icount-1) )
     med = dim_median( datA(0:icount-1) )
@@ -209,6 +208,8 @@ begin
     print ( "thresh = " + thresh)
     yearlyThresh = yearly
 
+    printVarSummary(yearlyThresh)
+    exit
 
     if ( threshFlag .eq. 1 ) then
 ; use this if threshold needed
@@ -216,7 +217,7 @@ begin
       yearlyThresh = where ( yearly .gt. thresh, yearly, yearly@_FillValue)
     end if
     
-    ;print ( "icount = " + icount + " " + sum(ycount) + " " + sum(yearlyThresh) )
+    print ( "icount = " + icount + " " + sum(ycount) + " " + sum(yearlyThresh) )
 
     datY := new(nYears,"double") 
     datC := new(nYears,"double") 
@@ -233,8 +234,9 @@ begin
         med     =   yearlyThresh@_FillValue
         datY(iy) =  yearlyThresh@_FillValue
       end if
+      print ( x(iy) + " " +   datY(iy) )
     end do
-    ;print ( x + " " +   datY )
+ 
 
     ;print ( "sum = " + sum( datY ) )
     print ( "mean = " + avg(datY)  + " " + dim_avg_n_Wrap (dim_avg_n_Wrap(yearlyThresh,1),0) )
