@@ -46,7 +46,7 @@ begin
   iyBeg = 1950
   dirName  = "/home/anant/data50/data/ibtracs/"
   ;fileName = dirName + "IBTrACS.since1980.v04r00.nc" 
-  fileName = dirName + "IBTrACS.ALL.v04r00.nc"
+  fileName = "IBTrACS.ALL.v04r00.nc"
 
 
    fileIn = addfile( fileName, "r" )
@@ -85,7 +85,7 @@ begin
 
 
   
-  indices   :=  ind(basin(:,0) .eq. "NA" .and. time .ge. dateBeg) 
+  indices   :=  ind(basin(:,0) .eq. "WP" .and. time .ge. dateBeg) 
 ; base is now the storm number for the first storm in 1950
   delete(time)
   delete(basin)
@@ -113,7 +113,6 @@ begin
   numobs      :=   numobs(indices)
   basin       :=    basin(indices,:)
   nature      :=   nature(indices,:,:)
-  wind        :=  fileIn->usa_wind(indices,:)
   
 ; read the motion speed from IBTracs
   speed       :=    speed(indices,:)  
@@ -398,7 +397,7 @@ accelSpeed@units = "m/s per day"
 accelCurve@units = "m/s per day"
 
 
-fileName = "tcSpeed_na_1950_2019.nc"
+fileName = "tcSpeed_wp_1950_2019.nc"
 system( "rm " + fileName )
 setfileoption("nc", "format", "NETCDF4") 
 outFile = addfile( fileName, "c" )

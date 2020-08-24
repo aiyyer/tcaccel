@@ -22,7 +22,7 @@ begin
 ;---------------------------------------------------------------------------  
 ; user inputs
   startYear = 1980
-  endYear   = 2016
+  endYear   = 2019
   nYears    = endYear - startYear + 1
 
   LatS =  30
@@ -32,14 +32,14 @@ begin
   basinAnalysis = "NA"  ;WP
 
 ; sdev threshold factor
-  sfac = 2.0
+  sfac = 1.0
 
 ; the sfac is used to determine the threshold accel, decel values.
 ; thresh = mean +/- sfac*sdev  
 ;--------------------------------------------------------------------------  
     
-  fileName = "../dat/tcSpeed.nc"
-  fileName = "/home/anant/data50/data/tcaccel/tcSpeed.nc"
+  fileName = "../tcSpeed_na_1950_2019.nc"
+  ;fileName = "/home/anant/data50/data/tcaccel/tcSpeed.nc"
   fileIn = addfile( fileName, "r" )
   time        = fileIn->time
 ; we expect time units to be in days
@@ -61,22 +61,22 @@ begin
   Lon = fileIn->lon
   numobs      = fileIn->numobs
   nature      = fileIn->nature
-  basin       = fileIn->basin
+  ;basin       = fileIn->basin
 ;
   dims  = dimsizes(time)
   nStorms  = dims(0)
 
-  xmax   =  30.
+  xmax   =  60.
 ; create array to store all accel data for some more stats
-  datA   = new (60000,"float")
+  datA   = new (60000,typeof(dat))
   icount = 0
 
 ; define output arrays  
   N = 2000
 
        iHigh = 0
-   speedHigh   = new (N, "float")
-   accelHigh   = new (N, "float")
+   speedHigh   = new (N, typeof(speed))
+   accelHigh   = new (N, typeof(dat) )
      LatHigh     = new (N, typeof(Lat))
      LonHigh     = new (N, typeof(Lon))
     timeHigh    = new (N, typeof(time))
@@ -84,8 +84,8 @@ begin
   jStormHigh  = new (N, "integer")
 
        iZero = 0
-   speedZero   = new (N, "float")
-   accelZero   = new (N, "float")
+   speedZero   = new (N, typeof(speed))
+   accelZero   = new (N,typeof(dat) )
      LatZero  = new (N, typeof(Lat))
      LonZero  = new (N, typeof(Lon))
     timeZero = new (N, typeof(time))
@@ -114,7 +114,7 @@ begin
                                 ;print ( i + " " + j + " " + A + " " +  chartostring(nature(i,j,:)))
 ; apply the relevant checks
         if ( time(i,0) .ge. startTime .and. time(i,0) .le. endTime ) then
-          if ( chartostring(basin(i,j,:)) .eq. basinAnalysis) then
+          ;if ( chartostring(basin(i,j,:)) .eq. basinAnalysis) then
             if ( Lat(i,j) .ge. LatS .and. Lat(i,j) .le. LatN ) then
               if ( Lon(i,j) .ge. LonW .and. Lon(i,j) .le. LonE ) then              
                 Nat = chartostring(nature(i,j,:))
@@ -130,6 +130,8 @@ begin
                         date=cd_calendar(time(i,j),-3)
 ;                  print ( icount + " " + date + " " +  A )
                         icount = icount + 1
+                        else
+                          print ( "xmax exceeded" + dat(i,j) )
                       end if
                     end if
                   end if
@@ -173,7 +175,7 @@ begin
                 end if ;nature
               end if ;lon
             end if ;lat        
-          end if ;basin
+          ;end if ;basin
         end if ;time
       end do ;j
     end do ;i

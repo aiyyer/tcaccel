@@ -22,26 +22,23 @@ begin
 ;---------------------------------------------------------------------------  
 ; user inputs
   startYear = 1980
-  endYear   = 2019
+  endYear   = 2016
+
   nYears    = endYear - startYear + 1
 
   LatS =  30
   LatN =  40 
-  LonW = -180 
-  LonE =  180
-  basinAnalysis = "NA"  ;WP
+  basinAnalysis = "WP"  ;WP
 
 ; sdev threshold factor
-  sfac  = 2.0
-
+  sfac  = 1.5
   
   print ( "sfac  = " + sfac )
-
 ; the sfac is used to determine the threshold accel, decel values.
 ; thresh = mean +/- sfac*sdev  
 ;--------------------------------------------------------------------------  
     
-  fileName = "../tcSpeed.nc"
+  fileName = "../tcSpeed_" + basinAnalysis + "_1950_2019.nc"
   fileIn = addfile( fileName, "r" )
   time        = fileIn->time
 ; we expect time units to be in days
@@ -139,28 +136,20 @@ begin
                                 ;print ( i + " " + j + " " + A + " " +  chartostring(nature(i,j,:)))
 ; apply the relevant checks
       if ( time(i,0) .ge. startTime .and. time(i,0) .le. endTime ) then
-       ; if ( chartostring(basin(i,j,:)) .eq. basinAnalysis) then
           if ( Lat(i,j) .ge. LatS .and. Lat(i,j) .le. LatN ) then
-            if ( Lon(i,j) .ge. LonW .and. Lon(i,j) .le. LonE ) then              
-              Nat = chartostring(nature(i,j,:))
-              
-              
-              if ( Nat .eq. "TS" ) then                     
+              Nat = chartostring(nature(i,j,:))              
+             if ( Nat .eq. "TS" ) then                     
 ; ignore spuriously large values of accel
 ; this is controlled by the xmax value
                 if (.not.ismissing(A)) then                
                   if ( abs(A) .le. xmax ) then 
                     datA(icount) = A
                     date=cd_calendar(time(i,j),-3)
-;                  print ( icount + " " + date + " " +  A )
                     icount = icount + 1
                   end if
                 end if
               end if
-              
-            end if
           end if         
-        ;end if
       end if
     end do
   end do
@@ -180,57 +169,53 @@ begin
       A = dat(i,j)
 ; apply the relevant checks
       if ( time(i,0) .ge. startTime .and. time(i,0) .le. endTime ) then
-        ;if ( chartostring(basin(i,j,:)) .eq. basinAnalysis) then
           if ( Lat(i,j) .ge. LatS .and. Lat(i,j) .le. LatN ) then
-            if ( Lon(i,j) .ge. LonW .and. Lon(i,j) .le. LonE ) then              
-              Nat = chartostring(nature(i,j,:))
 
+              Nat = chartostring(nature(i,j,:))
               if ( Nat .eq. "TS" ) then       
 ; ignore spuriously large values of accel
 ; this is controlled by the xmax value
                 if (.not.ismissing(A)) then                
                   if ( abs(A) .le. xmax ) then 
-
+                    
                     if ( A .ge. (ave+ (std*sfac) ) ) then    
-                       speedHigh(iHigh)  = speed(i,j)
-                       accelHigh(iHigh)  = A
-                         LatHigh(iHigh)  = Lat(i,j)
-                         LonHigh(iHigh)  = Lon(i,j)
-                        timeHigh(iHigh)  = time(i,j)
+                      speedHigh(iHigh)  = speed(i,j)
+                      accelHigh(iHigh)  = A
+                      LatHigh(iHigh)  = Lat(i,j)
+                      LonHigh(iHigh)  = Lon(i,j)
+                      timeHigh(iHigh)  = time(i,j)
                       iStormHigh(iHigh)  = i
                       jStormHigh(iHigh)  = origJ(i,j)
-                                 iHigh = iHigh + 1  
+                      iHigh = iHigh + 1  
                     end if
-
+                    
                     if ( A .le. (ave-(std*sfac)) ) then                  
-                       speedLow(iLow)   = speed(i,j)
-                       accelLow(iLow)   = A
-                         LatLow(iLow)  = Lat(i,j)
-                         LonLow(iLow)  = Lon(i,j)
+                      speedLow(iLow)   = speed(i,j)
+                      accelLow(iLow)   = A
+                      LatLow(iLow)  = Lat(i,j)
+                      LonLow(iLow)  = Lon(i,j)
                         timeLow(iLow)  = time(i,j)
-                      iStormLow(iLow)  = i
-                      jStormLow(iLow)  = origJ(i,j)
-                                 iLow = iLow + 1  
+                        iStormLow(iLow)  = i
+                        jStormLow(iLow)  = origJ(i,j)
+                        iLow = iLow + 1  
+                        
+                      end if
+                      
+; for ZERO accel go to ave plus minus 10% of mean
+                      if ( A .ge. (-std*.025) .and.  A .le. (std*.025) ) then 
+                        speedZero(iZero)   = speed(i,j)
+                        accelZero(iZero)   = A
+                        LatZero(iZero)  = Lat(i,j)
+                        LonZero(iZero)  = Lon(i,j)
+                        timeZero(iZero)  = time(i,j)
+                        iStormZero(iZero)  = i
+                        jStormZero(iZero)  = origJ(i,j)
+                        iZero = iZero + 1  
+                      end if
                       
                     end if
-
-; for ZERO accel go to ave plus minus 10% of mean
-                    if ( A .ge. (ave-(std*.025)) .and.  A .le. (ave+(std*.025)) ) then 
-                      speedZero(iZero)   = speed(i,j)
-                       accelZero(iZero)   = A
-                         LatZero(iZero)  = Lat(i,j)
-                         LonZero(iZero)  = Lon(i,j)
-                        timeZero(iZero)  = time(i,j)
-                      iStormZero(iZero)  = i
-                      jStormZero(iZero)  = origJ(i,j)
-                                 iZero = iZero + 1  
-                    end if
-
                   end if
-                end if
-              end if
             end if
-          ;end if
         end if
       end if
     end do
@@ -262,7 +247,7 @@ begin
   jStormZero!0 = "ZeroCount"
 ;
 ;
-  fileName = "tcAcc_dates" + LonW + "_" + LonE + "_" + LatN + "_" + LatS+"_"+ basinAnalysis + ".nc"
+  fileName = "tcAcc_dates_tang"  + "_" + LatN + "_" + LatS+"_"+ basinAnalysis + ".nc"
   system( "rm " + fileName )
  ; setfileoption("nc", "format", "NETCDF4") 
   outFile = addfile( fileName, "c" )
@@ -271,8 +256,8 @@ begin
   outFile->sfac=sfac
   outFile->LatS=LatS
   outFile->LatN=LatN
-  outFile->LonW=LonW
-  outFile->LonE=LonE
+  ;outFile->LonW=LonW
+  ;outFile->LonE=LonE
 
   N=iHigh-1
    speedHigh2 :=speedHigh(0:N)
@@ -291,9 +276,7 @@ begin
   outFile->jStormHigh=jStormHigh2
   outFile->timeHigh=timeHigh2
   outFile->HighCount=N
-  print ( iStormHigh2 + " " + jStormHigh2 + " " + LatHigh2 + " " + LonHigh2 )
-
-
+  ;print ( iStormHigh2 + " " + jStormHigh2 + " " + LatHigh2 + " " + LonHigh2 )
   print ("rapid accel cases:")
   print ( "mean accel = " + avg(accelHigh2) + " " + "median accel = " + dim_median(accelHigh2) )
   print ( "max accel = " + max(accelHigh2) + " " + "min accel = " + min(accelHigh2) )
