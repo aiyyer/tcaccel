@@ -25,11 +25,12 @@ begin
 
   
 ; user inputs
+;   
+; choose the stormNumber to plot
+; KATRINA 11886 HUGO 10135 IRMA 13087
 
-  sname = "KATRINA"
-  syear = 2005
-  sbasin = "NA"
-
+  ;StormNum=  11895
+  StormNum=  11887 ; 13099
 
 
 ; the ibtracs file
@@ -38,30 +39,17 @@ begin
 ;
 ; 
   fileIn = addfile( fileName, "r" )
-
-  name        =  chartostring(fileIn->name)
-  timeF        =  fileIn->time(:,0)
-  basin        =  chartostring(fileIn->basin(:,0,:))
-  year  = tointeger(cd_calendar(timeF,-1)/100) 
-  indices = ind(name.eq.sname .and. year .eq. syear .and. basin .eq. sbasin)
-
-  if (dimsizes(indices) .ne. 1 ) then
-    print ("Error in indices! Stopping code")
-    exit
-  end if
-  
-  StormNum= indices(0)
-
-  print("Requested storm = " + sname + " " + syear + " Storm Number = " + StormNum)
-
-  
+  time        = fileIn->time(StormNum,:)  
   Lat         = flt2dble(fileIn->lat(StormNum,:))
   Lon         = flt2dble(fileIn->lon(StormNum,:))
   N           = toint(short2flt(fileIn->numobs(StormNum)))
-  time        =  fileIn->time(StormNum,:)
+  name        =  chartostring(fileIn->name(StormNum,:))
 
 
-  
+  timeDecode = cd_calendar(time,-5)
+  year = timeDecode(0,0)
+  print ( "Storm = " + name + " " + year)
+
   
   if ( N .lt. 24 ) then
     print ( "Too few track points: I quit!")
@@ -120,7 +108,7 @@ begin
   wks  = gsn_open_wks("png","track_map_ce")      ; open an ncgm file  
   res = True
 
-  res@tiMainString         = sname + "(" + syear + ")"
+  res@tiMainString         = name + "(" + year + ")"
 
   
   res@mpProjection = "Mercator"
@@ -140,9 +128,9 @@ begin
 
 
   res@mpMaxLatF           =  40.
-  res@mpMinLatF           =  10.
-  res@mpMinLonF           = -105.
-  res@mpMaxLonF           =  -70.
+  res@mpMinLatF           = -10.
+  res@mpMinLonF           = -120.
+  res@mpMaxLonF           =  -40.
 
 
   
@@ -161,14 +149,14 @@ begin
 ; resource for markers  
   gsres               = True
   gsres@gsMarkerIndex = 16          ; Use filled dots for markers
-  gsres@gsMarkerSizeF     = .01         ; polymarker size
-  gsres@gsLineThicknessF = 10.0
+  gsres@gsMarkerSizeF     = .007          ; polymarker size
+  gsres@gsLineThicknessF = 6.0
 
 
 
   gsres@gsLineDashPattern = 0
   dum1=gsn_add_polyline(wks,plot,Lon,Lat,gsres)
-  colors  = (/"violet","navy blue","red","orange","dark green"/)
+  colors  = (/"violet","navy blue","red","orange","black"/)
 
   np=720
   circLat  = new(np,"double")
@@ -181,11 +169,15 @@ begin
   imain = 0
 
 
-  jindex = (/10,24,34,43,56/)
+  jindex = (/10,24,34,43/)
  ; jindex = (/10,77,78,79/)
 
-  do jjj = 0,4
+  do jjj = 0,3
+
     j = jindex(jjj)
+
+
+
     if ( j .lt. (N-1) ) then
     if ( .not.ismissing(LatC(j)) .and. j .lt. (N-1) ) then
     
@@ -239,7 +231,7 @@ begin
       
       
       gsres@gsLineColor= gsres@gsMarkerColor          ; set polymarker color
-      gsres@gsLineThicknessF = 2.0
+      gsres@gsLineThicknessF = 1.0
       
       dumG(jj) = gsn_add_polyline(wks,plot,circLon*pideg/pi,circLat*pideg/pi,gsres)
       jj=jj+1
