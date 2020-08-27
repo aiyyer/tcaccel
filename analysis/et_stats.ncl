@@ -20,11 +20,13 @@
 ;----------------------------------------------------------------------------
 ;----------------------------------------------------------------------------
 
+UNDER CONst.
+REDO THE IF STATEMENTSSSSSSS
 
 begin
 
 ; user inputs
-  startYear = 1980
+  startYear = 1966
   endYear   = 2019
   nYears    = endYear - startYear + 1
   basinAnalysis ="NA" ; "--" ;"--" ;"NA"  
@@ -34,7 +36,8 @@ begin
 ;--------------------------------------------------------------------------      
 
 ; the ibtracs file  
-  fileName = "/home/anant/data50/data/ibtracs/IBTrACS.since1980.v04r00.nc"
+;  fileName = "/home/anant/data50/data/ibtracs/IBTrACS.since1980.v04r00.nc"
+  fileName = "../IBTrACS.ALL.v04r00.nc"
   fileIn = addfile( fileName, "r" )
 ;
   time        = fileIn->time
@@ -70,11 +73,12 @@ begin
   yearlyETCount = 0   ; how many storms per year in the domain chosen became ET?
 
 ; Array to hold latitudes of all ETs identified here
-  N = 600
+  N = 900
   
   ETLat = new(N,"float") ;keep track of latitudes of each ET event
 ; a counter to keep track of ETs for filling the ETLat array
   iET =0
+  ires = 0
 ;--------------------------------------------------------------------------
 
   print ( "nStorms  " + nStorms)
@@ -91,7 +95,7 @@ begin
       flag = 0
     end if
 ;    
-; storm must live at least 1 day
+; storm must live at least 2 day
     numDays = tofloat(time(i,numobs(i)-1) - time(i,0))
     if (  numDays .lt. 2 ) then 
       flag=0
@@ -110,12 +114,13 @@ begin
     maxSpeed = max(wmo_wind(i,:))
     if ( ismissing(maxSpeed) ) then
       flag = 0
+      print ("missing max speed  " + i )
     else
       if ( maxSpeed .lt. WindThresh ) then
         flag = 0
       end if
     end if
-;   
+   
     stormFlag = 0
 
 ;===================================================================================    
@@ -178,6 +183,7 @@ begin
           iET = iET + 1
         else
           print ("ET before TS? " + i )
+          ires  = ires + 1
         end if
       end if
 
@@ -225,16 +231,18 @@ begin
   print (  " " )
   print ( "Num of TCs in the period = " + TCNUM)
   print ( "Num of ETs in the period = " + ETNUM)
-
-  ETfraction := new((/nYears/),"float")
-  ETfraction = tofloat(yearlyETCount)/tofloat( yearlyStormCount )*100.
+  print ( "ires = " + ires )
   
 ;  do k=0,nYears-1
 ;    iy = k + startYear
-;    print ( iy + " " + yearlyStormCount(k) + " " + yearlyETCount(k) + " " + ETfraction(k))
+;    print ( iy + " " + yearlyStormCount(k) + " " + yearlyETCount(k) ) ;+ " " + ETfraction(k))
 ;  end do
 
+  
+  ETfraction := new((/nYears/),"float")
+  ETfraction = tofloat(yearlyETCount)/tofloat( yearlyStormCount )*100.
 
+  
 ;..........................................................................
 
   print (  " " )

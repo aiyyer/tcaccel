@@ -34,7 +34,7 @@ load "rad_curv.ncl"
 begin
 
 
-  basinToConsider = "NA"
+  basinToConsider = "WP"
   
   masterCount = todouble(0.)
   masterBias  = todouble(0.)
@@ -46,7 +46,8 @@ begin
 ;
 ;   
 ; the ibtracs file
-  iyBeg = 1950
+  iyBeg = 1965
+
   dirName  = "/home/anant/data50/data/ibtracs/"
   ;fileName = dirName + "IBTrACS.since1980.v04r00.nc" 
   fileName = "IBTrACS.ALL.v04r00.nc"

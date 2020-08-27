@@ -13,7 +13,6 @@ begin
 
   variable = (/"speed","accelSpeed","accelCurve"/)
   basinAnalysis = "WP"
-
  
 ; user inputs
   startYear = 1965
