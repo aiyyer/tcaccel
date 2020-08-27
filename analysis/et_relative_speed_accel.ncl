@@ -36,7 +36,7 @@ begin
 
 
 ;--------------------------------------------------------------------------      
-  fileName = "../tcSpeed.nc"
+  fileName = "../tcSpeed_NA.nc"
   fileIn = addfile( fileName, "r" )
   time        = fileIn->time
 ; we expect time units to be in days

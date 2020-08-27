@@ -73,7 +73,7 @@
 
 
 \begin{abstract}
-  Forecasters have long known that rapid changes in tropical cyclones (TC) motion occur during interaction with extratropical wavetrains. While TC speed has received much attention in the past, acceleration has not. Here, using a large data sample, we formally examine the synoptic-scale patterns associated with  tangential and normal components of TC acceleration. During periods of rapid acceleration, the large-scale flow consists of a developing wavepacket in the extratropics, with the storm straddled between an upstream trough and downstream ridge. This pattern is consistent with the process of extratropical transition (ET) of TCs. In contrast, during near-zero or rapid deceleration, the extratropical wavepacket remains poleward, with a ridge  located directly north of the storm center.  On average, the tangential acceleration peaks about 18 hours prior to the ET designation. The curvature acceleration increases before ET and stabilizes thereafter.
+  Forecasters have long known that rapid changes in tropical cyclones (TC) motion occur during interaction with extratropical wavetrains. While TC speed has received much attention in the past, acceleration has not. Here, using a large data sample, we formally examine the synoptic-scale patterns associated with  tangential and normal components of TC acceleration. During rapid acceleration, a developing wavepacket in the extratropics is present and the TC ?????? with the TC straddled by an upstream trough and downstream ridge. This pattern is consistent with the process of extratropical transition (ET) of TCs. In contrast, during near-zero or rapid deceleration, the extratropical wavepacket remains poleward, with a ridge  located directly north of the storm center.  On average, the tangential acceleration peaks about 18 hours prior to the ET designation. The curvature acceleration increases before ET and stabilizes thereafter.
 %
  We also find a robust decrease in the annually averaged values of rapid acceleration over the past 38 years within the latitude band most commonly associated with ET over the Atlantic. Consequently, we hypothesize that trends in rapid acceleration can be used as an independent metric to assess changes in the extratropical stormtrack activity that mediate ET.
 \end{abstract}
@@ -86,25 +86,59 @@
 A tropical cyclone (TC), to a leading order, can abstracted as a nearly isolated vortex embedded in an external flow. From this view, its motion is primarily controlled by the large scale steering current. Secondary effects on TC motion involve interactions with the background vertical wind shear and potential vorticity gradients. The former influences the generation of new convection and redevelopment of the TC. The latter relates to Rossby wave dispersion that leads to the formation of the so-called $\beta$-gyres and nonlinear advection. As noted by \cite{E2018}, steady progress has been made in our understanding of TC motion and this is reflected in our ability to forecast their tracks. 
 
 
-\section{data}
+\section{Data}
+We used the IBTrACS v4 \citep{KnappIBTRaCS} data for track information. We did not apply a threshold for maximum sustained winds, but discarded all storms that lasted less than two days. Selected atmospheric fields are taken from the the European Center for Medium Range Weather Forecasting's (ECMWF) ERA-Interim (ERAi) reanalysis \citet{DUS11}. 
 
-
-We used the IBTrACS v4 \citep{KnappIBTRaCS} data for track information. We did not apply a threshold for maximum sustained winds, but discarded all storms that lasted less than two days. Selected atmospheric fields are taken from the the European Center for Medium Range Weather Forecasting's (ECMWF) ERA-Interim reanalysis \citep[ERAI; ][]{DUS11}. To ascertain whether a tropical storm underwent ET, we use the \emph{nature} designation in the IBTraCS database which relies on the judgement of the forecasters of the agency responsible for the ocean basin. For the North Atlantic basin, this designation made by the US national hurricane center (NHC) is available for the entire period considered here. While compiling ET statistics, we only consider cases where the storm nature designation switched from TS to ET at least once during its lifetime. 
-
-
-\subsection{HEADING}
-TEXT
-
-
-\subsubsection{Tangential and curvature acceleration}
-At any location along a TC track, the acceleration of a fluid element moving with the center of a TC can be written as:
-
+\section{Tangential and curvature acceleration}
+The acceleration of a hypothetical fluid element moving with the center of a TC can be written as:
+%
 \begin{equation}
     \mathbf{a} = \frac{dV}{dt} \mathbf{\hat{s}} + \frac{V^2}{R} \mathbf{\hat{n}} 
     \label{eq:acc}
 \end{equation}
+%
+where $V$ is the forward speed and $R$ is the radius of curvature of the track at a given location. Here, $\mathbf{\hat{s}}$ and $\mathbf{\hat{n}}$ are orthogonal unit vectors in the so-called \emph{natural coordinate} system. The former is directed along the TC motion. The latter is directed along the radius of curvature of the track.  The first term in equation \ref{eq:acc} is the tangential acceleration and the second is the curvature or normal acceleration. The speed $V_j$ at any track location (given by index j)  is calculated as:
+%
+\begin{equation}
+V_j = \frac{(D_{j,j-1} +  D_{j,j+1})}{\delta t}
+\end{equation}
+%
+where $D$ refers to the distance between the two consecutive points, indexed as shown above, along the track. Since we use 3-hourly reports from the IBtracs, $\delta t = 6$ h. The radius of curvature at each point along the track is calculated using the method described in Appendix A. Figure \ref{fig:track} illustrates the calculation at five selected locations along the the track of hurricane Katrina (2005). 
 
-Where V is the forward speed and R is the radius of curvature of the track at that location. Here $\mathbf{\hat{s}}$ and $\mathbf{\hat{n}}$ are unit vectors in this \emph{natural coordinate} system. The former is directed along the TC motion. The latter is normal to the local tangent and aligned along the radius of curvature.  The first term in equation \ref{eq:acc} is the tangential acceleration and the second is the curvature or normal acceleration. The tangential speed V at any track location (given by index j)  is calculated as:
+%approximated as follows. The latitude-longitude positions of the TC track are projected to a 2-dimensional surface using the Mercator transformation. Then, a circle is fitted to each set of three consecutive track points denoted by $\mathbf{X}_{j-1}, \mathbf{X}_j, \mathbf{X}_{j+1}$. The resulting circle is used to assign the radius of curvature of the track point  $\mathbf{X}_j$.  
+
+\begin{figure*}[t]
+\includegraphics[width=12cm]{track_rad_example.png}
+ \caption{Illustration of the circle-fit and radius of curvature at five selected locations along the track of hurricane Katrina (2005).}\label{fig:track}
+\end{figure*}
+
+
+
+
+\section{Results}
+
+Unless explicitly stated, we focus on track data prior to completion of ET. In essence, we draw a distinction between the propagation of extratropical and tropical systems. We reason that, an extratropical cyclone embedded in the stormtrack is subject to baroclinic development and dynamics of Rossby wavepackets. In contrast, a tropical system is primarily subject to steering by the background flow. {\bf references needed}. 
+
+To ascertain whether a tropical storm underwent ET, we use the \emph{nature} designation in the IBTraCS database which relies on the judgement of the forecasters of the agency responsible for the ocean basin. For NATL, this designation made by the US national hurricane center (NHC) is available for the entire period considered here. Occasionally, the nature of the storm is designated as not recorded (NR). In the NATL, only a small fraction of track data in the IBTrACs is designated as NR. 
+
+
+Table shows some basic numbers related to the storms and 
+
+
+For WPAC, we found 
+
+
+While compiling ET statistics, we only consider cases where the storm nature designation switched from TS to ET at least once during its lifetime.
+
+
+\subsection{Basic Statistics}
+
+
+
+499 qualifying TCs were found in the IBTrCS database.Figure \ref{fig:dist} provide some basic statistics for TC speed and accelerations as a function of latitude based on locations in 10$^\circ$-wide latitude bins. Tables \ref{tab:statSpeed}-\ref{tab:statCA} provide the same data, but with overlapping bins. The ensemble average TC speed over the entire Atlantic domain is about 21 km/hr ($\approx 6$ ms$^{-1}).$ TC speed clearly varies with latitude. It is lower in the subtropics as compared to the tropical and extratropical latitudes. It increases sharply in the vicinity of 40$^{o}$ N. 
+
+
+
 
 
 \conclusions  %% \conclusions[modified heading if necessary]
@@ -113,25 +147,59 @@ TEXT
 %% The following commands are for the statements about the availability of data sets and/or software code corresponding to the manuscript.
 %% It is strongly recommended to make use of these sections in case data sets and/or software code have been part of your research the article is based on.
 
-\codeavailability{TEXT} %% use this section when having only software code available
+%\codeavailability{TEXT} %% use this section when having only software code available
+
+%\dataavailability{TEXT} %% use this section when having only data sets available
 
 
-\dataavailability{TEXT} %% use this section when having only data sets available
+%\codedataavailability{TEXT} %% use this section when having data sets and software code available
 
 
-\codedataavailability{TEXT} %% use this section when having data sets and software code available
+%\sampleavailability{TEXT} %% use this section when having geoscientific samples available
 
 
-\sampleavailability{TEXT} %% use this section when having geoscientific samples available
-
-
-\videosupplement{TEXT} %% use this section when having video supplements available
+%\videosupplement{TEXT} %% use this section when having video supplements available
 
 
 \appendix
 \section{}    %% Appendix A
+A standard approach to calculating the radius of curvature, given a set of discrete points along a curve (in our case, a TC track) is to fit a circle through three consecutive points. For a curved line on a sphere, elementary geometry can be used to show:
 
-\subsection{}     %% Appendix A1, A2, etc.
+
+\begin{subequations}
+\renewcommand{\theequation}{\theparentequation.\arabic{equation}}
+\begin{equation}
+R  = R_e sin^{-1} {\left(\sqrt{\frac{2 d_{12} d_{13} d_{23}} {(d_{12} +d_{13} +d_{23})^2 -2(d_{12}^2 +d_{13}^2 +d_{23}^2)}}\right)}
+\end{equation}
+%
+where $R$ is the radius of curvature, $R_e$ is the radius of the Earth, and the $d$ terms are expressed as follows:
+%
+\begin{gather}
+ d_{12} = 1-(\cos{T_1}\cos{T_2}\cos{(N_2-N_1)} + \sin{T_1}\sin{T_2}) \\
+ d_{13} = 1-(\cos{T_1}\cos{T_3}\cos{(N_3-N_1)} + \sin{T_1}\sin{T_3}) \\
+ d_{23} = 1-(\cos{T_2}\cos{T_3}\cos{(N_3-N_2)} + \sin{T_2}\sin{T_3})
+\end{gather}
+\end{subequations}
+%
+where, $T_1$, $T_2$, and $T_3$ are the latitudes of the 3 points while $N_1$, $N_2$, and $N_3$ are the longitudes. The center of the circle is given by the coordinates:
+%
+\begin{subequations}
+\renewcommand{\theequation}{\theparentequation.\arabic{equation}}
+\begin{gather}
+\tan{\mathbf{T}} = \pm {\frac{\cos{T_1}\cos{T_2}\sin{(N_2-N_1)} + \cos{T_1}\cos{T_3}\sin{(N_1-N_3)} + \cos{T_2}\cos{T_3}\sin{(N_3-N_2)}} {\sqrt{\alpha^2+\beta^2}}} \\ \tan{\mathbf{N}} = -{\frac{\alpha}{\beta}}
+\end{gather}
+%
+Where $\mathbf{T}$ and $\mathbf{N}$ are the latitude and longitude of the circle, respectively and $\alpha$ and $\beta$ are obtained using:
+\begin{gather}
+\alpha = \cos{T_1}(\sin{T_2}-\sin{T_3})\cos{N_1} + \cos{T_2}(\sin{T_3} -\sin{T_1})\cos{N_2} +\cos{T_3}(\sin{T_1}-\sin{T_2})\cos{N_3} \\
+\beta = \cos{T_1}(\sin{T_2}-\sin{T_3})\sin{N_1} + \cos{T_2}(\sin{T_3}-\sin{T_1}) \sin{N_2} +\cos{T_3}(\sin{T_1}-\sin{T_2})\sin{N_3}
+\end{gather}
+\end{subequations}
+
+
+Figure \ref{fig:track} shows an example of the radius of curvature calculation for Hurricane Katrina. 
+
+%\subsection{}     %% Appendix A1, A2, etc.
 
 
 \noappendix       %% use this to mark the end of the appendix section. Otherwise the figures might be numbered incorrectly (e.g. 10 instead of 1).
@@ -144,9 +212,7 @@ TEXT
 %% Option 2: If you put all figures after the reference list, please insert appendix tables and figures after the normal tables and figures.
 %% To rename them correctly to A1, A2, etc., please add the following commands in front of them:
 
-\appendixfigures  %% needs to be added in front of appendix figures
 
-\appendixtables   %% needs to be added in front of appendix tables
 
 %% Please add \clearpage between each table and/or figure. Further guidelines on figures and tables can be found below.
 
@@ -161,22 +227,7 @@ This work was supported by NSF award
 \end{acknowledgements}
 
 
-
-
 %% REFERENCES
-
-%% The reference list is compiled as follows:
-
-%\begin{thebibliography}{}
-%\bibitem[AUTHOR(YEAR)]{LABEL1}
-%REFERENCE 1
-%\bibitem[AUTHOR(YEAR)]{LABEL2}
-%REFERENCE 2
-%\end{thebibliography}
-
-%% Since the Copernicus LaTeX package includes the BibTeX style file copernicus.bst,
-%% authors experienced with BibTeX only have to include the following two lines:
-%%
 \bibliographystyle{copernicus}
 \bibliography{aiyyer_references.bib}
 %%
@@ -208,6 +259,8 @@ This work was supported by NSF award
 % The figure files should be labelled correctly with Arabic numerals (e.g. fig01.jpg, fig02.png).
 
 
+\clearpage
+
 %% ONE-COLUMN FIGURES
 
 %%f
@@ -220,7 +273,12 @@ This work was supported by NSF award
 %
 %%% TWO-COLUMN FIGURES
 %
-%%f
+%f
+\begin{figure*}[t]
+\includegraphics[width=12cm]{track_rad_example.png}
+ \caption{Illustration of the circle-fit and radius of curvature at five selected locations along the track of hurricane Katrina (2005).}\label{fig:track}
+\end{figure*}
+
 \begin{figure*}[t]
 \includegraphics[width=12cm]{track_rad_example.png}
  \caption{Illustration of the circle-fit and radius of curvature at four selected locations along the track of hurricane Katrina (2005).}\label{fig:track}
@@ -349,5 +407,7 @@ This work was supported by NSF award
 %%%
 %%% Please use \unit{} and apply the exponential notation
 
+\appendixfigures  %% needs to be added in front of appendix figures
+\appendixtables   %% needs to be added in front of appendix tables
 
 \end{document}

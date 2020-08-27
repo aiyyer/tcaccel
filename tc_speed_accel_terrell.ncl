@@ -34,7 +34,7 @@ load "rad_curv.ncl"
 begin
 
 
-  basinToConsider = "WP"
+  basinToConsider = "NA"
   
   masterCount = todouble(0.)
   masterBias  = todouble(0.)

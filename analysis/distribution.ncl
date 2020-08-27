@@ -38,7 +38,7 @@ begin
 
 
 
-  fileName = "../tcSpeed_" + basinAnalysis + "_1950_2019.nc"
+  fileName = "../tcSpeed_" + basinAnalysis + ".nc"
   fileIn = addfile( fileName, "r" )
     
   time = fileIn->time
