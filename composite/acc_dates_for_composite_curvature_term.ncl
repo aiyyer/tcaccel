@@ -18,18 +18,16 @@
 
 
 begin
-
 ;---------------------------------------------------------------------------  
 ; user inputs
   startYear = 1980
-  endYear   = 2019
+  endYear   = 2016
   nYears    = endYear - startYear + 1
 
   LatS =  30
   LatN =  40 
-  LonW = -180 
-  LonE =  180
-  basinAnalysis = "NA"  ;WP
+  basinAnalysis = "WP"  ;WP
+fileName = "../tcSpeed_"+basinAnalysis+"_1950_2019.nc"
 
 ; sdev threshold factor
   sfac = 1.0
@@ -38,7 +36,7 @@ begin
 ; thresh = mean +/- sfac*sdev  
 ;--------------------------------------------------------------------------  
     
-  fileName = "../tcSpeed_na_1950_2019.nc"
+  
   ;fileName = "/home/anant/data50/data/tcaccel/tcSpeed.nc"
   fileIn = addfile( fileName, "r" )
   time        = fileIn->time
@@ -116,7 +114,7 @@ begin
         if ( time(i,0) .ge. startTime .and. time(i,0) .le. endTime ) then
           ;if ( chartostring(basin(i,j,:)) .eq. basinAnalysis) then
             if ( Lat(i,j) .ge. LatS .and. Lat(i,j) .le. LatN ) then
-              if ( Lon(i,j) .ge. LonW .and. Lon(i,j) .le. LonE ) then              
+              ;if ( Lon(i,j) .ge. LonW .and. Lon(i,j) .le. LonE ) then              
                 Nat = chartostring(nature(i,j,:))
                 if ( Nat .eq. "TS" ) then                     
                   
@@ -173,7 +171,7 @@ begin
                     
 ;...........................................................
                 end if ;nature
-              end if ;lon
+              ;end if ;lon
             end if ;lat        
           ;end if ;basin
         end if ;time
@@ -210,7 +208,7 @@ begin
   jStormZero!0 = "ZeroCount"
 ;
 ;
-  fileName = "tcAcc_dates_curvature" + LonW + "_" + LonE + "_" + LatN + "_" + LatS+"_"+ basinAnalysis + ".nc"
+  fileName = "tcAcc_dates_curv_" + LatN + "_" + LatS+"_"+ basinAnalysis + ".nc"
   system( "rm " + fileName )
  ; setfileoption("nc", "format", "NETCDF4") 
   outFile = addfile( fileName, "c" )
@@ -219,8 +217,8 @@ begin
   outFile->sfac=sfac
   outFile->LatS=LatS
   outFile->LatN=LatN
-  outFile->LonW=LonW
-  outFile->LonE=LonE
+;  outFile->LonW=LonW
+;  outFile->LonE=LonE
 
   N=iHigh-1
   speedHigh2 :=speedHigh(0:N)

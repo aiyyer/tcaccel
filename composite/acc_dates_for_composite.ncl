@@ -26,12 +26,12 @@ begin
 
   nYears    = endYear - startYear + 1
 
-  LatS =  30
-  LatN =  40 
+  LatS =  10
+  LatN =  20 
   basinAnalysis = "WP"  ;WP
 
 ; sdev threshold factor
-  sfac  = 1.5
+  sfac  = 1.
   
   print ( "sfac  = " + sfac )
 ; the sfac is used to determine the threshold accel, decel values.
@@ -84,7 +84,7 @@ begin
   icount = 0
 
 ; define output arrays  
-  N = 2000
+  N = 5000
 
        iHigh = 0
    speedHigh   = new (N,  typeof(Lat))
@@ -177,7 +177,6 @@ begin
 ; this is controlled by the xmax value
                 if (.not.ismissing(A)) then                
                   if ( abs(A) .le. xmax ) then 
-                    
                     if ( A .ge. (ave+ (std*sfac) ) ) then    
                       speedHigh(iHigh)  = speed(i,j)
                       accelHigh(iHigh)  = A

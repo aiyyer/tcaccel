@@ -28,10 +28,11 @@ begin
 
 
 ;=================================================
-  LatS =  30
-  LatN =  40
+  LatS =  10
+  LatN =  20
   basinAnalysis = "WP" 
-  accelType     = "tang"
+  accelType     = "tang" ;"curv" ;"tang"
+
   iA = 0
   iB = 2
   if ( accelType .eq. "curv" ) then
