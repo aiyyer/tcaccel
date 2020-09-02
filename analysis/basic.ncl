@@ -14,7 +14,7 @@ begin
 ;  
 ; user inputs
   startYear = 1966
-  endYear   = 2020
+  endYear   = 2019
   nYears    = endYear - startYear + 1
 
   
@@ -26,7 +26,7 @@ begin
   latN =  90.
 
 ;--------------------------------------------------------------------------      
-  fileName = "../tcSpeed_NA_1965_2019.nc"
+  fileName = "../tcSpeed_WP_1965_2019.nc"
   fileIn = addfile( fileName, "r" )
   time        = fileIn->time
 ; we expect time units to be in days

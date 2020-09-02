@@ -21,11 +21,13 @@
 ;-----------------------------------------------------------------------------
 ;
 ;
+
+
 begin
 ;  
 ; user inputs
-  startYear = 1980
-  endYear   = 2019
+  startYear = 1966
+  endYear   = 2018
   nYears    = endYear - startYear + 1
 
   print ( "Start Year = " + startYear + " end year = " + endYear)
@@ -36,7 +38,7 @@ begin
 
 
 ;--------------------------------------------------------------------------      
-  fileName = "../tcSpeed_NA.nc"
+  fileName = "../tcSpeed_WP_1965_2019.nc"
   fileIn = addfile( fileName, "r" )
   time        = fileIn->time
 ; we expect time units to be in days
@@ -94,10 +96,14 @@ begin
 ; bin size in hours
   lagH = 72
   dh   = 3
-  nn   = 250
+  nn   = 600
   nh   = 2*lagH/dh + 1
   nh2  = (nh-1)/2
 
+    
+  d1 = -nh2*dh
+  d2 =  nh2*dh
+  hours   = fspan(d1,d2,nh)
 
 ; these arrays will hold the accel and speed values for each storm
 ; for the lags defined above 
@@ -109,6 +115,8 @@ begin
   speedET@_FillValue = speed@_FillValue 
   speedET            = speedET@_FillValue
 
+
+  
 ;  
 ;======================================================================================
 ; first establish some basic stats for this lat-bin
@@ -122,15 +130,35 @@ begin
     
 ;loop over storms  
     do i = 0,nStorms-1
+
+
+;-----discard non TS storms
+;      TSFlag    = 0
+;      do j = 0, numobs(i)-1
+;        if ( chartostring(nature(i,j,:)) .eq. "TS" ) then
+;          TSFlag    = 1
+;        end if
+;      end do     
+;      if ( TSFlag .eq. 0 ) then
+;        numobs(i) = 0
+;      end if
+;----------------------------
+
+      
       if ( numobs(i) .ne. 0 ) then
         numDays = todouble(time(i,numobs(i)-1) - time(i,0))
         
 ;storm must live at least 2 days
       if (  numDays .ge. 2 ) then
-        if ( time(i,0) .ge. startTime .and. time(i,0) .le. endTime ) then
+        if ( time(i,0) .ge. startTime .and. time(i,  numobs(i)-1) .le. endTime ) then
 
 ; initialize flag          
           ETflag = 0
+          totCount = totCount + 1
+
+
+
+          
 
 ; temporarily store the speed and accel for this TC in
 ; new arrays          
@@ -138,8 +166,7 @@ begin
           curvAccel  := accelC(i,0:numobs(i)-1)    ;accel for this track
 
           ; smooth the accel?
-          opt   = 0
-         
+          opt   = 0         
           nave  = 5
           curvAccel  :=  runave (accelC(i,0:numobs(i)-1)  , nave, opt)
           speedAccel :=  runave (accelS(i,0:numobs(i)-1)  , nave, opt)
@@ -154,43 +181,60 @@ begin
           stormSpeed&time = dates
 
  ; now loop over all track points         
-          do j = 0, numobs(i)-1
-         
+            
+            do j = 0, numobs(i)-1
 ; apply the relevant checks
-
-              if ( Lat(i,j) .ge. latS .and. Lat(i,j) .le. latN ) then  
-                totCount = totCount+1
-
+              if ( Lat(i,j) .ge. latS .and. Lat(i,j) .le. latN ) then
                 if ( ETflag .eq. 0 ) then
                   if ( chartostring(nature(i,j,:)) .eq. "ET" ) then
                     ETflag = 1
-                    ;print ( ETCount + " " + i + " " + j + " " + Lat(i,j) + " " + cd_calendar( time(i,j),-3))
+
+ 
 
 ; now that we have found the ET, lets take each dh hour period spannning lagH hours before and after
 ; and record the speed/accel
+
+
+; lets make sure that we have TC data after ET
+
+                    ;print ( "ET j =  " + j )
+                    deltaDaysToEndOfTrack =  time(i,numobs(i)-1) -  time(i,j)
+                    ;print ("Delta Time = " + deltaDaysToEndOfTrack)
+                    ;exit
+
                     
+                    ;print ( ETCount + " " + i + " " + j + " " + Lat(i,j) + " " + cd_calendar( time(i,j),-3))
                     
-; loop over the times before and after the first ET designation
-                    do ih = -nh2,nh2
+
+
+                    if (  deltaDaysToEndOfTrack .ge.   lagH/24. ) then
                       
+; loop over the times before and after the first ET designation
+                      do ih = -nh2,nh2
+                        
                         ah    = ih*dh/24.  ;in days, this is the lag relative to ET designation
                         date := dates(j)   ;the reference date at ET designation
                         date  = date + ah  ;the date corresponding to the lag ah
-
+                        
 ; check that we are not running into the track begin/end                        
                         if ( date .ge. dates(0) .and.  date .le. dates(numobs(i)-1))
                           accelET(0,ETCount,ih+nh2)  = speedAccel({date})
                           accelET(1,ETCount,ih+nh2)  = curvAccel({date})
                           speedET(ETCount,ih+nh2)    = stormSpeed({date})
                         end if
+                        ;print ( "** " + ih + " " +  accelET(0,ETCount,ih+nh2) )
                         
-                    end do  ;ih
-                    
-                    ETCount = ETCount + 1
+                      end do  ;ih
+                      
+                      
+                      ;exit
+                      
+                      
+                      ETCount = ETCount + 1
+                      
+                    end if
                   end if ;ET
                 end if   ;ETflag
-                
-                
               end if ; lat              
           end do ; j
           
@@ -200,14 +244,50 @@ begin
     end do ;i
 
 
-    d1 = -nh2*dh
-    d2 =  nh2*dh
-    hours   = fspan(d1,d2,nh)
+    print ("Qual Storm numbers = " + totCount)
+    print ("ET Storm numbers = " + ETCount)
+    perET = 100.*tofloat(ETCount)/tofloat(totCount)
+    print ("Percent ET = " + perET)
+
+
+
+    accelET!0 = "type"
+    accelET!1 = "storm"
+    accelET!2 = "hour"
+    accelET&hour = hours
+
+    
+    ;print ( hours + " " + accelET(0,570,:) )
+    ;exit
+
+; check how many cases accelerated prior to ET
+
+    h1 = 0
+    h2 = 24
+    iP  = 0
+    do i = 0,ETCount-1
+      if(.not.all(ismissing(accelET(0,i,{h1:h2})    ))) then
+        ave = avg (accelET(0,i,{h1:h2}))
+        if ( ave .gt. 0. ) then
+          ;print ( iP + " " +  ave)
+          iP = iP + 1
+        end if
+      else
+        print ("hhh,,,," + i )
+      end if
+    end do
+    perP = 100*tofloat(iP)/tofloat(ETCount)
+    
+    ;print ( iP + " " + ETCount + " " + perP )
+    ;exit
+
+
+
     meanA   =    dim_avg_n( accelET,1 )
     medianA = dim_median_n( accelET,1 )
     meanS   =    dim_avg_n( speedET,0 )
     medianS = dim_median_n( speedET,0 )
-
+    
 ;    do i = 0,32
 ;      amin = min(accelET(0,:,i))
 ;      amax = max(accelET(0,:,i))

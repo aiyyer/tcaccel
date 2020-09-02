@@ -12,11 +12,11 @@
 begin
 
   variable = (/"speed","accelSpeed","accelCurve"/)
-  basinAnalysis = "NA"
+  basinAnalysis = "WP"
 ; 
 ; user inputs
-  startYear = 1965
-  endYear   = 2019
+  startYear = 1966
+  endYear   = 2018
 ;  
 ; choose the latitude bands
 ;
@@ -172,7 +172,8 @@ begin
       xmed = dim_median(dat)
       ave(i) = avg(dat)
       sdev =     stddev(dat) 
-      outString := (sprintf("%5.2f",lat1(i)) +"--" + sprintf("%5.2f",lat2(i))  + " & " +     sprinti("%5i",histoCount(i) ) + " & " +  sprintf("%5.2f",ave(i)) + " & " +  sprintf("%5.1f",xmed)  + " & " +  sprintf("%5.1f",sdev) + " \\")
+      ;outString := (sprintf("%5.2f",lat1(i)) +"--" + sprintf("%5.2f",lat2(i))  + " & " +     sprinti("%5i",histoCount(i) ) + " & " +  sprintf("%5.2f",ave(i)) + " & " +  sprintf("%5.1f",xmed)  + " & " +  sprintf("%5.1f",sdev) + " \\")
+  outString := (sprintf("%2.0f",lat1(i)) +"--" + sprintf("%2.0f",lat2(i))  + " & " +     sprinti("%5i",histoCount(i) ) + " & " +  sprintf("%5.2f",ave(i)) + " & " +  sprintf("%5.1f",xmed)  + " & " +  sprintf("%5.1f",sdev) + " \\")
 
       
       print  ( " " + outString ) 

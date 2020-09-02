@@ -112,7 +112,7 @@ begin
 ;..................................................................
     do i = 0,nStorms-1
       if ( numobs(i) .gt. 0 ) then
-        if ( time(i,0) .ge. startTime .and. time(i,0) .le. endTime ) then
+        if ( time(i,0) .ge. startTime .and. time(i,numobs(i)-1)) .le. endTime ) then
           numDays = tofloat(time(i,numobs(i)-1) - time(i,0))
 ;   storm must live at least 2 days
           if (  numDays .ge. 2 ) then
@@ -120,7 +120,7 @@ begin
             stormCount=stormCount+1
             do j = 0, numobs(i)-1
               A= dat(i,j)
-              if ( chartostring(nature(i,j,:)) .eq. "TS") then
+              if ( chartostring(nature(i,j,:)) .ne. "ET") then
                   if ( (Lat(i,j) .ge. latS) .and. (Lat(i,j) .le. latN) ) 
 ; ignore spuriously large values of accel
 ; this is controlled by the xmax value
