@@ -164,7 +164,7 @@ begin
 
   flag = 1 ; for tang
 
-; flag = 2 ; for curv
+  flag = 2 ; for curv
 
 
   LatS =  30

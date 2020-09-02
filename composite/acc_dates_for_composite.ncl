@@ -38,7 +38,7 @@ begin
 ; thresh = mean +/- sfac*sdev  
 ;--------------------------------------------------------------------------  
     
-  fileName = "../tcSpeed_" + basinAnalysis + "_1950_2019.nc"
+  fileName = "../tcSpeed_" + basinAnalysis + "_1965_2019.nc"
   fileIn = addfile( fileName, "r" )
   time        = fileIn->time
 ; we expect time units to be in days

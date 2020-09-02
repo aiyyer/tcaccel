@@ -12,13 +12,13 @@ begin
 
 
 ;user inputs
-  fileName = "../tcSpeed_NA_1950_2019.nc"
-  startYear = 1950
-  endYear   = 2018
+  fileName = "../tcSpeed_NA_1965_2019.nc"
+  startYear = 1966
+  endYear   = 2019
   variable = (/"speed","accelSpeed","accelCurve"/)
-  ivar = 0
-
-  threshFlag = 0
+  ivar       = 2
+  threshFlag = 1
+  
   sfac       = 1.
   var = variable(ivar)
   
@@ -29,8 +29,8 @@ begin
 ; nn   = 7
   
 ; entire basin
-  latS =  0. ; 5.0
-  dlat =  90.  ;10. ;10.0
+  latS =  30. ; 5.0
+  dlat =  20.  ;10. ;10.0
   latN = latS + dlat    
   nn = 1
   
@@ -163,7 +163,7 @@ begin
                 end if
                 
                 ;if ( chartostring(nature(i,j,:)) .eq. "TS" ) 
-                ;if ( chartostring(nature(i,j,:)) .ne. "ET" ) 
+                 if ( chartostring(nature(i,j,:)) .ne. "ET" ) 
 
 ; ignore spuriously large values of accel
 ; this is controlled by the Amax value                  
@@ -178,7 +178,7 @@ begin
                     yearly(iy,ii) = A
                     ycount(iy) =  ycount(iy) + 1
                   end if
-                ;end if ; nature                
+                end if ; nature                
               end if ; lat
             end do ; j
           end if ;numdays
@@ -234,7 +234,8 @@ begin
       icc =  ycount(iy)
       if ( icc .gt. 0 ) then
         med     =    dim_median(yearlyThresh(iy,:))
-        datY(iy) =   avg(yearlyThresh(iy,:))
+        ave     =    avg(yearlyThresh(iy,:))
+        datY(iy) =   ave
       else
         med     =   yearlyThresh@_FillValue
         datY(iy) =  yearlyThresh@_FillValue

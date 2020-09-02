@@ -13,44 +13,51 @@ begin
 
   variable = (/"speed","accelSpeed","accelCurve"/)
   basinAnalysis = "NA"
- 
+; 
 ; user inputs
-  startYear = 1966
+  startYear = 1965
   endYear   = 2019
 ;  
 ; choose the latitude bands
-  latS =   5.
-  latN =  55.
-  dlat =  10.
-
-  nBin = tointeger( (latN-latS)/dlat ) + 1
-  x = fspan(latS,latN,nBin) + .5*dlat
+;
+  latS     =   5.
+  latN     =  55.
+  binWidth =  10.
+  dlat     = 5.0
+  nBin     = 9
   nmax = 80000
   histoDat   = new ((/nBin,nmax/), "double" )
   histoCount = new (nBin, "integer" )
-  
+;
+  lat1 = new ((/nBin/), "double" )
+  lat2 = new ((/nBin/), "double" )
+  x    = new ((/nBin/), "double" )
+;
+  do i=0,nBin-1
+    lat1(i) = latS    + i*dlat
+    lat2(i) = lat1(i) + binWidth
+    cen = .5*(lat1(i) + lat2(i) )
+    print ( i + " " + cen + " " + lat1(i) + " " + lat2(i))
+  end do
+  x =  .5*(lat1 + lat2)
+;  
 ;--------------------------------------------------------------------------  
-  wks = gsn_open_wks("pdf","distribution")       ; send graphics to PNG file
+;
+  wks = gsn_open_wks("png","distribution")       ; send graphics to PNG file
   res            = True                          ; plot mods desired
   plot = new(3,graphic)                          ; create a plot array
   dum  = new(3,graphic)                          ; create a plot array
-
-
-
+;
   fileName = "../tcSpeed_" + basinAnalysis + "_1965_2019.nc"
-
   fileIn = addfile( fileName, "r" )
-    
+;    
   time = fileIn->time
   Lat  = fileIn->lat
   Lon  = fileIn->lon
   numobs      = fileIn->numobs
   nature      = fileIn->nature
   dims        = dimsizes(time)
-  nStorms     = dims(0)
-  ;basin       = fileIn->basin
-
-  
+  nStorms     = dims(0) 
   print ("Number of Storms = " + nStorms)
   
 ; we expect time units to be in days
@@ -65,16 +72,14 @@ begin
 ; set the start and end times to consider  
   startTime = cd_inv_calendar(startYear,1,1,0,0,0,time@units,  0)
   endTime = cd_inv_calendar(endYear,12,31,24,0,0,time@units, 0)
-
-
+;
 ;...................................................
   do ivar = 0,2
 
 ; initialize arrays
 
-
     histoCount = 0
-    histoDat = histoDat@_FillValue
+    histoDat   = histoDat@_FillValue
     var = variable(ivar)    
     dat := fileIn->$var$
     print ("Processing " + var )
@@ -104,8 +109,6 @@ begin
     end if
     
     title = " " 
-
-
     stormCount = 0
     Ave   = todouble(0.)
     icc =   todouble(0.)
@@ -120,20 +123,27 @@ begin
             stormCount=stormCount+1
             do j = 0, numobs(i)-1
               A= dat(i,j)
-              if ( chartostring(nature(i,j,:)) .eq. "TS") then
+              if ( chartostring(nature(i,j,:)) .ne. "ET") then
                   if ( (Lat(i,j) .ge. latS) .and. (Lat(i,j) .le. latN) ) 
 ; ignore spuriously large values of accel
 ; this is controlled by the xmax value
                     if (.not.ismissing(A) .and. abs(A) .le. Amax ) then
-                      iBin  = tointeger ((Lat(i,j)-latS)/dlat)
-                      ;print ( i + " " + j + " " + A  + " " + iBin + " " +   histoCount(iBin))               
-                      histoDat(iBin,histoCount(iBin)) = A
-                      histoCount(iBin) =  histoCount(iBin) + 1
+
+                      iBin=-9
+                      do binJ = 0,nBin-1
+                        if ( Lat(i,j) .ge. lat1(binJ) .and. Lat(i,j) .le. lat2(binJ) ) then
+                          ;print ( Lat(i,j) + " found " + binJ + " " + lat1(binJ)  + " " +  lat2(binJ))
+                          iBin =binJ
+                          histoDat(iBin,histoCount(iBin)) = A
+                          histoCount(iBin) =  histoCount(iBin) + 1
+                        end if                          
+                      end do
                       Ave = Ave*icc/(icc+1.) + A/(icc+1.)
                       icc = icc + 1.
                     end if   
                 end if
               end if
+              
             end do ;j
           end if ;numdays
         end if ;time
@@ -162,41 +172,45 @@ begin
       xmed = dim_median(dat)
       ave(i) = avg(dat)
       sdev =     stddev(dat) 
-      outString := (sprinti("%5i",histoCount(i) )  + " & " + sprintf("%5.2f",x(i)) + " & " +  sprintf("%5.2f",ave(i)) + " & " +  sprintf("%5.1f",xmed)  + " & " +  sprintf("%5.1f",sdev) + " \\")
+      outString := (sprintf("%5.2f",lat1(i)) +"--" + sprintf("%5.2f",lat2(i))  + " & " +     sprinti("%5i",histoCount(i) ) + " & " +  sprintf("%5.2f",ave(i)) + " & " +  sprintf("%5.1f",xmed)  + " & " +  sprintf("%5.1f",sdev) + " \\")
+
+      
       print  ( " " + outString ) 
       hist(i,:) = (/dat(x10),dat(x25),xmed,dat(x75),dat(x90)/)      
     end do
     
 ;.............................................................................
     
+        
+    if ( var .eq. "speed" ) then
+      res@tiMainString = "(a) Speed"
+      res@trYMinF =   0.
+      res@trYMaxF =  90.
+      yTitle = "(km/hr)"
+    end if
     
     
     if ( var .eq. "accelSpeed" ) then
-      res@tiMainString = "(b)"
-      yTitle = "Tangential Acceleration (km/hr/day)"
+      res@tiMainString = "(b) Tangential Acceleration"
+      yTitle = "Acceleration (km/hr/day)"
       res@trYMinF =  -50.
       res@trYMaxF =   65.
     end if
+
+    
     if ( var .eq. "accelCurve" ) then
-      res@tiMainString = "(c)"     
-      yTitle = "Curvature Acceleration (km/hr/day)"
+      res@tiMainString = "(c) Curvature Acceleration"     
+      yTitle = "Acceleration (km/hr/day)"
       res@trYMinF =   0.
       res@trYMaxF =  90.
     end if
-    
-    if ( var .eq. "speed" ) then
-      res@tiMainString = "(a)"
-      res@trYMinF =   0.
-      res@trYMaxF =  90.
-      yTitle = "Speed (km/hr)"
-    end if
-    
+
     
     res@tiYAxisString =  yTitle
     res@tiXAxisString = "Center Latitude of Each Bin" 
     
     ; plot the box and whisker plot
-    plot(ivar) = boxplot(wks,x(0:nBin-2),hist(0:nBin-2,:),False,res,False)
+    plot(ivar) = boxplot(wks,tofloat(x(0:nBin-2)),tofloat(hist(0:nBin-2,:)),False,res,False)
     mres               = True                     ; marker mods desired
     mres@gsMarkerIndex = 16                        ; polymarker style
     mres@gsMarkerSizeF = 4.                      ; polymarker size
@@ -211,8 +225,8 @@ begin
 ; 
   resP                    = True                 ; modify the panel plot
   resP@gsnPanelMainString = ""     ; set main title
-  resP@gsnPanelYWhiteSpacePercent = 1
-  resP@gsnPanelXWhiteSpacePercent = 1
+  resP@gsnPanelYWhiteSpacePercent = 5
+  resP@gsnPanelXWhiteSpacePercent = 5
   gsn_panel(wks,plot,(/3,1/),resP)               ; now draw as one plot
 
    
