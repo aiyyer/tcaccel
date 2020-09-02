@@ -21,8 +21,8 @@ begin
 
 ;---------------------------------------------------------------------------  
 ; user inputs
-  startYear = 1966
-  endYear   = 2019
+  startYear = 1980
+  endYear   = 2016
 
   nYears    = endYear - startYear + 1
 
@@ -84,7 +84,7 @@ begin
   icount = 0
 
 ; define output arrays  
-  N = 2000
+  N = 1200
 
        iHigh = 0
    speedHigh   = new (N,  typeof(Lat))
@@ -260,8 +260,6 @@ begin
   print ( "ETcount = " + ETcount)
   per = 100*tofloat(ETcount)/tofloat(STcount)
   print ( "ETper = " + per)
-
-  exit
 ;
 ;  
   speedLow!0 = "LowCount"
@@ -289,7 +287,7 @@ begin
   jStormZero!0 = "ZeroCount"
 ;
 ;
-  fileName = "tcAcc_dates_tang"  + "_" + LatN + "_" + LatS+"_"+ basinAnalysis + ".nc"
+  fileName = "tcAcc_dates_tang_ETonly"  + "_" + LatN + "_" + LatS+"_"+ basinAnalysis + ".nc"
   system( "rm " + fileName )
  ; setfileoption("nc", "format", "NETCDF4") 
   outFile = addfile( fileName, "c" )
