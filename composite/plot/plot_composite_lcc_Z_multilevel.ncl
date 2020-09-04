@@ -158,18 +158,47 @@ begin
 ; User Input
 ;***************************************************************
 
-  diri = "~/data50/data/tcaccel/one/tang/" ;  "../../dat/one/tang/"
-  diri = "~/data50/data/tcaccel/one/curv/" ;  "../../dat/one/tang/"
+  flag = 1 ; for tang
 
-  
-  pltName = "composite"                    ; netCDF name output
+  ;flag = 2 ; for curv
+
+
+  LatS =  30
+  LatN =  40
+  basinAnalysis = "NA" 
+
+
+  if (flag .eq. 1 ) then
+    accelType     = "tang"
+    dir = "~/data50/data/tcaccel/one/tang/" 
+    plot = new(9,"graphic")
+    types = (/"High","Zero","Low"/)
+    titles = (/"Rapid Tangential Acceleration","Near Zero Tangential Acceleration","Rapid Tangential Deceleration"/)    
+    nmain = 3
+  else
+    accelType     = "curv"
+    dir = "~/data50/data/tcaccel/one/curv/" 
+    plot = new(6,"graphic")
+    types = (/"High","Zero"/)  
+    titles = (/"Rapid Curvature Acceleration","Near Zero Curvature Acceleration"/)
+    nmain = 2
+  end if
+
+
+
+  pltName = "composite_" + accelType  + "_" + LatN + "_" + LatS+"_"+ basinAnalysis
   pltType = "pdf"                       ; send graphics to PNG file
-
 
   wks    = gsn_open_wks(pltType,pltName)
   resAnom                      = True     ; plot mods desired
-  gsn_define_colormap(wks,"GreenMagenta16" ) ;CBR_coldhot") ;BlueWhiteOrangeRed")
-  gsn_reverse_colormap(wks)      
+
+  ;gsn_define_colormap(wks,"GreenMagenta16" ) ;CBR_coldhot") ;BlueWhiteOrangeRed")
+  ;gsn_reverse_colormap(wks)
+
+  gsn_define_colormap(wks,"temp_diff_18lev")
+
+
+  
   resAnom@cnFillOn            =  True    ; turn on color fill
   resAnom@cnLinesOn           =  False       ; Turn off contour lines
   resAnom@cnLineLabelsOn      =  False       ; Turn off contour lines   
@@ -237,14 +266,6 @@ begin
   plot = new(9,"graphic")
 
 
-
-
-  types = (/"High","Zero","Low"/)
-  types = (/"High","Zero","Zero"/)
-
-  ;titles = (/"Rapid Tangential Acceleration","Near Zero Tangential Acceleration","Rapid Tangential Deceleration"/)
-  titles = (/"Rapid Curvature Acceleration","Near Zero Curvature Acceleration","Rapid Curvature Deceleration"/)
-
   levels = (/300,500,850/)
   ic = 0    
 
@@ -270,8 +291,8 @@ begin
     if (level .eq. 300 ) then
       resAnom@cnMinLevelValF  = -10.			; set the minimum contour level
       resAnom@cnMaxLevelValF  =  10.			; set the maximum contour level
-      resAnom@cnLevelSpacingF =   2.			; set the interval between contours
-      resC@cnMinLevelValF  = 680.			; set the minimum contour level
+      resAnom@cnLevelSpacingF =  2.			; set the interval between contours
+      resC@cnMinLevelValF  = 640.			; set the minimum contour level
       resC@cnMaxLevelValF  = 1600.			; set the maximum contour level
       resC@cnLevelSpacingF = 12.			; set the interval between contours
     end if
@@ -279,13 +300,13 @@ begin
 
 
     if (level .eq. 500 ) then
-      resAnom@cnMinLevelValF  = -6			; set the minimum contour level
-      resAnom@cnMaxLevelValF  =  6.			; set the maximum contour level
+      resAnom@cnMinLevelValF  = -5			; set the minimum contour level
+      resAnom@cnMaxLevelValF  =  5.			; set the maximum contour level
       resAnom@cnLevelSpacingF =  1.			; set the interval between contours
       
-      resC@cnMinLevelValF  = 496.			; set the minimum contour level
-      resC@cnMaxLevelValF  = 584.			; set the maximum contour level
-      resC@cnLevelSpacingF = 4.			; set the interval between contours
+      resC@cnMinLevelValF  = 460.			; set the minimum contour level
+      resC@cnMaxLevelValF  = 600.			; set the maximum contour level
+      resC@cnLevelSpacingF = 6.			; set the interval between contours
     end if
 
 
@@ -301,8 +322,8 @@ begin
 
 
     if (level .eq. 850 ) then
-      resAnom@cnMinLevelValF  = -6			; set the minimum contour level
-      resAnom@cnMaxLevelValF  =  6.			; set the maximum contour level
+      resAnom@cnMinLevelValF  = -5			; set the minimum contour level
+      resAnom@cnMaxLevelValF  =  5.			; set the maximum contour level
       resAnom@cnLevelSpacingF =  1.			; set the interval between contours
       resC@cnMinLevelValF  = 120.			; set the minimum contour level
       resC@cnMaxLevelValF  = 180.			; set the maximum contour level
@@ -318,14 +339,15 @@ begin
     
 
 ; loop over types
-    do imain = 0,2
+    do imain =  0,nmain-1
+
       type = types(imain)
-      fili   = "laggedComp_"+type+"_-180_180_40_30_NA.nc"
-      
+      fili = "laggedComp_" + accelType + "_"  + type  + "_" + LatN + "_" + LatS+"_"+ basinAnalysis + ".nc"
+
       print ("--------------------------------")
       print (imain + " " + type + " day = " + day )
 
-      f      = addfile (diri+fili, "r")
+      f      = addfile (dir+fili, "r")
       
                                 ; read the location of the composite storm
 
@@ -358,7 +380,20 @@ begin
       comp&lon = lonArray
       cenLon = 0.0
 ; create filled plot for anomalies
+
+
+; create filled plot for composite anomalies
+; retrieve the colors and white the near zero values
+      colors = gsn_retrieve_colormap(wks)     ; retrieve color map for editing. dimensioned (103,3)
+      colors(12,:) = 1.0
+      colors(10,:) = 1.0
+      gsn_define_colormap(wks,colors)         ; redefine colormap to workstation, color map now includes a gray
+
+      
       plot1    = gsn_csm_contour_map(wks,compAnom, resAnom)
+
+
+      
       plot2    = gsn_csm_contour(wks,comp, resC)
       
 ;---------------------------------------------------------

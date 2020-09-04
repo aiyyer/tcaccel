@@ -16,10 +16,10 @@ begin
   startYear = 1966
   endYear   = 2019
   variable = (/"speed","accelSpeed","accelCurve"/)
-  ivar       = 2
+  ivar       = 1
   threshFlag = 1
   
-  sfac       = 1.
+  sfac       = 1.5
   var = variable(ivar)
   
 ; choose the latitude band
@@ -206,17 +206,27 @@ begin
 ;
 ;=======================================================================================
 ;
-    ; define the thresh    
-    thresh =  ave  + sfac*std
 
-    print ( "thresh = " + thresh)
     yearlyThresh = yearly
+    yearlyThresh =  yearlyThresh@_FillValue
 
+    
     if ( threshFlag .eq. 1 ) then
+      thresh =  ave  + sfac*std
+      print ( "thresh = " + thresh)
+      yearlyThresh = yearly
 ; use this if threshold needed
       yearlyThresh =  yearlyThresh@_FillValue
       yearlyThresh = where ( yearly .gt. thresh, yearly, yearly@_FillValue)
     end if
+    
+    if ( threshFlag .eq. -1 ) then
+      thresh =  ave  - sfac*std
+      print ( "thresh = " + thresh)
+      yearlyThresh = where ( yearly .lt. thresh, yearly, yearly@_FillValue)
+    end if
+
+    
     
     print ( "icount = " + icount + " " + sum(ycount) + " " + sum(yearlyThresh) )
 

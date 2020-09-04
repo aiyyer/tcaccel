@@ -28,10 +28,10 @@ begin
 
   LatS =  30
   LatN =  40 
-  basinAnalysis = "NA"  ;WP
+  basinAnalysis = "WP"  ;WP
 
 ; sdev threshold factor
-  sfac  = 1.5
+  sfac  = 1.
   
   print ( "sfac  = " + sfac )
 ; the sfac is used to determine the threshold accel, decel values.
@@ -86,20 +86,16 @@ begin
 ; define output arrays  
   N = 5000
 
-  iHigh = 0
-  iHighET = 0
-
+       iHigh = 0
    speedHigh   = new (N,  typeof(Lat))
    accelHigh   = new (N,   typeof(dat))
-     LatHigh   = new (N, typeof(Lat))
-     LonHigh   = new (N, typeof(Lon))
-    timeHigh   = new (N, typeof(time))
-  iStormHigh   = new (N, "integer")
-  jStormHigh   = new (N, "integer")
+     LatHigh     = new (N, typeof(Lat))
+     LonHigh     = new (N, typeof(Lon))
+    timeHigh    = new (N, typeof(time))
+  iStormHigh  = new (N, "integer")
+  jStormHigh  = new (N, "integer")
 
-  iLow = 0
-  iLowET = 0
-
+   iLow = 0
    speedLow   = new (N,  typeof(speed))
    accelLow   = new (N,  typeof(dat))
      LatLow     = new (N, typeof(Lat))
@@ -108,9 +104,7 @@ begin
   iStormLow  = new (N, "integer")
   jStormLow  = new (N, "integer")
 
-  iZero = 0
-  iZeroET = 0
-
+       iZero = 0
    speedZero   = new (N, typeof(speed))
    accelZero   = new (N, typeof(dat))
      LatZero  = new (N, typeof(Lat))
@@ -170,10 +164,6 @@ begin
 ;===================================================================================
 ; now repeat and extract the high and low accel cases per user specifications
 
-
-  sinfo = new ( (/nStorms,2/), "integer" )
-  sinfo = -9
-  
 ; loop over storms  
   do i = 0,nStorms-1
     do j = 0, numobs(i)-1
@@ -187,8 +177,7 @@ begin
 ; ignore spuriously large values of accel
 ; this is controlled by the xmax value
                 if (.not.ismissing(A)) then                
-                  if ( abs(A) .le. xmax ) then
-                    
+                  if ( abs(A) .le. xmax ) then 
                     if ( A .ge. (ave+ (std*sfac) ) ) then    
                       speedHigh(iHigh)  = speed(i,j)
                       accelHigh(iHigh)  = A
@@ -198,21 +187,6 @@ begin
                       iStormHigh(iHigh)  = i
                       jStormHigh(iHigh)  = origJ(i,j)
                       iHigh = iHigh + 1  
-                      sinfo(i,0) = 1 
-; did this instance lead to ET in 48 hours?
-
-                      ETComplete = 0
-                      do k = j,j+8
-                        if (  chartostring(nature(i,k,:)) .eq. "ET" ) then
-                          ETComplete=1
-                        end if
-                      end do
-
-                      if (  ETComplete .eq. 1 ) then
-                        iHighET = iHighET + 1
-                        sinfo(i,1) = 1 
-                      end if
-
                     end if
                     
                     if ( A .le. (ave-(std*sfac)) ) then                  
@@ -224,22 +198,6 @@ begin
                         iStormLow(iLow)  = i
                         jStormLow(iLow)  = origJ(i,j)
                         iLow = iLow + 1  
-                        sinfo(i,0) = 2 
-
-
-                      ETComplete = 0
-                      do k = j,j+8
-                        if (  chartostring(nature(i,k,:)) .eq. "ET" ) then
-                          ETComplete=1
-                        end if
-                      end do
-
-                      if (  ETComplete .eq. 1 ) then
-                        iLowET = iLowET + 1
-                        sinfo(i,1) = 1 
-                      end if
-
-
                         
                       end if
                       
@@ -252,21 +210,7 @@ begin
                         timeZero(iZero)  = time(i,j)
                         iStormZero(iZero)  = i
                         jStormZero(iZero)  = origJ(i,j)
-                        iZero = iZero + 1
-                        sinfo(i,0) = 3
-
-                      ETComplete = 0
-                      do k = j,j+8
-                        if (  chartostring(nature(i,k,:)) .eq. "ET" ) then
-                          ETComplete=1
-                        end if
-                      end do
-
-                      if (  ETComplete .eq. 1 ) then
-                        iZeroET = iZeroET + 1
-                        sinfo(i,0) = 1
-                      end if
-                        
+                        iZero = iZero + 1  
                       end if
                       
                     end if
@@ -369,7 +313,7 @@ begin
   print (  "mean lat = " + avg(LatLow2) + " max lat = " + max(LatLow2) + " " + "min lat = " + min(LatLow2) )
 
   print ( "mean speed  = " + avg(speedLow2) + " " + "median speed = " + dim_median(speedLow2) )
-  print ( "mean lat = " + avg(LatLow2) + " " + "median lat = " + dim_median(LatLow2) )
+ print ( "mean lat = " + avg(LatLow2) + " " + "median lat = " + dim_median(LatLow2) )
   print ( "max lat = " + max(LatLow2) + " " + "min lat = " + min(LatLow2) )
 
   N=iZero-1
@@ -402,49 +346,6 @@ begin
   print ( "max lat = " + max(LatZero2) + " " + "min lat = " + min(LatZero2) )
 
   print ( "iLow , iHigh, iZero = "  + iLow + " " + iHigh + " " + iZero)
-  print ( "iLowET , iHighET, iZero = "  + iLowET + " " + iHighET + " " + iZeroET)
-
-
-  iH = 0
-  iHE= 0
-
-  iL = 0
-  iLE= 0
-
-  iZ = 0
-  iZE= 0
-
-  
-  do i = 0,nStorms-1
-    
-    if (sinfo(i,0) .eq. 1 ) then
-      iH = iH + 1
-      if (sinfo(i,1) .eq. 1 ) then
-        iHE = iHE + 1
-      end if
-    end if
-
-   if (sinfo(i,0) .eq. 2 ) then
-      iL = iL + 1
-      if (sinfo(i,1) .eq. 1 ) then
-        iLE = iLE + 1
-      end if
-    end if
-
-   if (sinfo(i,0) .eq. 3 ) then
-      iZ = iZ + 1
-      if (sinfo(i,1) .eq. 1 ) then
-        iZE = iZE + 1
-      end if
-    end if
-    
-  end do
-
-  print ( nStorms + " " + iH + " " + iHE)
-  print ( nStorms + " " + iL + " " + iLE)
-  print ( nStorms + " " + iZ + " " + iZE)
-
-  
 ;===================================================================================
 ;===================================================================================  
 ;===================================================================================

@@ -164,7 +164,7 @@ begin
 
   flag = 1 ; for tang
 
-  flag = 2 ; for curv
+  ;flag = 2 ; for curv
 
 
   LatS =  30
@@ -278,7 +278,7 @@ begin
 
 
   levels = (/300,500,700,850/)
-  iLevel = 0
+  iLevel = 1
 
   ic = 0    
 ; record the center of the TC 
@@ -288,7 +288,8 @@ begin
 
   labels = (/"a)","b)","c)","d)","e)","f)","g)","h)","i)"/)
   
-  do ilag = 1,3,1  ;lag over days 0=-2d,1=-1d,2=0d,3=+1d,4=+2d
+  ;do ilag = 1,3,1  ;lag over days 0=-2d,1=-1d,2=0d,3=+1d,4=+2d
+  do ilag = 0,4,2  ;lag over days 0=-2d,1=-1d,2=0d,3=+1d,4=+2d
 
     hour = -48 + ilag*24 ;hard coded
     day  = -2 + ilag     ;hard coded
@@ -304,18 +305,19 @@ begin
       resAnom@cnMinLevelValF  = -9.			; set the minimum contour level
       resAnom@cnMaxLevelValF  =  9.			; set the maximum contour level
       resAnom@cnLevelSpacingF =  1.			; set the interval between contours
-      resC@cnMinLevelValF  = 680.			; set the minimum contour level
+      resC@cnMinLevelValF  = 640.			; set the minimum contour level
       resC@cnMaxLevelValF  = 1600.			; set the maximum contour level
       resC@cnLevelSpacingF = 12.			; set the interval between contours
     end if
+    
     if (level .eq. 500 ) then
       resAnom@cnMinLevelValF  = -5			; set the minimum contour level
       resAnom@cnMaxLevelValF  =  5.			; set the maximum contour level
       resAnom@cnLevelSpacingF =  1.			; set the interval between contours
       
-      resC@cnMinLevelValF  = 496.			; set the minimum contour level
-      resC@cnMaxLevelValF  = 584.			; set the maximum contour level
-      resC@cnLevelSpacingF = 4.			        ; set the interval between contours
+      resC@cnMinLevelValF  = 460.			; set the minimum contour level
+      resC@cnMaxLevelValF  = 600.			; set the maximum contour level
+      resC@cnLevelSpacingF = 6.			        ; set the interval between contours
     end if
     if (level .eq. 700 ) then
       resAnom@cnMinLevelValF  = -6			; set the minimum contour level
@@ -376,8 +378,8 @@ begin
       
 ;---------------------------------------------------------
       composite = f->compZ(ilag,{level},:,:)
-      anomaly = f->compAnomZ(ilag,{level},:,:)
-      anomaly = anomaly*.01 ;in dam 
+      anomaly   = f->compAnomZ(ilag,{level},:,:)
+      anomaly   = anomaly*.01 ;in dam 
       composite = composite*.01 ;in dam 
       anomaly@long_name = " " 
       anomaly@units  = ""
@@ -400,6 +402,17 @@ begin
 
       
 ; create filled plot for composite anomalies
+; retrieve the colors and white the near zero values
+      colors = gsn_retrieve_colormap(wks)     ; retrieve color map for editing. dimensioned (103,3)
+
+
+      colors(12,:) = 1.0
+      colors(10,:) = 1.0
+
+      gsn_define_colormap(wks,colors)         ; redefine colormap to workstation, color map now includes a gray
+
+
+      
       plot1    = gsn_csm_contour_map(wks,anomaly, resAnom)
 
 ; now contours for the composite
