@@ -11,24 +11,49 @@ load "$NCARG_ROOT/lib/ncarg/nclscripts/csm/contributed.ncl"
 
 begin
 
+  flag = 1 ; for tang
+  ;flag = 2 ; for curv
 
-  types = (/"High","Zero","Low"/)
-  titles = (/"Rapid Acceleration","Near Zero Acceleration","Rapid Deceleration"/)  
+  imain = 2
+  itype = 2
+  
+  LatS =  30
+  LatN =  40
+  basinAnalysis = "NA" 
+
+
+  if (flag .eq. 1 ) then
+    accelType     = "tang"
+    dir = "~/data50/data/tcaccel/one/tang/" 
+    plot = new(9,"graphic")
+    types = (/"High","Zero","Low"/)
+    titles = (/"Rapid Tangential Acceleration","Near Zero Tangential Acceleration","Rapid Tangential Deceleration"/)    
+    nmain = 3
+  else
+    accelType     = "curv"
+    dir = "~/data50/data/tcaccel/one/curv/" 
+    plot = new(6,"graphic")
+    types = (/"High","Zero"/)  
+    titles = (/"Rapid Curvature Acceleration","Near Zero Curvature Acceleration"/)
+    nmain = 2
+  end if
+
+
   levels = (/300,500,750/)
 
   var = "compAnomZ"
 
-  itype=0
-  type = types(itype)
 
-  diri = "/home/anant/data50/data/tcaccel/one/curv/"
-  fileName  = diri +  "laggedComp_"+type+"_-180_180_40_30_NA.nc"
+  
+
+  type = types(imain)
+  fili = "laggedComp_" + accelType + "_"  + type  + "_" + LatN + "_" + LatS+"_"+ basinAnalysis + ".nc"
 
   level =  300
   hovLat1 = 36.
   hovLat2 = 46.
 
-  inFile = addfile( fileName, "r" )
+  inFile = addfile( dir+fili, "r" )
   comp  = lonFlip(inFile->$var$(:,{level},:,:))
   comp=comp*.01 ; dam
   comp@units = "dam"

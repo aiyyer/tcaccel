@@ -46,7 +46,7 @@ begin
 ;
 ;   
 ; the ibtracs file
-  iyBeg = 1965
+  iyBeg = 1966
 
   dirName  = "/home/anant/data50/data/ibtracs/"
   ;fileName = dirName + "IBTrACS.since1980.v04r00.nc" 

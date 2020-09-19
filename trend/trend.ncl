@@ -12,27 +12,39 @@ begin
 
 
 ;user inputs
-  fileName = "../tcSpeed_NA_1965_2019.nc"
-  startYear = 1966
-  endYear   = 2019
+  fileName = "../tcSpeed_WP_1949_2019.nc" ;  "../tcSpeed_WP.nc"
+  startYear = 1949
+  endYear   = 2016
   variable = (/"speed","accelSpeed","accelCurve"/)
-  ivar       = 1
-  threshFlag = 1
-  
-  sfac       = 1.5
+  ivar       = 0
+
+
+  ;threshFlag = 1
+  ;sfac       = 1.5
+
+
+  threshFlag = 0
+  sfac       = 0 ;1.5
+
+
   var = variable(ivar)
   
 ; choose the latitude band
-; latS = 10. ; 5.0
-; dlat = 20.  ;10. ;10.0
-; latN = latS + dlat    
-; nn   = 7
+
   
-; entire basin
-  latS =  30. ; 5.0
+  latS =   0. ; 5.0
   dlat =  20.  ;10. ;10.0
   latN = latS + dlat    
+  nn = 7
+
+; entire basin
+ 
+  latS =   0. ; 5.0
+  dlat =  90.  ;10. ;10.0
+  latN = latS + dlat    
   nn = 1
+
+  
   
   nYears    = endYear - startYear + 1
   print ( "Start Year = " + startYear + " end year = " + endYear + " " + nYears)
@@ -163,12 +175,12 @@ begin
                 end if
                 
                 ;if ( chartostring(nature(i,j,:)) .eq. "TS" ) 
-                 if ( chartostring(nature(i,j,:)) .ne. "ET" ) 
+                 ;if ( chartostring(nature(i,j,:)) .ne. "ET" ) 
 
 ; ignore spuriously large values of accel
 ; this is controlled by the Amax value                  
 
-                  if (.not.ismissing(A) .and. abs(A) .le. Amax ) then
+                  ;if (.not.ismissing(A) .and. abs(A) .le. Amax ) then
                     tsCount        = tsCount + 1
                     datA(icount)   = A
                     icount = icount + 1
@@ -177,8 +189,8 @@ begin
                     ii = ycount(iy)
                     yearly(iy,ii) = A
                     ycount(iy) =  ycount(iy) + 1
-                  end if
-                end if ; nature                
+                  ;end if ;Amax
+                ;end if ; nature                
               end if ; lat
             end do ; j
           end if ;numdays
@@ -187,7 +199,7 @@ begin
       end if ;numobs 
     end do ;i
     
-    ave = avg(datA(0:icount-1) )
+    ave =    avg(datA(0:icount-1) )
     std = stddev(datA(0:icount-1) )
     med = dim_median( datA(0:icount-1) )
     print ( "Lat range " + latS + " " + latN + " Mean Median Sdev = " + ave + " " + med + " " +  std)
@@ -198,18 +210,21 @@ begin
     print ( "tot count=" + totCount + " NR count="+nrCount + " NR per="+ NRper)
     print ( "tot count=" + totCount + " TS count="+tsCount + " ts per="+ TSper)
     print ( "tot count=" + totCount + " ET count="+etCount + " ET per="+ ETper)
-
-    latAve(imain) = ave
-    latMed(imain) = med
-    latSD(imain)  = std
+    
+    latAve(imain)   = ave
+    latMed(imain)   = med
+    latSD(imain)    = std
     latCount(imain) = icount
 ;
 ;=======================================================================================
 ;
 
     yearlyThresh = yearly
-    yearlyThresh =  yearlyThresh@_FillValue
 
+
+    if ( threshFlag .ne. 0 ) then
+      yearlyThresh =  yearlyThresh@_FillValue
+    end if
     
     if ( threshFlag .eq. 1 ) then
       thresh =  ave  + sfac*std
@@ -225,11 +240,10 @@ begin
       print ( "thresh = " + thresh)
       yearlyThresh = where ( yearly .lt. thresh, yearly, yearly@_FillValue)
     end if
-
-    
     
     print ( "icount = " + icount + " " + sum(ycount) + " " + sum(yearlyThresh) )
-
+    
+    
     datY := new(nYears,"double") 
  
     datY@_FillValue = yearlyThresh@_FillValue

@@ -26,7 +26,7 @@ begin
   latN =  90.
 
 ;--------------------------------------------------------------------------      
-  fileName = "../tcSpeed_WP_1965_2019.nc"
+  fileName = "../tcSpeed_WP.nc"
   fileIn = addfile( fileName, "r" )
   time        = fileIn->time
 ; we expect time units to be in days
@@ -94,15 +94,13 @@ begin
    do i = 0,nStorms-1
      if ( numobs(i) .ne. 0 ) then
        numDays = todouble(time(i,numobs(i)-1) - time(i,0))
+
+       
 ;storm must live at least 2 days
        if (  numDays .ge. 0 ) then
          if ( time(i,0) .ge. startTime .and. time(i, numobs(i)-1) .le. endTime ) then
            ist = ist + 1
-           
-           
 ; now lets see how many NR, TS, MX and ET records are there
-
-
            
            do j = 0, numobs(i)-1
               if ( Lat(i,j) .ge. latS .and. Lat(i,j) .le. latN ) then  

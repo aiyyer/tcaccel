@@ -171,11 +171,20 @@ begin
 ; now repeat and extract the high and low accel cases per user specifications
 
 
-  sinfo = new ( (/nStorms,2/), "integer" )
-  sinfo = -9
+  sinfoH = new ( (/nStorms,2/), "integer" )
+  sinfoH = -9
+  sinfoL = sinfoH
+  sinfoZ = sinfoH
+
   
 ; loop over storms  
   do i = 0,nStorms-1
+
+
+    ETCompleteH = 0
+    ETCompleteL = 0
+    ETCompleteZ = 0
+
     do j = 0, numobs(i)-1
       A = dat(i,j)
 ; apply the relevant checks
@@ -189,7 +198,7 @@ begin
                 if (.not.ismissing(A)) then                
                   if ( abs(A) .le. xmax ) then
                     
-                    if ( A .ge. (ave+ (std*sfac) ) ) then    
+                    if ( A .ge. (ave+(std*sfac) ) ) then    
                       speedHigh(iHigh)  = speed(i,j)
                       accelHigh(iHigh)  = A
                       LatHigh(iHigh)  = Lat(i,j)
@@ -198,21 +207,23 @@ begin
                       iStormHigh(iHigh)  = i
                       jStormHigh(iHigh)  = origJ(i,j)
                       iHigh = iHigh + 1  
-                      sinfo(i,0) = 1 
-; did this instance lead to ET in 48 hours?
+                      sinfoH(i,0) = 1 
 
-                      ETComplete = 0
-                      do k = j,j+8
-                        if (  chartostring(nature(i,k,:)) .eq. "ET" ) then
-                          ETComplete=1
+                      if ( ETCompleteH .eq. 0 ) then
+                        ETComplete=0
+                        do k = j,j+8
+                          if (chartostring(nature(i,k,:)) .eq. "ET" ) then
+                            ETComplete=1
+                          end if
+                        end do
+                        if (  ETComplete .eq. 1 ) then
+                          iHighET = iHighET + 1
+                          ETCompleteH = 1
+                          sinfoH(i,1) = 1 
                         end if
-                      end do
-
-                      if (  ETComplete .eq. 1 ) then
-                        iHighET = iHighET + 1
-                        sinfo(i,1) = 1 
                       end if
 
+                      
                     end if
                     
                     if ( A .le. (ave-(std*sfac)) ) then                  
@@ -220,25 +231,26 @@ begin
                       accelLow(iLow)   = A
                       LatLow(iLow)  = Lat(i,j)
                       LonLow(iLow)  = Lon(i,j)
-                        timeLow(iLow)  = time(i,j)
-                        iStormLow(iLow)  = i
-                        jStormLow(iLow)  = origJ(i,j)
-                        iLow = iLow + 1  
-                        sinfo(i,0) = 2 
-
-
-                      ETComplete = 0
-                      do k = j,j+8
-                        if (  chartostring(nature(i,k,:)) .eq. "ET" ) then
-                          ETComplete=1
+                      timeLow(iLow)  = time(i,j)
+                      iStormLow(iLow)  = i
+                      jStormLow(iLow)  = origJ(i,j)
+                      iLow = iLow + 1  
+                      sinfoL(i,0) = 2 
+                                            
+                      if ( ETCompleteL .eq. 0 ) then
+                        ETComplete=0
+                        do k = j,j+8
+                          if (  chartostring(nature(i,k,:)) .eq. "ET" ) then
+                            ETComplete=1
+                          end if
+                        end do
+                        
+                        if (  ETComplete .eq. 1 ) then
+                          iLowET = iLowET + 1
+                          ETCompleteL = 1
+                          sinfoL(i,1) = 1 
                         end if
-                      end do
-
-                      if (  ETComplete .eq. 1 ) then
-                        iLowET = iLowET + 1
-                        sinfo(i,1) = 1 
                       end if
-
 
                         
                       end if
@@ -253,19 +265,22 @@ begin
                         iStormZero(iZero)  = i
                         jStormZero(iZero)  = origJ(i,j)
                         iZero = iZero + 1
-                        sinfo(i,0) = 3
+                        sinfoZ(i,0) = 3
 
-                      ETComplete = 0
-                      do k = j,j+8
-                        if (  chartostring(nature(i,k,:)) .eq. "ET" ) then
-                          ETComplete=1
+
+                        if ( ETCompleteZ .eq. 0 ) then
+                          ETComplete=0
+                          do k = j,j+8
+                            if (  chartostring(nature(i,k,:)) .eq. "ET" ) then
+                              ETComplete=1
+                            end if
+                          end do
+                          if (  ETComplete .eq. 1 ) then
+                            iZeroET = iZeroET + 1
+                            sinfoZ(i,1) = 1
+                            ETCompleteZ = 1
+                          end if
                         end if
-                      end do
-
-                      if (  ETComplete .eq. 1 ) then
-                        iZeroET = iZeroET + 1
-                        sinfo(i,0) = 1
-                      end if
                         
                       end if
                       
@@ -417,31 +432,30 @@ begin
   
   do i = 0,nStorms-1
     
-    if (sinfo(i,0) .eq. 1 ) then
+    if (sinfoH(i,0) .eq. 1 ) then
       iH = iH + 1
-      if (sinfo(i,1) .eq. 1 ) then
+      if (sinfoH(i,1) .eq. 1 ) then
         iHE = iHE + 1
       end if
     end if
 
-   if (sinfo(i,0) .eq. 2 ) then
+   if (sinfoL(i,0) .eq. 2 ) then
       iL = iL + 1
-      if (sinfo(i,1) .eq. 1 ) then
+      if (sinfoL(i,1) .eq. 1 ) then
         iLE = iLE + 1
       end if
     end if
 
-   if (sinfo(i,0) .eq. 3 ) then
+   if (sinfoZ(i,0) .eq. 3 ) then
       iZ = iZ + 1
-      if (sinfo(i,1) .eq. 1 ) then
+      if (sinfoZ(i,1) .eq. 1 ) then
         iZE = iZE + 1
       end if
     end if
     
   end do
-
-  print ( nStorms + " " + iH + " " + iHE)
   print ( nStorms + " " + iL + " " + iLE)
+  print ( nStorms + " " + iH + " " + iHE)
   print ( nStorms + " " + iZ + " " + iZE)
 
   

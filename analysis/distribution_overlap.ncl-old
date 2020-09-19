@@ -12,7 +12,7 @@
 begin
 
   variable = (/"speed","accelSpeed","accelCurve"/)
-  basinAnalysis = "WP"
+  basinAnalysis = "NA"
 ; 
 ; user inputs
   startYear = 1966
@@ -78,10 +78,6 @@ begin
   print ( cd_calendar(startTime,-3) + " " +  cd_calendar(endTime,-3) )
 ;
 ;...................................................
-
-
- outputText = new ((/nBin,3/), "string" )
-  
   do ivar = 0,2
 
     print ( "IVAR = " + ivar)
@@ -174,7 +170,7 @@ begin
     
     ;print (var)
 
-    do i = 0,nBin-1
+    do i = 0,nBin-2
       dat := histoDat(i,0:histoCount(i)-1)
       qsort(dat)
       dimt = dimsizes(dat)
@@ -185,19 +181,11 @@ begin
       xmed = dim_median(dat)
       ave(i) = avg(dat)
       sdev =     stddev(dat) 
-                                ;outString := (sprintf("%5.2f",lat1(i)) +"--" + sprintf("%5.2f",lat2(i))  + " & " +     sprinti("%5i",histoCount(i) ) + " & " +  sprintf("%5.2f",ave(i)) + " & " +  sprintf("%5.1f",xmed)  + " & " +  sprintf("%5.1f",sdev) + " \\")
-      outString := (sprintf("%2.0f",lat1(i)) +"--" + sprintf("%2.0f",lat2(i))  + " & " +     sprinti("%5i",histoCount(i) ) + " & " +  sprintf("%5.2f",ave(i)) + " & " +  sprintf("%5.1f",xmed)  + " & " +  sprintf("%5.1f",sdev) )
-      
-      
-      print  ( " " + outString  + " \\" )
-
-      if ( ivar .eq. 0 ) then
-        outputText(i,ivar) = outString
-      else
-        outputText(i,ivar) = sprintf("%5.2f",ave(i)) + " & " +  sprintf("%5.1f",xmed)  + " & " +  sprintf("%5.1f",sdev)
-      end if
+      ;outString := (sprintf("%5.2f",lat1(i)) +"--" + sprintf("%5.2f",lat2(i))  + " & " +     sprinti("%5i",histoCount(i) ) + " & " +  sprintf("%5.2f",ave(i)) + " & " +  sprintf("%5.1f",xmed)  + " & " +  sprintf("%5.1f",sdev) + " \\")
+  outString := (sprintf("%2.0f",lat1(i)) +"--" + sprintf("%2.0f",lat2(i))  + " & " +     sprinti("%5i",histoCount(i) ) + " & " +  sprintf("%5.2f",ave(i)) + " & " +  sprintf("%5.1f",xmed)  + " & " +  sprintf("%5.1f",sdev) + " \\")
 
       
+      print  ( " " + outString ) 
       hist(i,:) = (/dat(x10),dat(x25),xmed,dat(x75),dat(x90)/)      
     end do
     
@@ -253,11 +241,7 @@ begin
 
    
 
-
-
-
-  print ("====================================================================================")
-  print ( " " + outputText(:,0) + " & " + outputText(:,1) + " & " + outputText(:,2) + " \\" )
+  
 end
 
 

@@ -37,7 +37,7 @@ begin
 
 
 
-  fileName = "../tcSpeed_" + basinAnalysis + "_1965_2019.nc"
+  fileName = "../tcSpeed_" + basinAnalysis + ".nc"
 
   fileIn = addfile( fileName, "r" )
     
