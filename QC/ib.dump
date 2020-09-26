@@ -1,0 +1,190 @@
+ Copyright (C) 1995-2019 - All Rights Reserved
+ University Corporation for Atmospheric Research
+ NCAR Command Language Version 6.6.2
+ The use of this software is governed by a License Agreement.
+ See http://www.ncl.ucar.edu/ for more details.
+
+Variable: f
+Type: file
+filename:	Allstorms.ibtracs_wmo.v03r10
+path:	Allstorms.ibtracs_wmo.v03r10.nc
+   file global attributes:
+      Title : IBTrACS-WMO: NetCDF reformat
+      Version : v03r10
+      Description : IBTrACS-WMO data reformatted to contain 
+all data in one netCDF file. Also an attempt has been made
+to have the data appear as trajectories in the CDM
+      cdm_datatype : Trajectory
+      trajectoryDimension : storm
+      Conventions : CF-1.0
+      metadata_link : gov.noaa.ncdc:C00834
+   dimensions:
+      storm = 7367  // unlimited
+      time = 137
+      ncharsn = 13
+      ncharnm = 57
+      center = 26
+      ncharcn = 10
+   variables:
+      character storm_sn ( storm, ncharsn )
+         long_name :	Storm serial number
+
+      character name ( storm, ncharnm )
+         long_name :	Storm name
+
+      short numObs ( storm )
+         long_name :	Number of observations for the storm
+
+      short season ( storm )
+         long_name :	Year based on season
+         Note :	Following WMO,
+NH Seasons begin 1 January and 
+SH Seasons begin 1 July the prior year
+
+      byte track_type ( storm )
+         long_name :	Track type
+         key :	0 = main - cyclogenesis to cyclolysis
+1 = merge - cyclogenesis to merger
+2 = split - split to cyclolysis
+3 = other - split to merger
+
+      byte genesis_basin ( storm )
+         long_name :	Basin of genesis
+         units :	 
+         key :	0 = NA - North Atlantic
+1 = SA - South Atlantic
+2 = WP - West Pacific
+3 = EP - East Pacific
+4 = SP - South Pacific
+5 = NI - North Indian
+6 = SI - South Indian
+7 = AS - Arabian Sea
+8 = BB - Bay of Bengal
+9 = EA - Eastern Australia
+10 = WA - Western Australia
+11 = CP - Central Pacific
+12 = CS - Carribbean Sea
+13 = GM - Gulf of Mexico
+14 = MM - Missing
+         Note :	Based on where the storm began
+
+      byte num_basins ( storm )
+         long_name :	Number of basins through which the storm passes
+         units :	 
+
+      byte basin ( storm, time )
+         long_name :	Basin
+         units :	 
+         key :	0 = NA - North Atlantic
+1 = SA - South Atlantic
+2 = WP - West Pacific
+3 = EP - East Pacific
+4 = SP - South Pacific
+5 = NI - North Indian
+6 = SI - South Indian
+7 = AS - Arabian Sea
+8 = BB - Bay of Bengal
+9 = EA - Eastern Australia
+10 = WA - Western Australia
+11 = CP - Central Pacific
+12 = CS - Carribbean Sea
+13 = GM - Gulf of Mexico
+14 = MM - Missing
+         Note :	Based on present location
+         _FillValue :	-127
+
+      byte wind_avg_period ( center )
+         long_name :	Wind speed averaging period
+         units :	min
+         _FillValue :	-127
+
+      character source ( center, ncharcn )
+         long_name :	Source name
+         Note :	This order matches the dimension in source_* variables
+
+      double time_wmo ( storm, time )
+         long_name :	Modified Julian Day
+         units :	days since 1858-11-17 00:00:00
+         _FillValue :	9.969209999999999e+36
+
+      short lat_wmo ( storm, time )
+         long_name :	Storm center latitude
+         units :	degrees_north
+         scale_factor :	0.01
+         _FillValue :	-32767
+
+      short lon_wmo ( storm, time )
+         long_name :	Storm center longitude
+         units :	degrees_east
+         scale_factor :	0.01
+         _FillValue :	-32767
+
+      byte alt ( storm, time )
+         long_name :	Altitude
+         units :	m
+         _FillValue :	-127
+         note :	only included in an attempt to have THREDDS recognize the file as a trajectory
+
+      short wind_wmo ( storm, time )
+         long_name :	Maximum Sustained Wind (MSW)
+         units :	kt
+         scale_factor :	0.1
+         _FillValue :	-32767
+
+      short pres_wmo ( storm, time )
+         long_name :	Minimum Central Pressure (MCP)
+         units :	mb
+         scale_factor :	0.1
+         _FillValue :	-32767
+
+      byte sub_basin ( storm, time )
+         long_name :	Sub-Basin
+         units :	 
+         key :	0 = NA - North Atlantic
+1 = SA - South Atlantic
+2 = WP - West Pacific
+3 = EP - East Pacific
+4 = SP - South Pacific
+5 = NI - North Indian
+6 = SI - South Indian
+7 = AS - Arabian Sea
+8 = BB - Bay of Bengal
+9 = EA - Eastern Australia
+10 = WA - Western Australia
+11 = CP - Central Pacific
+12 = CS - Carribbean Sea
+13 = GM - Gulf of Mexico
+14 = MM - Missing
+         Note :	Based on present location
+         _FillValue :	-127
+
+      byte nature_wmo ( storm, time )
+         long_name :	Storm nature
+         key :	0 = TS - Tropical
+1 = SS - Subtropical
+2 = ET - Extratropical
+3 = DS - Disturbance
+4 = MX - Mix of conflicting reports
+5 = NR - Not Reported
+6 = MM - Missing
+7 =  - Missing
+         Note :	Based on classification from original sources
+         _FillValue :	-127
+
+      byte source_wmo ( storm, time )
+         long_name :	Source used as WMO agency
+         flag_values :	0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25
+         flag_meanings :	hurdat_atl td9636 reunion atcf mlc_natl ds824_sh ds824_ni bom ds824_au jtwc_sh jtwc_wp td9635 ds824_wp jtwc_io cma hurdat_epa jtwc_ep ds824_ep jtwc_cp tokyo neumann hko cphc wellington newdelhi nadi
+         _FillValue :	-127
+
+      short dist2land ( storm, time )
+         long_name :	Distance to land
+         units :	km
+         _FillValue :	-999
+
+      short landfall ( storm, time )
+         long_name :	Minimum distance to land until next report (0=landfall)
+         units :	km
+         _FillValue :	-999
+
+ 

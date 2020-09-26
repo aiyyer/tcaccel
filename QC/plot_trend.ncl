@@ -9,14 +9,16 @@
 ;----------------------------------------------------------------------------
 ;----------------------------------------------------------------------------
 begin
+
+
+
   
   ncdf = addfile("dat.nc" ,"r")  ; open output netCDF file
+
   startYear = ncdf->startYear
-  endYear   = ncdf->endYear
+  endYear  = ncdf->endYear
+    
   ave   = ncdf->ave
-
-
-  
   x = ispan(startYear,endYear,1)
 
   printVarSummary(ave)

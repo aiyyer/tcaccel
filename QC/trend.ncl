@@ -1,65 +1,40 @@
 ; a program to:
-;
-;=====================================================================
 ; Calculate the trend in TC acceleration/speed in latitude bands
 ; user specifies the width of the band and overlap
-;
+; output: pdf plot
 ;
 ;
 ; NCSU Tropical Dynamics Group
-; A. Aiyyer
 ;
-;======================================================================
-; Last Update Sep 21, 2020
-;             -Some more testing to confirm results of trends
 ;----------------------------------------------------------------------------
-
-
 
 begin
 
-  basinAnalysis = "NA"
-  fileName = "../tcMotion.nc"
-  startYear = 1949
-  endYear   = 2019
-  variable = (/"speed","accelSpeed","accelCurve"/)
-  ivar       = 1
-
- ; threshFlag = 1
- ; sfac       = 1.25
-  
-  threshFlag = 1
-  sfac       = 1.
+  basinAnalysis = 0
 
 
-  var = variable(ivar)
-  
-  
-; choose the latitude band
-  
-;  latS =   0. ; 5.0
-;  dlat =  20.  ;10. ;10.0
-;  latN = latS + dlat    
-;  nn   = 7
+  fileName = "tcMotion.nc"
 
-; entire basin 
-  latS = -90. ; 5.0
-  dlat =  180.  ;10. ;10.0
+  
+  startYear = 1951
+  endYear   = 2016
+  
+  latS =   0. ; 5.0
+  dlat =  90.  ;10. ;10.0
   latN = latS + dlat    
   nn = 1
 
-;  latS = 20. ; 5.0
-;  dlat = 30.  ;10. ;10.0
-;  latN = latS + dlat    
-;  nn = 1
 
-
-  
   nYears    = endYear - startYear + 1
   print ( "Start Year = " + startYear + " end year = " + endYear + " " + nYears)
   
   fileIn = addfile( fileName, "r" )
   time        = fileIn->time
+  time!0 = "storm"
+  time!1 = "dates"
+
+  printVarSummary(time)
+  
 ; we expect time units to be in days
   unitsExpected  = "days since 1858-11-17 00:00:00"
   if (time@units .ne. unitsExpected ) then
@@ -72,43 +47,47 @@ begin
   startTime = cd_inv_calendar(startYear,1,1,0,0,0,time@units,  0)
   endTime   = cd_inv_calendar(endYear,12,31,24,0,0,time@units, 0)
 ;
-  
-  dat := fileIn->$var$
-  dat@name = var
-  ;printVarSummary(dat)
 
-  if ( var .eq. "speed"  .or. var .eq. "speedIB" ) then
-    Amax = 60.*3.6
-    if ( dat@units .eq. "m/s" ) then
-      dat := dat*3.6 ; now km/hr per day
-      dat@units = "km/hr" 
-    else
-      print ("Units unexpected! Terminating code!")
-      exit
-    end if
-  end if  
-  if ( var .eq. "accelSpeed" .or. var .eq.  "accelCurve" ) then
-    Amax = 60.*3.6
-    if ( dat@units .eq. "m/s per day" ) then
-      dat := dat*3.6 ; now km/hr per day
-      dat@units = "km/hr per day" 
-    else
-      print ("Units unexpected! Terminating code!")
-      exit
-    end if
-  end if
+  print ( cd_calendar(startTime,-3)  + " " + cd_calendar(endTime,-3) )
+  
+  dat = fileIn->speed
+  dat = dat*3.6 ; now km/hr
+  dat!0 = "storm"
+  dat!1 = "dates"
+  printVarSummary(dat)
+  dat@units = "km/hr" 
+
   
   basin = fileIn->basin
+  basin!0 = "storm"
+  basin!1 = "dates"
+
   
-  time  = fileIn->time
   Lat   = fileIn->lat
+  Lat!0 = "storm"
+  Lat!1 = "dates"
+
+
+  
+
   Lon   = fileIn->lon
+  Lon!0 = "storm"
+  Lon!1 = "dates"
+
+  
   numobs      = fileIn->numobs
   nature      = fileIn->nature
+
+  
   dims        = dimsizes(time)
   nStorms     = dims(0)
+
+  
   datYaLL := new( (/nn,nYears/),"double")
   datYaLL@_FillValue = dat@_FillValue
+
+
+  print ( "nStorms = " + nStorms)
   
 ;===================================================================== 
   clat     = new(nn,"double")
@@ -125,18 +104,15 @@ begin
   latNorth = clat
   latSouth = clat
   latNorth = clat
-;===================================================================== 
- 
- 
- 
- 
+;=====================================================================
+
  do imain = 0,nn-1
-   
-   print ("---------------------------------------------")
+
+  
 ;======================================================================================
 ; first establish some basic stats for this lat-bin
 ; create array to store all accel data for some more stats
-   datA     := new (700000,"double")
+   datA     := new (300000,"double")
    datA@_FillValue = dat@_FillValue
    
    icount    = 0
@@ -149,7 +125,7 @@ begin
 
    latSouth(imain) = latS
    latNorth(imain) = latN
-   yearly := new((/nYears,20000/),"double")
+   yearly := new((/nYears,4000/),"double")
    ycount := new((/nYears/),"integer")
    yearly@_FillValue = dat@_FillValue
    ycount = 0
@@ -171,44 +147,36 @@ begin
             ;print ( i + " " + stormCount + " " +  numobs(i) + " " +  cd_calendar(time(i,0),-3) + " " +  cd_calendar(time(i,numobs(i)-1),-3) )
             
             do j = 0, numobs(i)-1
+
               
-             if ( basin(i,j) .eq. basinAnalysis ) then
-                A = dat(i,j)              
-; apply the relevant checks
+             if ( basin(i,j) .eq. 2 ) ;2 .or.   basin(i,j) .eq. 11 ) then
+
                 
-                if ( Lat(i,j) .ge. latS .and. Lat(i,j) .le. latN ) then  
+                A = dat(i,j)              
+                
+               ;;if ( Lat(i,j) .ge. latS .and. Lat(i,j) .le. latN ) then  
                   totCount = totCount+1
-                  if ( chartostring(nature(i,j,:)) .eq. "NR" .or. chartostring(nature(i,j,:)) .eq. "MX") then
-                    nrCount = nrCount + 1
-                  end if
-                  if ( chartostring(nature(i,j,:)) .eq. "ET" ) then
-                    etCount = etCount + 1
-                  end if
+
+                  ;print ( i + " " + j + " " + dat(i,j) )
+
+                                    
+; ignore spuriously large values of accel
+; this is controlled by the Amax value                  
                   
-;-------------------------------------------------------------------------                
-                if ( chartostring(nature(i,j,:)) .ne. "ET" .and.  chartostring(nature(i,j,:)) .ne. "NR" ) then
-
-                  if (.not.ismissing(A) ) ;;;.and. abs(A) .le. Amax ) then
-
-                    ;print ( i + " " + j + icount + " " + A(icount) )
-                    tsCount        = tsCount + 1
+                  if (.not.ismissing(A)) then
                     datA(icount)   = A
                     icount = icount + 1
                     date=cd_calendar(time(i,j),-5)
-                    iy = date(0,0)-startYear                   
+                    iy = date(0,0)-startYear
                     ii = ycount(iy)
                     yearly(iy,ii) = A
                     ycount(iy) =  ycount(iy) + 1
-                    
                   end if ;Amax
                   
                   
-             end if ; nature
-;-------------------------------------------------------------------------
                   
-               end if ; lat
-
-             end if  ;basin
+              ;; end if ; lat
+              end if ;basin
 
               
             end do ; j
@@ -218,19 +186,14 @@ begin
       end if ;numobs 
     end do ;i
 
-
-    print ( "icount = " + icount)
+    
     ave =    avg(datA(0:icount-1) )
     std = stddev(datA(0:icount-1) )
     med = dim_median( datA(0:icount-1) )
     print ( "Lat range " + latS + " " + latN + " Mean Median Sdev = " + ave + " " + med + " " +  std)
     NRper = tofloat(nrCount*100)/tofloat(totCount)
-    TSper = tofloat(tsCount*100)/tofloat(totCount)
-    ETper = tofloat(etCount*100)/tofloat(totCount)
     
-    print ( "tot count=" + totCount + " NR count="+nrCount + " NR per="+ NRper)
-    print ( "tot count=" + totCount + " TS count="+tsCount + " ts per="+ TSper)
-    print ( "tot count=" + totCount + " ET count="+etCount + " ET per="+ ETper)
+    print ( "tot count=" + totCount)
     
     latAve(imain)   = ave
     latMed(imain)   = med
@@ -243,23 +206,6 @@ begin
     yearlyThresh = yearly
 
 
-    if ( threshFlag .ne. 0 ) then
-      yearlyThresh =  yearlyThresh@_FillValue
-    end if
-    
-    if ( threshFlag .eq. 1 ) then
-      thresh =  ave  + sfac*std
-      print ( "thresh = " + thresh)
-      yearlyThresh =  yearlyThresh@_FillValue
-      yearlyThresh = where ( yearly .gt. thresh, yearly, yearly@_FillValue)
-    end if
-    
-    if ( threshFlag .eq. -1 ) then
-      thresh =  ave  - sfac*std
-      print ( "thresh = " + thresh)
-      yearlyThresh = where ( yearly .lt. thresh, yearly, yearly@_FillValue)
-    end if
-    
     print ( "icount = " + icount + " " + sum(ycount) + " " + sum(yearlyThresh) )
     
     
@@ -283,7 +229,7 @@ begin
         med     =   yearlyThresh@_FillValue
         datY(iy) =  yearlyThresh@_FillValue
       end if
-      ;print ( x(iy) + " " +   datY(iy) )
+       print ( x(iy) + " " +   datY(iy) )
     end do
  
 
@@ -361,9 +307,8 @@ begin
     
     print  ( " " + outString ) 
 
-  end do
 
-  datYaLL@name = var
+  end do
   
                                 ; write out the yearly data
   system ( "rm dat.nc")

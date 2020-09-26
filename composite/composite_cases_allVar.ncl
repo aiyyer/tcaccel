@@ -222,7 +222,7 @@ begin
                                 ;printVarSummary(climdate)
                                 ; print("looking for " + climdate + " " + cd_calendar(climdate,-3))
             Clim := inClim->$vars(imain)$({climdate},{1000:50},{-10.:80.},:)
-            
+
             if (lagCount.eq. 0 ) then
               dims = dimsizes(Dat)
               nz = dims(0)

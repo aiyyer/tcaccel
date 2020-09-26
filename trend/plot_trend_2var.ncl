@@ -1,0 +1,118 @@
+;----------------------------------------------------------------------------
+; a program to:
+; 
+; output: pdf plot
+;
+;
+; NCSU Tropical Dynamics Group
+;
+;----------------------------------------------------------------------------
+;----------------------------------------------------------------------------
+
+
+begin
+
+
+
+  file1 = "dat_atl_all.nc"
+  file2 = "dat_atl_noET_noNR.nc"
+  vari = "Speed"
+
+
+  file1 = "dat_atl_all_accelS_sfac1.nc"
+  file2 = "dat_atl_noET_noNR_accelS_sfac1.nc"
+  vari = "Tangential Acceleration"
+
+  
+  ncdf = addfile(file1 ,"r")  ; open output netCDF file
+  startYear1 = ncdf->startYear
+  endYear1   = ncdf->endYear
+  ave1   = ncdf->ave
+
+
+  ncdf = addfile(file2 ,"r")  ; open output netCDF file
+  startYear2 = ncdf->startYear
+  endYear2   = ncdf->endYear
+  ave2       = ncdf->ave
+
+
+  if ( startYear1 .ne. startYear2 ) then
+    print ("start year mismatch! terminating!!")
+    exit
+  end if
+  if ( endYear1 .ne. endYear2 ) then
+    print ("end year mismatch! terminating!!")
+    exit
+  end if
+  x = ispan(startYear1,endYear1,1)
+
+
+  N = dimsizes(x)
+  dat = new( (/4,N/), typeof(ave1) )
+  dat = dat@_FillValue
+  dat(0,:) = ave1(0,:)
+  dat(1,:) = ave2(0,:)
+  
+
+
+; calculate trends  
+  y =  ave1(0,:)
+  rc :=  regline_stats(x,y) ; linear regression coef
+  print( "trend = " + rc@b(1) + " pval = " + rc@pval(1))
+  print( "2.5% and 97.5%  conf intervals " + rc@b95(0) + " "  +  rc@b95(1) )
+  dat(2,:) = rc@Yest
+  print (" " )
+
+; calculate trends  
+  y =  ave2(0,:)
+  rc :=  regline_stats(x,y) ; linear regression coef
+  print( "trend = " + rc@b(1) + " pval = " + rc@pval(1))
+  print( "2.5% and 97.5%  conf intervals " + rc@b95(0) + " "  +  rc@b95(1) )
+  dat(3,:) = rc@Yest
+
+
+
+  
+;************************************************
+; plotting parameters
+; This illustrates one approach. Overlays could also be used.
+;************************************************
+   wks  = gsn_open_wks("pdf","trend")             ; send graphics to PNG file
+   
+   res                     = True                   ; plot mods desired
+   res@xyMarkLineModes     = (/"Lines","Lines","Lines","Lines"/)  ; choose which have markers
+   res@xyMarkers           = 16                     ; choose type of marker 
+   res@xyMarkerColor       = "red"                  ; Marker color
+   res@xyMarkerSizeF       = 0.005                  ; Marker size (default 0.01)
+   res@xyDashPatterns      = 1                      ; solid line 
+   res@xyLineThicknesses   = (/4,4,1,1/)                ; set second line to 2
+   res@tmYLFormat          = "f"                    ; not necessary but nicer labels 
+   res@tiMainString        = " "  ; title
+   res@xyLineColors= (/"purple", "green","black","red"/)        ; set polymarker color
+   res@xyExplicitLegendLabels = (/"ALL","NO ET,NR","Trend ALL", "Trend NO ET,NR"/)  
+   res@pmLegendDisplayMode    = "Always"            ; turn on legend
+   res@pmLegendSide           = "Top"               ; Change location of 
+ 
+   res@pmLegendDisplayMode    = "Always"            ; turn on legend
+   res@pmLegendSide           = "Top"               ; Change location of 
+   res@pmLegendParallelPosF   = .8                  ; move units right
+   res@pmLegendOrthogonalPosF = -0.26                ; move units down
+   res@pmLegendWidthF         = 0.12                ; Change width and
+   res@pmLegendHeightF        = 0.10                ; height of legend.
+   res@lgPerimOn              = False               ; turn off box around
+   res@lgLabelFontHeightF     = .013                 ; label font height
+   res@lgItemOrder  = (/3,2,1,0/)   ; Reorder the legends
+
+;   plotDat = new ( (/2,nn/),"float")
+;   plotDat(0,:) = trend
+;   plotDat(1,:) = signi
+
+   res@tiYAxisString = vari
+   res@tiXAxisString = "Year"
+
+   plot  = gsn_csm_xy(wks,x,dat,res)           ; create plot
+
+
+end
+
+

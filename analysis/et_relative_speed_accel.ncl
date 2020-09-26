@@ -17,19 +17,28 @@
 ;-----------------------------------------------------------------------------
 ;
 ; updated with comments and to include the first and last TC position
-; Dec 5, 2019 
+; Dec 5, 2019
+;
+; Sep 22 2020: Clean up code
+;
 ;-----------------------------------------------------------------------------
 ;
 ;
+
 
 
 begin
 ;  
 ; user inputs
   startYear = 1966
-  endYear   = 2018
+  endYear   = 2019
   nYears    = endYear - startYear + 1
+  basinAnalysis = "NA"   ;WP, NA...
+;--------------------------------------------------------------------------      
 
+
+  
+  fileName = "../tcMotion.nc"
   print ( "Start Year = " + startYear + " end year = " + endYear)
 
 ; choose the latitude band
@@ -38,7 +47,8 @@ begin
 
 
 ;--------------------------------------------------------------------------      
-  fileName = "../tcSpeed_WP_1965_2019.nc"
+
+  
   fileIn = addfile( fileName, "r" )
   time        = fileIn->time
 ; we expect time units to be in days
@@ -59,7 +69,8 @@ begin
   accelC   = fileIn->accelCurve  ;curvature/normal
 ; read the speeds  
   speed   = fileIn->speed
-    
+  basin = fileIn->basin
+
   time  = fileIn->time
   Lat   = fileIn->lat
   Lon   = fileIn->lon
@@ -93,267 +104,259 @@ begin
   end if
 
 
-; bin size in hours
-  lagH = 72
-  dh   = 3
-  nn   = 600
-  nh   = 2*lagH/dh + 1
-  nh2  = (nh-1)/2
-
-    
-  d1 = -nh2*dh
-  d2 =  nh2*dh
-  hours   = fspan(d1,d2,nh)
+; go 72 hours prior to 48 hours post ET
+  lagM = -72
+  lagP =  48
+  dh   =  3   ; data is 3 hourly
+  nn   =  800 ; number of storms likely in the data
+  nh   = (-lagM+lagP) /dh + 1 ; number of hour bins
+  hours   = ispan(lagM,lagP,dh)
 
 ; these arrays will hold the accel and speed values for each storm
-; for the lags defined above 
+; for the ET-relative hours defined above
+  
   accelET:= new( (/2,nn,nh/),"double")
   accelET@_FillValue =  accelS@_FillValue
   accelET            = accelET@_FillValue
+  accelET!0 = "type"
+  accelET&type = (/"tang","curv"/)
+  accelET!1 = "storm"
+  accelET!2 = "hour"
+  accelET&hour = hours
 ;
   speedET = new( (/nn,nh/),"double")
   speedET@_FillValue = speed@_FillValue 
   speedET            = speedET@_FillValue
-
-
+  speedET!0 = "storm"
+  speedET!1 = "hour"
+  speedET&hour = hours
   
 ;  
 ;======================================================================================
-; first establish some basic stats for this lat-bin
-; create array to store all accel data for some more stats
-    icount    = 0
-    nrCount   = 0
-    totCount  = 0
-    tsCount   = 0
-    ETCount   = 0
-
+; some counters
+  
+  icount    = 0
+  nrCount   = 0
+  totCount  = 0
+  tsCount   = 0
+  ETCount   = 0
+  
     
 ;loop over storms  
     do i = 0,nStorms-1
 
+;
+;-----discard non TS storms and storms that form in basins other than what was requested.
+;     
+      TSFlag       = 0
+      BasinFlag    = 0
+      if (  basin(i,0) .eq. basinAnalysis ) then
+        ;print ( i + " matches basin requested = " + basinAnalysis )
+        BasinFlag = 1
+      end if
+      do j = 0, numobs(i)-1
+        if ( chartostring(nature(i,j,:)) .eq. "TS" ) then
+          TSFlag    = 1
+        end if
+      end do
 
-;-----discard non TS storms
-;      TSFlag    = 0
-;      do j = 0, numobs(i)-1
-;        if ( chartostring(nature(i,j,:)) .eq. "TS" ) then
-;          TSFlag    = 1
-;        end if
-;      end do     
-;      if ( TSFlag .eq. 0 ) then
-;        numobs(i) = 0
-;      end if
-;----------------------------
-
+; Now move forward with this storm
       
-      if ( numobs(i) .ne. 0 ) then
-        numDays = todouble(time(i,numobs(i)-1) - time(i,0))
+      if ( TSFlag .eq. 1 .and. BasinFlag .eq. 1 ) then
         
-;storm must live at least 2 days
-      if (  numDays .ge. 2 ) then
-        if ( time(i,0) .ge. startTime .and. time(i,  numobs(i)-1) .le. endTime ) then
+        if ( numobs(i) .ne. 0 ) then
+          numDays = todouble(time(i,numobs(i)-1) - time(i,0))
+        end if
 
-; initialize flag          
-          ETflag = 0
-          totCount = totCount + 1
-
-
-
-          
-
-; temporarily store the speed and accel for this TC in
-; new arrays          
-          speedAccel := accelS(i,0:numobs(i)-1)    ;accel for this track
-          curvAccel  := accelC(i,0:numobs(i)-1)    ;accel for this track
-
-          ; smooth the accel?
-          opt   = 0         
-          nave  = 5
-          curvAccel  :=  runave (accelC(i,0:numobs(i)-1)  , nave, opt)
-          speedAccel :=  runave (accelS(i,0:numobs(i)-1)  , nave, opt)
-
-          stormSpeed := speed(i,0:numobs(i)-1)    ;speed for this track
-          dates:=  time(i,0:numobs(i)-1)          ;dates along the track
-          speedAccel!0    = "time"
-          speedAccel&time = dates
-          curvAccel!0     = "time"
-          curvAccel&time  = dates
-          stormSpeed!0    = "time"
-          stormSpeed&time = dates
-
- ; now loop over all track points         
+        
+;storm must live at least 3 days
+        if (  numDays .ge. 3 ) then          
+          if ( time(i,0) .ge. startTime .and. time(i,  numobs(i)-1) .le. endTime ) then
             
+            totCount = totCount + 1
+            
+; temporarily store the speed and accel for this TC in ; new arrays          
+            speedAccel := accelS(i,0:numobs(i)-1)    ;accel for this track
+            curvAccel  := accelC(i,0:numobs(i)-1)    ;accel for this track
+            stormSpeed :=  speed(i,0:numobs(i)-1)    ;speed for this track
+            
+            
+            dates:=  time(i,0:numobs(i)-1)          ;dates along the track
+            speedAccel!0    = "time"
+            speedAccel&time = dates
+            curvAccel!0     = "time"
+            curvAccel&time  = dates
+            stormSpeed!0    = "time"
+            stormSpeed&time = dates
+            
+            nat :=  chartostring( nature(i,0:numobs(i)-1,:) )
+            nat!0      = "time"
+            nat&time   = dates
+            ETflag = 0
+            
+                                ; now loop over all track points                    
             do j = 0, numobs(i)-1
+              
 ; apply the relevant checks
-              if ( Lat(i,j) .ge. latS .and. Lat(i,j) .le. latN ) then
-                if ( ETflag .eq. 0 ) then
-                  if ( chartostring(nature(i,j,:)) .eq. "ET" ) then
-                    ETflag = 1
-
- 
-
+              if ( ETflag .eq. 0 ) then
+                if ( chartostring(nature(i,j,:)) .eq. "ET" ) then
+                  
+                  ETCount   = ETCount+1
+                  
+                  
+                  ETflag = 1
+                   deltaDaysToEndOfTrack =  time(i,numobs(i)-1) -  time(i,j)
+                   deltaDaysToBegOfTrack =  time(i,j) - time(i,0)
+                   
+                   
 ; now that we have found the ET, lets take each dh hour period spannning lagH hours before and after
 ; and record the speed/accel
-
-
+                   
 ; lets make sure that we have TC data after ET
-
-                    ;print ( "ET j =  " + j )
-                    deltaDaysToEndOfTrack =  time(i,numobs(i)-1) -  time(i,j)
-                    ;print ("Delta Time = " + deltaDaysToEndOfTrack)
-                    ;exit
-
-                    
-                    ;print ( ETCount + " " + i + " " + j + " " + Lat(i,j) + " " + cd_calendar( time(i,j),-3))
-                    
-
-
-                    if (  deltaDaysToEndOfTrack .ge.   lagH/24. ) then
-                      
-; loop over the times before and after the first ET designation
-                      do ih = -nh2,nh2
-                        
-                        ah    = ih*dh/24.  ;in days, this is the lag relative to ET designation
-                        date := dates(j)   ;the reference date at ET designation
-                        date  = date + ah  ;the date corresponding to the lag ah
-                        
+                   
+                   
+                   deltaDaysToEndOfTrack =  time(i,numobs(i)-1) -  time(i,j)
+                   deltaDaysToBegOfTrack =  time(i,j) - time(i,0)
+                   
+                   ;if (  deltaDaysToEndOfTrack .ge.  2. .and. deltaDaysToBegOfTrack .ge.  3. ) then
+                     
+                     do ih = lagM,lagP,dh
+                       
+                       ah    = tofloat(ih)/24.  ;in days, this is the lag relative to ET designation
+                       date := dates(j)   ;the reference date at ET designation
+                       date  = date + ah  ;the date corresponding to the lag ah
+                       
 ; check that we are not running into the track begin/end                        
-                        if ( date .ge. dates(0) .and.  date .le. dates(numobs(i)-1))
-                          accelET(0,ETCount,ih+nh2)  = speedAccel({date})
-                          accelET(1,ETCount,ih+nh2)  = curvAccel({date})
-                          speedET(ETCount,ih+nh2)    = stormSpeed({date})
-                        end if
-                        ;print ( "** " + ih + " " +  accelET(0,ETCount,ih+nh2) )
-                        
-                      end do  ;ih
-                      
-                      
-                      ;exit
-                      
-                      
-                      ETCount = ETCount + 1
-                      
-                    end if
-                  end if ;ET
-                end if   ;ETflag
-              end if ; lat              
-          end do ; j
-          
-        end if
-      end if ;numdays
-    end if
-    end do ;i
-
-
-    print ("Qual Storm numbers = " + totCount)
-    print ("ET Storm numbers = " + ETCount)
-    perET = 100.*tofloat(ETCount)/tofloat(totCount)
-    print ("Percent ET = " + perET)
-
-
-
-    accelET!0 = "type"
-    accelET!1 = "storm"
-    accelET!2 = "hour"
-    accelET&hour = hours
-
-    
-    ;print ( hours + " " + accelET(0,570,:) )
-    ;exit
-
+                       if ( date .ge. dates(0) .and.  date .le. dates(numobs(i)-1))
+                         accelET(0,icount,{ih})  = (/speedAccel({date})/)
+                         accelET(1,icount,{ih})  = (/curvAccel({date})/)
+                         speedET(  icount,{ih})    = (/stormSpeed({date})/)
+                       end if
+                       
+                       
+                     end do  ;ih
+                     
+                     icount=icount+1
+                     
+                     
+                   ;end if
+                   
+                   
+                   
+                 end if
+               end if
+               
+               
+             end do ;j
+             
+             
+             
+             
+             
+             
+           end if ;time
+         end if ; numdays
+       end if ; TSflag
+       
+       
+     end do ;i
+     
+     print ("Qual Storm numbers = " + totCount)
+     print ("ET Storm numbers = " + ETCount)
+     perET = 100.*tofloat(ETCount)/tofloat(totCount)
+     print ("Percent ET = " + perET)
+     print ("Storm numbers for composit= " + icount)
+     
+     
+;====================================================================================================
+     
+     
+     
+     
 ; check how many cases accelerated prior to ET
-
-    h1 = 0
-    h2 = 24
-    iP  = 0
-    do i = 0,ETCount-1
-      if(.not.all(ismissing(accelET(0,i,{h1:h2})    ))) then
-        ave = avg (accelET(0,i,{h1:h2}))
-        if ( ave .gt. 0. ) then
-          ;print ( iP + " " +  ave)
-          iP = iP + 1
-        end if
-      else
-        print ("hhh,,,," + i )
-      end if
-    end do
-    perP = 100*tofloat(iP)/tofloat(ETCount)
-    
-    ;print ( iP + " " + ETCount + " " + perP )
-    ;exit
-
-
-
-    meanA   =    dim_avg_n( accelET,1 )
-    medianA = dim_median_n( accelET,1 )
-    meanS   =    dim_avg_n( speedET,0 )
-    medianS = dim_median_n( speedET,0 )
-    
-;    do i = 0,32
-;      amin = min(accelET(0,:,i))
-;      amax = max(accelET(0,:,i))
-;      print ( hours(i)  + " " + meanA(0,i) + "  " + medianA(0,i) + " " + amin + " " + amax)
-;    end do
-
-    yMin = -20.
-    yMax =  20.
-    
-    wks = gsn_open_wks("pdf", "ET_relative_accel_speed")                ; create postscript file
-    
+     
+     h1 = -24
+     h2 = 0
+     iP  = 0
+     do i = 0,icount-1
+       if(.not.all(ismissing(accelET(0,i,{h1:h2})    ))) then
+         ave = avg (accelET(0,i,{h1:h2}))
+         if ( ave .gt. 0. ) then
+                                ;print ( iP + " " +  ave)
+           iP = iP + 1
+         end if
+       else
+       end if
+     end do
+     perP = 100*tofloat(iP)/tofloat(ETCount)
+     
+     
+     
+     meanA   =    dim_avg_n_Wrap(accelET,1 )
+     medianA = dim_median_n(accelET,1 )
+     meanS   =    dim_avg_n_Wrap( speedET,0 )
+     medianS = dim_median_n( speedET,0 )
+     
+     yMin = -20.
+     yMax =  20.
+     
+     wks = gsn_open_wks("png", "ET_relative_accel_speed")                ; create postscript file
+     
 ; resources for "left" variable
-    resL                        = True 
-    resL@xyLineThicknesses      = (/4.,4./)                  ; thicker line
-    resL@tiYAxisString = "Acceleration (km/hr/day)"
-    resL@tiXAxisString = "Hour Relative to ET"
-    resL@gsnDraw   = False                             ; don't draw yet
-    resL@gsnFrame  = False                             ; don't advance yet
-    resL@xyExplicitLegendLabels = (/"Tangential Acceleration","Curvature Acceleration "/)         ; create explicit labels
-    
-    resL@pmLegendDisplayMode    = "Always"            ; turn on legend
-    resL@pmLegendSide           = "Top"               ; Change location of 
-    resL@pmLegendParallelPosF   = .22                  ; move units right
-    resL@pmLegendOrthogonalPosF = -0.18                ; move units down
-    resL@pmLegendWidthF         = 0.12                ; Change width and
-    resL@pmLegendHeightF        = 0.10                ; height of legend.
-    resL@lgPerimOn              = False               ; turn off box around
-    resL@lgLabelFontHeightF     = .013                 ; label font height
-    resL@lgItemOrder  = (/1,0/)   ; Reorder the legends
-    
-    
+     resL                        = True 
+     resL@xyLineThicknesses      = (/8.,8./)                  ; thicker line
+     resL@tiYAxisString = "Acceleration (km/hr/day)"
+     resL@tiXAxisString = "Hour Relative to ET"
+     resL@gsnDraw   = False                             ; don't draw yet
+     resL@gsnFrame  = False                             ; don't advance yet
+     resL@xyExplicitLegendLabels = (/"Tangential Acceleration","Curvature Acceleration "/)         ; create explicit labels
+     
+     resL@pmLegendDisplayMode    = "Always"            ; turn on legend
+     resL@pmLegendSide           = "Top"               ; Change location of 
+     resL@pmLegendParallelPosF   = .22                  ; move units right
+     resL@pmLegendOrthogonalPosF = -0.18                ; move units down
+     resL@pmLegendWidthF         = 0.12                ; Change width and
+     resL@pmLegendHeightF        = 0.10                ; height of legend.
+     resL@lgPerimOn              = False               ; turn off box around
+     resL@lgLabelFontHeightF     = .013                 ; label font height
+     resL@lgItemOrder  = (/1,0/)   ; Reorder the legends
+     
+     
 ; resources for "right" variable
-    resR                        = True                      
-    resR@xyDashPatterns         = 1                   ; dashed line for 2nd
-    resR@xyLineThicknesses      = 4.                   ; thicker line
-    resR@tiYAxisString = "Speed (km/hr)"   ; axis string
-    resR@gsnDraw   = False                             ; don't draw yet
-    resR@gsnFrame  = False                             ; don't advance yet
-    resR@xyExplicitLegendLabels =  (/"Forward Speed          "/)         ; create explicit labels
-    resR@pmLegendDisplayMode    = "Always"            ; turn on legend
-    resR@pmLegendSide           = "Top"               ; Change location of 
-    resR@pmLegendParallelPosF   = .87                  ; move units right
-    resR@pmLegendOrthogonalPosF = -0.15                ; move units down
-    resR@pmLegendWidthF         = 0.12                ; Change width and
-    resR@pmLegendHeightF        = 0.10                ; height of legend.
-    resR@lgPerimOn              = False               ; turn off box around
-    resR@lgLabelFontHeightF     = .013                 ; label font height
-    
-    
-    resL@trXMinF = -1*lagH
-    resL@trXMaxF =  1*lagH
-    
-    
-    resR@trXMinF =  -1*lagH
-    resR@trXMaxF =   1*lagH
-    
-    resL@tmXBMode        = "Manual"	
-    resL@tmXBTickStartF  =  -1*lagH
-    resL@tmXBTickEndF    = 1*lagH
-    resL@tmXBTickSpacingF= dh*4
-    
-    resR@tmXBMode        = "Manual"	
-    resR@tmXBTickStartF  =  -1*lagH
-    resR@tmXBTickEndF    =  1*lagH
-    resR@tmXBTickSpacingF= resL@tmXBTickSpacingF
-    
+     resR                        = True                      
+     resR@xyDashPatterns         = 1                   ; dashed line for 2nd
+     resR@tiYAxisString = "Speed (km/hr)"   ; axis string
+     resR@gsnDraw   = False                             ; don't draw yet
+     resR@gsnFrame  = False                             ; don't advance yet
+     resR@xyExplicitLegendLabels =  (/"Forward Speed          "/)         ; create explicit labels
+     resR@pmLegendDisplayMode    = "Always"            ; turn on legend
+     resR@pmLegendSide           = "Top"               ; Change location of 
+     resR@pmLegendParallelPosF   = .87                  ; move units right
+     resR@pmLegendOrthogonalPosF = -0.15                ; move units down
+     resR@pmLegendWidthF         = 0.12                ; Change width and
+     resR@pmLegendHeightF        = 0.10                ; height of legend.
+     resR@lgPerimOn              = False               ; turn off box around
+     resR@lgLabelFontHeightF     = .013                 ; label font height
+     resR@xyLineThicknesses      = (/8.,8./)                  ; thicker line
+
+     
+     resL@trXMinF = lagM
+     resL@trXMaxF = lagP
+     
+     
+     resR@trXMinF = lagM
+     resR@trXMaxF = lagP
+     
+     resL@tmXBMode        = "Manual"	
+     resL@tmXBTickStartF  = lagM
+     resL@tmXBTickEndF    = lagP
+     resL@tmXBTickSpacingF= dh*4
+     
+     resR@tmXBMode        = "Manual"	
+     resR@tmXBTickStartF  =  lagM
+     resR@tmXBTickEndF    =  lagP
+     resR@tmXBTickSpacingF= resL@tmXBTickSpacingF
+     
                                 ;resL@tmXBMode        = "Explicit"	
                                 ;resL@tmXBValues      = ispan(-1*lagH, 1*lagH,dh)
     
@@ -364,16 +367,33 @@ begin
     
     resp                  = True                      ; polyline mods desired
     resp@gsLineColor      = "red"                     ; color of lines
-    resp@gsLineThicknessF = 1.0                       ; thickness of lines
-    resp@gsLineLabelString= "ET"                    ; adds a line label string
+    resp@gsLineThicknessF = 3.0                       ; thickness of lines
+    resp@gsLineLabelString= "ET"                      ; adds a line label string
     
       
-    resL@xyLineColors= (/"black", "purple"/)        ; set polymarker color
+    resL@xyLineColors= (/"red", "blue"/)        ; set polymarker color
     resR@xyLineColors= (/"green", "purple"/)        ; set polymarker color
 
-     ;plot = gsn_csm_xy2(wks,hours,meanA(:,:),meanS,resL,resR)
-    plot = gsn_csm_xy2(wks,hours,medianA(:,:),medianS,resL,resR)
 
+
+   ; smooth the data for display
+    opt   = 1         
+    nave  = 5
+
+    printVarSummary(meanA)
+    
+    meanA(0,:)  =  runave (meanA(0,:) , nave, opt)
+    meanS       =  runave (meanS , nave, opt)
+    do ii = 0,1
+      nave  = 5
+      meanA(1,:)  =  runave (meanA(1,:) , nave, opt)
+    end do
+
+    
+    plot = gsn_csm_xy2(wks,hours,meanA,meanS,resL,resR)
+    ;plot = gsn_csm_xy2(wks,hours,medianA,medianS,resL,resR)
+
+    ; plot = gsn_csm_xy(wks,hours,meanS,resR)
 
     ; draw a vertical line to mark ET which is x=0 line
     resp                  = True                      ; polyline mods desired
@@ -381,13 +401,11 @@ begin
     resp@gsLineThicknessF = 2.0                       ; thickness of lines
     resp@gsLineLabelString= "ET"                    ; adds a line label string
     xx = (/ 0., 0./)
-    yy = (/-10., 50. /)
+    yy = (/-20., 50. /)
     dum=gsn_add_polyline(wks,plot,xx,yy,resp)      
     
     draw(plot)
     frame(wks)
-    
-    
     print ( "Normal code end")
     
 end

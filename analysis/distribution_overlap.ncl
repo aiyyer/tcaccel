@@ -8,11 +8,18 @@
 ; NCSU Tropical Dynamics Group
 ;
 ;----------------------------------------------------------------------------
+;
+; updated Sep 19 to use the single file for all basins/times
+;----------------------------------------------------------------------------
 
 begin
 
+
+  fileName = "../tcMotion.nc"
+  fileIn = addfile( fileName, "r" )
+  
   variable = (/"speed","accelSpeed","accelCurve"/)
-  basinAnalysis = "WP"
+  basinAnalysis = "NA"
 ; 
 ; user inputs
   startYear = 1966
@@ -37,7 +44,7 @@ begin
     lat1(i) = latS    + i*dlat
     lat2(i) = lat1(i) + binWidth
     cen = .5*(lat1(i) + lat2(i) )
-    print ( i + " " + cen + " " + lat1(i) + " " + lat2(i))
+;   print ( i + " " + cen + " " + lat1(i) + " " + lat2(i))
   end do
   x =  .5*(lat1 + lat2)
 ;  
@@ -48,12 +55,12 @@ begin
   plot = new(3,graphic)                          ; create a plot array
   dum  = new(3,graphic)                          ; create a plot array
 ;
-  fileName = "../tcSpeed_" + basinAnalysis + ".nc"
-  fileIn = addfile( fileName, "r" )
+
 ;    
   time = fileIn->time
   Lat  = fileIn->lat
   Lon  = fileIn->lon
+  basin = fileIn->basin
   numobs      = fileIn->numobs
   nature      = fileIn->nature
   dims        = dimsizes(time)
@@ -76,15 +83,18 @@ begin
   endTime = cd_inv_calendar(endYear,12,31,24,0,0,time@units, 0)
 
   print ( cd_calendar(startTime,-3) + " " +  cd_calendar(endTime,-3) )
+
+  
 ;
 ;...................................................
-
+;
 
  outputText = new ((/nBin,3/), "string" )
   
   do ivar = 0,2
 
     print ( "IVAR = " + ivar)
+
 ; initialize arrays
 
     histoCount = 0
@@ -95,7 +105,7 @@ begin
 
     ;printVarSummary(dat)
     
-    if ( var .eq. "speed" ) then
+    if ( var .eq. "speed" .or. var .eq. "speedIB") then
       Amax = 60.*3.6
       if ( dat@units .eq. "m/s" ) then
         dat := dat*3.6 ; now km/hr per day
@@ -118,50 +128,77 @@ begin
     end if
     
     title = " " 
-    stormCount = 0
+
     Ave   = todouble(0.)
     icc =   todouble(0.)
+
+    stormCount = 0
+
 ;..................................................................
     do i = 0,nStorms-1
+      sflag = 0
       if ( numobs(i) .gt. 0 ) then
-
-        if ( time(i,0) .ge. startTime .and. time(i,0) .le. endTime ) then
+        
+        if ( time(i,0) .ge. startTime .and. time(i,numobs(i)-1) .le. endTime ) then
+          
           numDays = tofloat(time(i,numobs(i)-1) - time(i,0))
           
           
 ;   storm must live at least 2 days
           if (  numDays .ge. 2 ) then
             
-            stormCount=stormCount+1
+
+            
             do j = 0, numobs(i)-1
-              A= dat(i,j)
-              if ( chartostring(nature(i,j,:)) .ne. "ET"  .and. chartostring(nature(i,j,:)) .ne. "NR" ) then
-                if ( (Lat(i,j) .ge. latS) .and. (Lat(i,j) .le. latN) ) 
+
+              if ( basin(i,j) .eq. basinAnalysis ) then
+
+                if ( sflag .eq. 0 ) then
+                  print ( i + " " + stormCount + " " + cd_calendar( time(i,0) , -3) )
+
+                  stormCount=stormCount+1
+                  sflag = 1
+                end if
+                
+                A= dat(i,j)
+                
+                if ( chartostring(nature(i,j,:)) .ne. "ET" ) ;  .and. chartostring(nature(i,j,:)) .ne. "NR" ) then
+                  
+                  if ( (Lat(i,j) .ge. latS) .and. (Lat(i,j) .le. latN) ) 
+                    
+                    
 ; ignore spuriously large values of accel
 ; this is controlled by the xmax value
-                  if (.not.ismissing(A) .and. abs(A) .le. Amax ) then
                     
-                    iBin=-9
-                    do binJ = 0,nBin-1
-                      if ( Lat(i,j) .ge. lat1(binJ) .and. Lat(i,j) .le. lat2(binJ) ) then
+                    if (.not.ismissing(A)) ;   .and. abs(A) .le. Amax ) then                      
+                      
+                      iBin=-9
+                      do binJ = 0,nBin-1
+                        if ( Lat(i,j) .ge. lat1(binJ) .and. Lat(i,j) .le. lat2(binJ) ) then
                                 ;print ( Lat(i,j) + " found " + binJ + " " + lat1(binJ)  + " " +  lat2(binJ))
-                        iBin =binJ
-                        histoDat(iBin,histoCount(iBin)) = A
-                        histoCount(iBin) =  histoCount(iBin) + 1
-                      end if                          
-                    end do
-                    Ave = Ave*icc/(icc+1.) + A/(icc+1.)
-                    icc = icc + 1.
-                  end if   
-                end if
-              end if
-              
-            end do ;j
+                          iBin =binJ
+                          histoDat(iBin,histoCount(iBin)) = A
+                          histoCount(iBin) =  histoCount(iBin) + 1
+                        end if                          
+                      end do ;binj
+                      
+                      Ave = Ave*icc/(icc+1.) + A/(icc+1.)
+                      icc = icc + 1.
+                      
+                    end if ; A
+                    
+                  end if ;lat
+                  
+                end if ; nat
+
+              end if ;basin
+            
+          end do ;j
           end if ;numdays
         end if ;time
       end if ;numobs
     end do ;i
-    
+    exit
 ;..................................................................
 ;
 ;

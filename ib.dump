@@ -1,0 +1,2354 @@
+ Copyright (C) 1995-2019 - All Rights Reserved
+ University Corporation for Atmospheric Research
+ NCAR Command Language Version 6.6.2
+ The use of this software is governed by a License Agreement.
+ See http://www.ncl.ucar.edu/ for more details.
+
+Variable: f
+Type: file
+filename:	IBTrACS.ALL.v04r00
+path:	IBTrACS.ALL.v04r00.nc
+Number of Attributes:50
+    title	: 	IBTrACS - International Best Track Archive for Climate Stewardship - version v04r00, Position, intensity and other information for known tropical cyclones
+    summary	: 	The intent of the IBTrACS project is to overcome best track data availability issues that arise from multiple agencies producing data for different storms in different formats. This was achieved by working directly with all the Regional Specialized Meteorological Centers and other international centers and individuals to create a global best track dataset, merging storm information from multiple agencies into one product and archiving the data for public use.
+    source	: 	The original data are tropical cyclone position, intensity and otherinformation provided by various agencies and people. This is a collection of all data on each tropical cyclone recorded.
+    Conventions	: 	ACDD-1.3
+    Conventions_note	: 	Data are nearly CF-1.7 compliant. The sole issue is the storage of missing data in the latitude/longitude/time variables. Otherwise, data are CF compliant.
+    product_version	: 	v04r00
+    project	: 	International Best Track Archive for Climate Stewardship (IBTrACS)
+    processing_level	: 	NOAA Processing Level 2, Data products are derived geophysical variables at the same resolution and locations as the level 1 source data
+    acknowledgement	: 	IBTrACS was produced by a team of scientists from NOAA in collaboration with scientists worldwide.
+    references	: 	https://www.ncdc.noaa.gov/ibtracs/, doi:10.1175/2009BAMS2755.1
+    institution	: 	National Centers for Environmental Information, NESDIS, NOAA, U.S. Department of Commerce
+    publisher_type	: 	institution
+    publisher_name	: 	National Centers for Environmental Information, NESDIS, NOAA, U.S. Department of Commerce
+    publisher_email	: 	ncei.sat.info@noaa.gov
+    publisher_institution	: 	National Centers for Environmental Information, NESDIS, NOAA, U.S. Department of Commerce
+    publisher_url	: 	https://ncei.noaa.gov/
+    creator_type	: 	group
+    creator_name	: 	IBTrACS Science Team (Ken Knapp, Howard Diamond, Jim Kossin, Mike Kruk, Carl Schreck)
+    creator_institution	: 	National Centers for Environmental Information, NESDIS, NOAA, U.S. Department of Commerce
+    creator_email	: 	ibtracs.team@noaa.gov, ken.knapp@noaa.gov
+    creator_url	: 	https://www.ncdc.noaa.gov/ibtracs/
+    contributor_name	: 	"National Hurricane Center, National Weather Service, NOAA, U.S. Department of Commerce","Central Pacific Hurricane Center, National Weather Service, NOAA, U.S. Department of Commerce","Japan Meteorological Agency, RSMC Tokyo, Japan","India Meteorological Department, RSMC New Delhi, India","Bureau of Meteorology, Australia","MetService, TCWC Wellington, New Zealand","Fiji Meteorological Service, RSMC Fiji, Fiji","MeteoFrance, La Reunion, RSMC La Reunion","Shanghai Typhoon Institute, Chinese Meteorological Administration, China","Hong Kong Observatory, Hong Kong""Joint Typhoon Warning Center, U.S. Department of Defense","National Center for Atmospheric Research, University Corporation for Atmospheric Research","Charlie Neumann Southern Hemisphere Dataset","Mike Chenoweth North Atlantic Dataset"
+    contributor_role	: 	These agencies and people provide track data and best track data used to produce IBTrACS.
+    date_created	: 	2020-08-08 03:51:21
+    date_issued	: 	2020-08-08 03:51:21
+    time_coverage_start	: 	1842-10-25T03:00:00
+    time_coverage_end	: 	2020-08-08 03:51:21
+    geospatial_lat_min	: 	80.0
+    geospatial_lat_max	: 	-80.0
+    geospatial_lat_units	: 	degrees_north
+    geospatial_lat_resolution	: 	0.10
+    geospatial_lon_min	: 	-180.0
+    geospatial_lon_max	: 	 180.0
+    geospatial_lon_units	: 	degrees_east
+    geospatial_lon_resolution	: 	0.10
+    geospatial_vertical_min	: 	not applicable
+    geospatial_vertical_max	: 	not applicable 
+    naming_authority	: 	gov.noaa.ncei
+    id	: 	1842298N11080.ibtracs_int.v04r00.nc
+    metadata_link	: 	doi:10.25921/82ty-9e16
+    keywords	: 	EARTH SCIENCE> ATMOSPHERE> WEATHER EVENTS> TROPICAL CYCLONES> MAXIMUM SURFACE WIND, EARTH SCIENCE> ATMOSPHERE> WEATHER EVENTS> TROPICAL CYCLONES> MINIMUM CENTRAL PRESSURE, EARTH SCIENCE> ATMOSPHERE> WEATHER EVENTS> TROPICAL CYCLONES> TROPICAL CYCLONE TRACK, EARTH SCIENCE> ATMOSPHERE> WEATHER EVENTS> TROPICAL CYCLONES> TROPICAL CYCLONE FORCE WIND EXTENT, EARTH SCIENCE> ATMOSPHERE> WEATHER EVENTS> TROPICAL CYCLONES> TROPICAL CYCLONE RADIUS, EARTH SCIENCE> ATMOSPHERE> WEATHER EVENTS> TROPICAL CYCLONES> MAXIMUM 1-MINUTE SUSTAINED WIND, EARTH SCIENCE> ATMOSPHERE> WEATHER EVENTS> SUBTROPICAL CYCLONES > SUBTROPICAL STORM
+    keywords_vocabulary	: 	GCMD Science Keywords Version 8.6
+    standard_name_vocabulary	: 	CF Standard Name Table v52
+    history	: 	Sun Sep 13 04:35:32 2020: ncks -a -4 -L 5 temp.nc -O netcdf/IBTrACS.ALL.v04r00.nc
+Sun Sep 13 04:06:38 2020: ncrcat -6 -H -O netcdf/ibtracs.ALL.v04r00.nc
+Produced by IBTrACS for individual tracks and merged into basin and temporal collections using netCDF operators (ncrcat)
+    license	: 	These data may be redistributed and used without restriction.
+    featureType	: 	trajectory
+    cdm_data_type	: 	Trajectory
+    comment	: 	The tracks of TCs generally look like a trajectory except that it wasn't expedient to use the CF trajectory type. The team stored data in a way that approximates the trajectory profile, where each new track (each new storm) is a new trajectory.
+    nco_openmp_thread_number	: 	1
+    NCO	: 	4.4.3
+
+dimensions:
+    storm	= 13422
+    charsn	= 13
+    date_time	= 360
+    char2	= 2
+    char128	= 128
+    niso	= 19
+    char14	= 14
+    char32	= 32
+    char1	= 1
+    quadrant	= 4
+    char6	= 6
+    char10	= 10
+
+chunk dimensions:
+    storm	= 13422
+    charsn	= 13
+    date_time	= 180
+    char2	= 1
+    char128	= 128
+    niso	= 5
+    char14	= 5
+    char32	= 8
+    char1	= 1
+    quadrant	= 1
+    char6	= 2
+    char10	= 3
+
+variables:
+    Variable: numobs
+    Type: short
+    Total Size: 13422 values
+                26844 bytes
+    Number of Dimensions: 1
+    Dimensions and sizes:	[ 13422 <storm> ]
+    Chunking Info:	[ 13422 <storm> ]
+    Coordinates:
+        Number of Attributes:        4
+            long_name	: 	Number of observations per system
+            units	: 	1
+            _FillValue	: 	-9999
+            coverage_content_type	: 	coordinate
+
+    Variable: sid
+    Type: character
+    Total Size: 174486 values
+                174486 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 13 <charsn> ]
+    Chunking Info:	[ 13422 <storm> x 13 <charsn> ]
+    Coordinates:
+        Number of Attributes:        3
+            long_name	: 	SID (IBTrACS Serial ID)
+            cf_role	: 	trajectory_id
+            coverage_content_type	: 	auxiliaryInformation
+
+    Variable: season
+    Type: short
+    Total Size: 13422 values
+                26844 bytes
+    Number of Dimensions: 1
+    Dimensions and sizes:	[ 13422 <storm> ]
+    Chunking Info:	[ 13422 <storm> ]
+    Coordinates:
+        Number of Attributes:        5
+            long_name	: 	Season
+            units	: 	Year
+            _FillValue	: 	-9999
+            description	: 	Season when storm started
+            coverage_content_type	: 	physicalMeasurement
+
+    Variable: number
+    Type: short
+    Total Size: 13422 values
+                26844 bytes
+    Number of Dimensions: 1
+    Dimensions and sizes:	[ 13422 <storm> ]
+    Chunking Info:	[ 13422 <storm> ]
+    Coordinates:
+        Number of Attributes:        3
+            long_name	: 	Storm number (within season)
+            units	: 	1
+            coverage_content_type	: 	auxiliaryInformation
+
+    Variable: basin
+    Type: character
+    Total Size: 9663840 values
+                9663840 bytes
+    Number of Dimensions: 3
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> x 2 <char2> ]
+    Chunking Info:	[ 6711 <storm> x 180 <date_time> x 1 <char2> ]
+    Coordinates:
+        Number of Attributes:        3
+            long_name	: 	Current basin
+            Note	: 	EP=East_Pacific NA=North_Atlantic NI=North_Indian SA=South_Atlantic SI=South_Indian SP=South_Pacific WP=Western_Pacific
+            coverage_content_type	: 	thematicClassification
+
+    Variable: subbasin
+    Type: character
+    Total Size: 9663840 values
+                9663840 bytes
+    Number of Dimensions: 3
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> x 2 <char2> ]
+    Chunking Info:	[ 6711 <storm> x 180 <date_time> x 1 <char2> ]
+    Coordinates:
+        Number of Attributes:        3
+            long_name	: 	Current sub-basin
+            Note	: 	AS=Arabian_Sea BB=Bay_of_Bengal CP=Central_Pacific CS=Caribbean_Sea GM=Gulf_of_Mexico NA=North_Atlantic EA=Eastern_Australia WA=Western_Australia MM=No_subbasin_for_this_position 
+            coverage_content_type	: 	thematicClassification
+
+    Variable: name
+    Type: character
+    Total Size: 1718016 values
+                1718016 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 128 <char128> ]
+    Chunking Info:	[ 13422 <storm> x 128 <char128> ]
+    Coordinates:
+        Number of Attributes:        3
+            long_name	: 	Name of system
+            description	: 	May be a combination of names from different agencies
+            coverage_content_type	: 	thematicClassification
+
+    Variable: source_usa
+    Type: character
+    Total Size: 1718016 values
+                1718016 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 128 <char128> ]
+    Chunking Info:	[ 13422 <storm> x 128 <char128> ]
+    Coordinates:
+        Number of Attributes:        2
+            long_name	: 	Source data information for this storm for USA track
+            coverage_content_type	: 	auxiliaryInformation
+
+    Variable: source_jma
+    Type: character
+    Total Size: 1718016 values
+                1718016 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 128 <char128> ]
+    Chunking Info:	[ 13422 <storm> x 128 <char128> ]
+    Coordinates:
+        Number of Attributes:        2
+            long_name	: 	Source data information for this storm for RSMC Tokyo (Japan Meteorological Agency)  track
+            coverage_content_type	: 	auxiliaryInformation
+
+    Variable: source_cma
+    Type: character
+    Total Size: 1718016 values
+                1718016 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 128 <char128> ]
+    Chunking Info:	[ 13422 <storm> x 128 <char128> ]
+    Coordinates:
+        Number of Attributes:        2
+            long_name	: 	Source data information for this storm for Chinese (Chinese Meteorological Administration) track
+            coverage_content_type	: 	auxiliaryInformation
+
+    Variable: source_hko
+    Type: character
+    Total Size: 1718016 values
+                1718016 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 128 <char128> ]
+    Chunking Info:	[ 13422 <storm> x 128 <char128> ]
+    Coordinates:
+        Number of Attributes:        2
+            long_name	: 	Source data information for this storm for Hong Kong (Hong Kong Observatory) track
+            coverage_content_type	: 	auxiliaryInformation
+
+    Variable: source_new
+    Type: character
+    Total Size: 1718016 values
+                1718016 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 128 <char128> ]
+    Chunking Info:	[ 13422 <storm> x 128 <char128> ]
+    Coordinates:
+        Number of Attributes:        2
+            long_name	: 	Source data information for this storm for RSMC New Delhi (Indian Meteorological Department) track
+            coverage_content_type	: 	auxiliaryInformation
+
+    Variable: source_reu
+    Type: character
+    Total Size: 1718016 values
+                1718016 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 128 <char128> ]
+    Chunking Info:	[ 13422 <storm> x 128 <char128> ]
+    Coordinates:
+        Number of Attributes:        2
+            long_name	: 	Source data information for this storm for RSMC La Reunion track
+            coverage_content_type	: 	auxiliaryInformation
+
+    Variable: source_bom
+    Type: character
+    Total Size: 1718016 values
+                1718016 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 128 <char128> ]
+    Chunking Info:	[ 13422 <storm> x 128 <char128> ]
+    Coordinates:
+        Number of Attributes:        2
+            long_name	: 	Source data information for this storm for Australian TCWCs (Bureau of Meteorology) track
+            coverage_content_type	: 	auxiliaryInformation
+
+    Variable: source_nad
+    Type: character
+    Total Size: 1718016 values
+                1718016 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 128 <char128> ]
+    Chunking Info:	[ 13422 <storm> x 128 <char128> ]
+    Coordinates:
+        Number of Attributes:        2
+            long_name	: 	Source data information for this storm for RSMC Nadi (Fiji) track
+            coverage_content_type	: 	auxiliaryInformation
+
+    Variable: source_wel
+    Type: character
+    Total Size: 1718016 values
+                1718016 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 128 <char128> ]
+    Chunking Info:	[ 13422 <storm> x 128 <char128> ]
+    Coordinates:
+        Number of Attributes:        2
+            long_name	: 	Source data information for this storm for TCWC Wellington track
+            coverage_content_type	: 	auxiliaryInformation
+
+    Variable: source_td5
+    Type: character
+    Total Size: 1718016 values
+                1718016 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 128 <char128> ]
+    Chunking Info:	[ 13422 <storm> x 128 <char128> ]
+    Coordinates:
+        Number of Attributes:        3
+            long_name	: 	Source data information for this storm for TD-9635 track
+            Note	: 	TD-9635 "Tropical Cyclone Analogs" produced by National Climatic Center in the 1970s
+            coverage_content_type	: 	auxiliaryInformation
+
+    Variable: source_td6
+    Type: character
+    Total Size: 1718016 values
+                1718016 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 128 <char128> ]
+    Chunking Info:	[ 13422 <storm> x 128 <char128> ]
+    Coordinates:
+        Number of Attributes:        3
+            long_name	: 	Source data information for this storm for TD-9636 track
+            Note	: 	TD-9636 "Tropical Cyclone Data Global Consolidated" produced by National Climatic Center in the 1970s
+            coverage_content_type	: 	auxiliaryInformation
+
+    Variable: source_ds8
+    Type: character
+    Total Size: 1718016 values
+                1718016 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 128 <char128> ]
+    Chunking Info:	[ 13422 <storm> x 128 <char128> ]
+    Coordinates:
+        Number of Attributes:        3
+            long_name	: 	Source data information for this storm for ds824 track
+            Note	: 	NCAR/UCAR research data archive dataset ds824: Global Tropical Cyclone "Best Track" Position and Intensity Data
+            coverage_content_type	: 	auxiliaryInformation
+
+    Variable: source_neu
+    Type: character
+    Total Size: 1718016 values
+                1718016 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 128 <char128> ]
+    Chunking Info:	[ 13422 <storm> x 128 <char128> ]
+    Coordinates:
+        Number of Attributes:        2
+            long_name	: 	Source data information for this storm for C. Neumann S. Hemi. track
+            coverage_content_type	: 	auxiliaryInformation
+
+    Variable: source_mlc
+    Type: character
+    Total Size: 1718016 values
+                1718016 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 128 <char128> ]
+    Chunking Info:	[ 13422 <storm> x 128 <char128> ]
+    Coordinates:
+        Number of Attributes:        2
+            long_name	: 	Source data information for this storm for M. Chenoweth track
+            coverage_content_type	: 	auxiliaryInformation
+
+    Variable: time
+    Type: double
+    Total Size: 4831920 values
+                38655360 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 3356 <storm> x 90 <date_time> ]
+    Coordinates:
+        Number of Attributes:        8
+            long_name	: 	time
+            standard_name	: 	time
+            units	: 	days since 1858-11-17 00:00:00
+            _FillValue	: 	-9999000
+            description	: 	Nominally, time steps are 3 hourly, but can be more often since some agencies include extra position (e.g., times near landfall, maximum intensity, etc.)
+            Note	: 	Variable:time can be missing since the tracks are stored in a fixed 2-D grid where tracks have varying lengths
+            calendar	: 	standard
+            coverage_content_type	: 	physicalMeasurement
+
+    Variable: iso_time
+    Type: character
+    Total Size: 91806480 values
+                91806480 bytes
+    Number of Dimensions: 3
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> x 19 <niso> ]
+    Chunking Info:	[ 4474 <storm> x 120 <date_time> x 5 <niso> ]
+    Coordinates:
+        Number of Attributes:        3
+            long_name	: 	Time (ISO)
+            description	: 	Nominally, time steps are 3 hourly, but can be more often since some agencies include extra position (e.g., times near landfall, maximum intensity, etc.)
+            coverage_content_type	: 	physicalMeasurement
+
+    Variable: nature
+    Type: character
+    Total Size: 9663840 values
+                9663840 bytes
+    Number of Dimensions: 3
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> x 2 <char2> ]
+    Chunking Info:	[ 6711 <storm> x 180 <date_time> x 1 <char2> ]
+    Coordinates:
+        Number of Attributes:        3
+            long_name	: 	Nature of the cyclone
+            Note	: 	NR=Not_Reported DS=Disturbance TS=Tropical_System ET=Extratropical_System SS=Subtropical_System MX=MIXED_occurs_when_agencies_reported_inconsistent_types
+            coverage_content_type	: 	thematicClassification
+
+    Variable: lat
+    Type: float
+    Total Size: 4831920 values
+                19327680 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 4474 <storm> x 120 <date_time> ]
+    Coordinates:
+        Number of Attributes:        7
+            long_name	: 	latitude
+            standard_name	: 	latitude
+            units	: 	degrees_north
+            _FillValue	: 	-9999
+            description	: 	This is merged position based on the position(s) from the various source datasets.
+            Note	: 	Variable:lat can be missing since the tracks are stored in a fixed 2-D grid where tracks have varying lengths
+            coverage_content_type	: 	coordinate
+
+    Variable: lon
+    Type: float
+    Total Size: 4831920 values
+                19327680 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 4474 <storm> x 120 <date_time> ]
+    Coordinates:
+        Number of Attributes:        7
+            long_name	: 	longitude
+            standard_name	: 	longitude
+            units	: 	degrees_east
+            _FillValue	: 	-9999
+            description	: 	This is merged position based on the position(s) from the various source datasets.
+            Note	: 	Variable:lon can be missing since the tracks are stored in a fixed 2-D grid where tracks have varying lengths
+            coverage_content_type	: 	coordinate
+
+    Variable: wmo_wind
+    Type: short
+    Total Size: 4831920 values
+                9663840 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 6711 <storm> x 180 <date_time> ]
+    Coordinates:
+        Number of Attributes:        4
+            long_name	: 	Maximum sustained wind speed from Official WMO agency
+            units	: 	kts
+            _FillValue	: 	-9999
+            coverage_content_type	: 	physicalMeasurement
+
+    Variable: wmo_pres
+    Type: short
+    Total Size: 4831920 values
+                9663840 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 6711 <storm> x 180 <date_time> ]
+    Coordinates:
+        Number of Attributes:        4
+            long_name	: 	Minimum central preossure from  Official WMO agency
+            units	: 	mb
+            _FillValue	: 	-9999
+            coverage_content_type	: 	physicalMeasurement
+
+    Variable: wmo_agency
+    Type: character
+    Total Size: 91806480 values
+                91806480 bytes
+    Number of Dimensions: 3
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> x 19 <niso> ]
+    Chunking Info:	[ 4474 <storm> x 120 <date_time> x 5 <niso> ]
+    Coordinates:
+        Number of Attributes:        2
+            long_name	: 	Official WMO agency
+            coverage_content_type	: 	thematicClassification
+
+    Variable: track_type
+    Type: character
+    Total Size: 255018 values
+                255018 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 19 <niso> ]
+    Chunking Info:	[ 13422 <storm> x 19 <niso> ]
+    Coordinates:
+        Number of Attributes:        3
+            long_name	: 	Name of track type
+            description	: 	Tracks are either MAIN or SPUR. Spur tracks have points that either merge with or split from another track (or both). Main tracks are regular tracks. Spur tracks should be treated with caution.
+            coverage_content_type	: 	thematicClassification
+
+    Variable: main_track_sid
+    Type: character
+    Total Size: 174486 values
+                174486 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 13 <charsn> ]
+    Chunking Info:	[ 13422 <storm> x 13 <charsn> ]
+    Coordinates:
+        Number of Attributes:        3
+            long_name	: 	SID of the main track associated with this storm.
+            description	: 	If this track is a main, then this is the same as serial_id. If a spur, it namesthe associated main track.
+            coverage_content_type	: 	thematicClassification
+
+    Variable: dist2land
+    Type: short
+    Total Size: 4831920 values
+                9663840 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 6711 <storm> x 180 <date_time> ]
+    Coordinates:
+        Number of Attributes:        5
+            long_name	: 	Distance to Land at current location
+            units	: 	km
+            _FillValue	: 	-9999
+            description	: 	Distance to the nearest land point. Also acts as a land mask since 0km = over land. Uses present location ONLY.
+            coverage_content_type	: 	modelResult
+
+    Variable: landfall
+    Type: short
+    Total Size: 4831920 values
+                9663840 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 6711 <storm> x 180 <date_time> ]
+    Coordinates:
+        Number of Attributes:        5
+            long_name	: 	Minimum distance to land between current location and next.
+            units	: 	km
+            _FillValue	: 	-9999
+            description	: 	Describes landfall conditions between the present observation and the next (usually 3 hours) by providing minimum distance to land. So a value of 0 implies that the storm crosses a coastline prior to the next observation.
+            coverage_content_type	: 	modelResult
+
+    Variable: iflag
+    Type: character
+    Total Size: 67646880 values
+                67646880 bytes
+    Number of Dimensions: 3
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> x 14 <char14> ]
+    Chunking Info:	[ 4474 <storm> x 120 <date_time> x 5 <char14> ]
+    Coordinates:
+        Number of Attributes:        6
+            long_name	: 	Interpolation flag
+            flag_values	: 	O P I V _
+            flag_names	: 	Original Position_interpolated Intensity_values_interpolated Other_Values_Interpolated Nothing_reported
+            description	: 	Each character represents the source of the values for a particular reporting time. 14 characters represent 14 agencies.
+            Note	: 	Agency Order: USA, JMA, CMA, HKO, NewDelhi, La Reunion, BoM, Nadi, Wellington, TD9636, TD9635, ds824, Neumann, Chenoweth
+            coverage_content_type	: 	qualityInformation
+
+    Variable: usa_agency
+    Type: character
+    Total Size: 154621440 values
+                154621440 bytes
+    Number of Dimensions: 3
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> x 32 <char32> ]
+    Chunking Info:	[ 3356 <storm> x 90 <date_time> x 8 <char32> ]
+    Coordinates:
+        Number of Attributes:        2
+            long_name	: 	Source dataset for U.S. data
+            coverage_content_type	: 	auxiliaryInformation
+
+    Variable: usa_atcf_id
+    Type: character
+    Total Size: 154621440 values
+                154621440 bytes
+    Number of Dimensions: 3
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> x 32 <char32> ]
+    Chunking Info:	[ 3356 <storm> x 90 <date_time> x 8 <char32> ]
+    Coordinates:
+        Number of Attributes:        3
+            long_name	: 	ATCF ID for the storm
+            standard_name	: 	automated_tropical_cyclone_forecasting_system_storm_identifier
+            coverage_content_type	: 	thematicClassification
+
+    Variable: usa_lat
+    Type: float
+    Total Size: 4831920 values
+                19327680 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 4474 <storm> x 120 <date_time> ]
+    Coordinates:
+        Number of Attributes:        4
+            long_name	: 	Latitude (U.S. Agency)
+            units	: 	degrees_north
+            _FillValue	: 	-9999
+            coverage_content_type	: 	coordinate
+
+    Variable: usa_lon
+    Type: float
+    Total Size: 4831920 values
+                19327680 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 4474 <storm> x 120 <date_time> ]
+    Coordinates:
+        Number of Attributes:        4
+            long_name	: 	Longitude (U.S. Agency)
+            units	: 	degrees_east
+            _FillValue	: 	-9999
+            coverage_content_type	: 	coordinate
+
+    Variable: usa_record
+    Type: character
+    Total Size: 4831920 values
+                4831920 bytes
+    Number of Dimensions: 3
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> x 1 <char1> ]
+    Chunking Info:	[ 6711 <storm> x 180 <date_time> x 1 <char1> ]
+    Coordinates:
+        Number of Attributes:        3
+            long_name	: 	Storm record type
+            description	: 	C – Closest approach to a coast, not followed by a landfall, G – Genesis, I – An intensity peak in terms of both pressure and wind, L – Landfall (center of system crossing a coastline), P – Minimum in central pressure, R – Provides additional detail on the intensity of the cyclone when rapid changes are underway, S – Change of status of the system, T – Provides additional detail on the track (position) of the cyclone, W – Maximum sustained wind speed
+            coverage_content_type	: 	thematicClassification
+
+    Variable: usa_status
+    Type: character
+    Total Size: 9663840 values
+                9663840 bytes
+    Number of Dimensions: 3
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> x 2 <char2> ]
+    Chunking Info:	[ 6711 <storm> x 180 <date_time> x 1 <char2> ]
+    Coordinates:
+        Number of Attributes:        3
+            long_name	: 	Storm status
+            description	: 	 DB - disturbance,  TD - tropical depression,  TS - tropical storm,  TY - typhoon,  ST - super typhoon,  TC - tropical cyclone,  HU, HR - hurricane,  SD - subtropical depression,  SS - subtropical storm,  EX - extratropical systems,  PT - post tropical,  IN - inland,  DS - dissipating,  LO - low,  WV - tropical wave,  ET - extrapolated,  MD - monsoon depression,  XX - unknown.
+            coverage_content_type	: 	thematicClassification
+
+    Variable: usa_wind
+    Type: short
+    Total Size: 4831920 values
+                9663840 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 6711 <storm> x 180 <date_time> ]
+    Coordinates:
+        Number of Attributes:        8
+            long_name	: 	Maximum sustained wind speed
+            standard_name	: 	tropical_cyclone_maximum_sustained_wind_speed
+            units	: 	kts
+            valid_min	: 	1
+            valid_max	: 	250
+            _FillValue	: 	-9999
+            coordinates	: 	time lon lat
+            coverage_content_type	: 	physicalMeasurement
+
+    Variable: usa_pres
+    Type: short
+    Total Size: 4831920 values
+                9663840 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 6711 <storm> x 180 <date_time> ]
+    Coordinates:
+        Number of Attributes:        6
+            long_name	: 	Minimum central pressure
+            units	: 	mb
+            valid_min	: 	700
+            valid_max	: 	1050
+            _FillValue	: 	-9999
+            coverage_content_type	: 	physicalMeasurement
+
+    Variable: usa_sshs
+    Type: byte
+    Total Size: 4831920 values
+                4831920 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 6711 <storm> x 180 <date_time> ]
+    Coordinates:
+        Number of Attributes:        8
+            long_name	: 	Saffir-Simpson Hurricane Wind Scale Category
+            units	: 	1
+            valid_min	: 	-5
+            valid_max	: 	5
+            _FillValue	: 	-15
+            flag_values	: 	( -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, ... [Total of 11 values] )
+            flag_names	: 	unknown_type_XX post_tropical_ET_EX_PT misc_disturbances_WV_LO_DB_DS_IN_MD subtropical_SS_SD tropical_depression_w_lt_34 tropical_storm_wind_35-63 hurricane_cat_1_wind_64-82 hurricane_cat_2_wind_83-95 hurricane_cat_3_wind_96-112 hurricane_cat_4_wind_113-136 hurricane_cat_5_wind_137+
+            coverage_content_type	: 	thematicClassification
+
+    Variable: usa_r34
+    Type: short
+    Total Size: 19327680 values
+                38655360 bytes
+    Number of Dimensions: 3
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> x 4 <quadrant> ]
+    Chunking Info:	[ 4474 <storm> x 120 <date_time> x 1 <quadrant> ]
+    Coordinates:
+        Number of Attributes:        6
+            long_name	: 	Radius of 34 knot winds
+            units	: 	nmile
+            valid_min	: 	1
+            valid_max	: 	1000
+            _FillValue	: 	-9999
+            coverage_content_type	: 	physicalMeasurement
+
+    Variable: usa_r50
+    Type: short
+    Total Size: 19327680 values
+                38655360 bytes
+    Number of Dimensions: 3
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> x 4 <quadrant> ]
+    Chunking Info:	[ 4474 <storm> x 120 <date_time> x 1 <quadrant> ]
+    Coordinates:
+        Number of Attributes:        6
+            long_name	: 	Radius of 50 knot winds
+            units	: 	nmile
+            valid_min	: 	1
+            valid_max	: 	1000
+            _FillValue	: 	-9999
+            coverage_content_type	: 	physicalMeasurement
+
+    Variable: usa_r64
+    Type: short
+    Total Size: 19327680 values
+                38655360 bytes
+    Number of Dimensions: 3
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> x 4 <quadrant> ]
+    Chunking Info:	[ 4474 <storm> x 120 <date_time> x 1 <quadrant> ]
+    Coordinates:
+        Number of Attributes:        6
+            long_name	: 	Radius of 64 knot winds
+            units	: 	nmile
+            valid_min	: 	1
+            valid_max	: 	1000
+            _FillValue	: 	-9999
+            coverage_content_type	: 	physicalMeasurement
+
+    Variable: usa_poci
+    Type: short
+    Total Size: 4831920 values
+                9663840 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 6711 <storm> x 180 <date_time> ]
+    Coordinates:
+        Number of Attributes:        6
+            long_name	: 	Pressure of outermost closed isobar (not best tracked)
+            units	: 	mb
+            valid_min	: 	700
+            valid_max	: 	1050
+            _FillValue	: 	-9999
+            coverage_content_type	: 	physicalMeasurement
+
+    Variable: usa_roci
+    Type: short
+    Total Size: 4831920 values
+                9663840 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 6711 <storm> x 180 <date_time> ]
+    Coordinates:
+        Number of Attributes:        6
+            long_name	: 	Pressure of outermost closed isobar (not best tracked)
+            units	: 	nmile
+            valid_min	: 	1
+            valid_max	: 	1000
+            _FillValue	: 	-9999
+            coverage_content_type	: 	physicalMeasurement
+
+    Variable: usa_rmw
+    Type: short
+    Total Size: 4831920 values
+                9663840 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 6711 <storm> x 180 <date_time> ]
+    Coordinates:
+        Number of Attributes:        7
+            long_name	: 	Radius of maximum winds (not best tracked)
+            standard_name	: 	radius_of_tropical_cyclone_maximum_sustained_wind_speed
+            units	: 	nmile
+            valid_min	: 	1
+            valid_max	: 	1000
+            _FillValue	: 	-9999
+            coverage_content_type	: 	physicalMeasurement
+
+    Variable: usa_eye
+    Type: short
+    Total Size: 4831920 values
+                9663840 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 6711 <storm> x 180 <date_time> ]
+    Coordinates:
+        Number of Attributes:        7
+            long_name	: 	Eye diameter (not best tracked)
+            standard_name	: 	radius_of_tropical_cyclone_eye
+            units	: 	nmile
+            valid_min	: 	1
+            valid_max	: 	250
+            _FillValue	: 	-9999
+            coverage_content_type	: 	physicalMeasurement
+
+    Variable: tokyo_lat
+    Type: float
+    Total Size: 4831920 values
+                19327680 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 4474 <storm> x 120 <date_time> ]
+    Coordinates:
+        Number of Attributes:        4
+            long_name	: 	Latitude (RSMC Tokyo)
+            units	: 	degrees_north
+            _FillValue	: 	-9999
+            coverage_content_type	: 	coordinate
+
+    Variable: tokyo_lon
+    Type: float
+    Total Size: 4831920 values
+                19327680 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 4474 <storm> x 120 <date_time> ]
+    Coordinates:
+        Number of Attributes:        4
+            long_name	: 	Longitude (RSMC Tokyo)
+            units	: 	degrees_east
+            _FillValue	: 	-9999
+            coverage_content_type	: 	coordinate
+
+    Variable: tokyo_grade
+    Type: byte
+    Total Size: 4831920 values
+                4831920 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 6711 <storm> x 180 <date_time> ]
+    Coordinates:
+        Number of Attributes:        8
+            long_name	: 	Storm grade
+            units	: 	1
+            valid_min	: 	2
+            valid_max	: 	9
+            _FillValue	: 	-15
+            flag_values	: 	( 2, 3, 4, 5, 6, 7, 8, 9 )
+            flag_names	: 	tropical_depression tropical_storm severe_tropical_storm typhoon extratropical just_entering_JMA_AoR not_used tropical_cyclone_of_TS_intensity_or_higher
+            coverage_content_type	: 	thematicClassification
+
+    Variable: tokyo_wind
+    Type: short
+    Total Size: 4831920 values
+                9663840 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 6711 <storm> x 180 <date_time> ]
+    Coordinates:
+        Number of Attributes:        6
+            long_name	: 	Maximum sustained wind speed
+            units	: 	kts
+            valid_min	: 	1
+            valid_max	: 	250
+            _FillValue	: 	-9999
+            coverage_content_type	: 	physicalMeasurement
+
+    Variable: tokyo_pres
+    Type: short
+    Total Size: 4831920 values
+                9663840 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 6711 <storm> x 180 <date_time> ]
+    Coordinates:
+        Number of Attributes:        6
+            long_name	: 	Minimum central pressure
+            units	: 	mb
+            valid_min	: 	700
+            valid_max	: 	1050
+            _FillValue	: 	-9999
+            coverage_content_type	: 	physicalMeasurement
+
+    Variable: tokyo_r50_dir
+    Type: byte
+    Total Size: 4831920 values
+                4831920 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 6711 <storm> x 180 <date_time> ]
+    Coordinates:
+        Number of Attributes:        7
+            long_name	: 	Direction of maximum radius of 50 knots winds
+            valid_min	: 	0
+            valid_max	: 	9
+            _FillValue	: 	-15
+            flag_values	: 	( 1, 2, 3, 4, 5, 6, 7, 8, 9 )
+            flag_names	: 	Northeast East Southeast South Southwest West Northwest North Symmetric_Circle
+            coverage_content_type	: 	thematicClassification
+
+    Variable: tokyo_r50_long
+    Type: short
+    Total Size: 4831920 values
+                9663840 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 6711 <storm> x 180 <date_time> ]
+    Coordinates:
+        Number of Attributes:        6
+            long_name	: 	Maximum radius of 50 knots winds
+            units	: 	nmile
+            valid_min	: 	1
+            valid_max	: 	1000
+            _FillValue	: 	-9999
+            coverage_content_type	: 	physicalMeasurement
+
+    Variable: tokyo_r50_short
+    Type: short
+    Total Size: 4831920 values
+                9663840 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 6711 <storm> x 180 <date_time> ]
+    Coordinates:
+        Number of Attributes:        6
+            long_name	: 	Minimum radius of 50 knots winds
+            units	: 	nmile
+            valid_min	: 	1
+            valid_max	: 	1000
+            _FillValue	: 	-9999
+            coverage_content_type	: 	physicalMeasurement
+
+    Variable: tokyo_r30_dir
+    Type: byte
+    Total Size: 4831920 values
+                4831920 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 6711 <storm> x 180 <date_time> ]
+    Coordinates:
+        Number of Attributes:        7
+            long_name	: 	Direction of maximum radius of 30 knots winds
+            valid_min	: 	0
+            valid_max	: 	9
+            _FillValue	: 	-15
+            flag_values	: 	( 1, 2, 3, 4, 5, 6, 7, 8, 9 )
+            flag_names	: 	Northeast East Southeast South Southwest West Northwest North Symmetric_Circle
+            coverage_content_type	: 	thematicClassification
+
+    Variable: tokyo_r30_long
+    Type: short
+    Total Size: 4831920 values
+                9663840 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 6711 <storm> x 180 <date_time> ]
+    Coordinates:
+        Number of Attributes:        6
+            long_name	: 	Direction of maximum radius of 30 knots winds
+            units	: 	nmile
+            valid_min	: 	1
+            valid_max	: 	1000
+            _FillValue	: 	-9999
+            coverage_content_type	: 	physicalMeasurement
+
+    Variable: tokyo_r30_short
+    Type: short
+    Total Size: 4831920 values
+                9663840 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 6711 <storm> x 180 <date_time> ]
+    Coordinates:
+        Number of Attributes:        6
+            long_name	: 	Minimum radius of 30 knots winds
+            units	: 	nmile
+            valid_min	: 	1
+            valid_max	: 	1000
+            _FillValue	: 	-9999
+            coverage_content_type	: 	physicalMeasurement
+
+    Variable: tokyo_land
+    Type: byte
+    Total Size: 4831920 values
+                4831920 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 6711 <storm> x 180 <date_time> ]
+    Coordinates:
+        Number of Attributes:        6
+            long_name	: 	Landfall flag
+            units	: 	1
+            valid_min	: 	0
+            valid_max	: 	1
+            _FillValue	: 	-15
+            coverage_content_type	: 	thematicClassification
+
+    Variable: cma_lat
+    Type: float
+    Total Size: 4831920 values
+                19327680 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 4474 <storm> x 120 <date_time> ]
+    Coordinates:
+        Number of Attributes:        4
+            long_name	: 	Latitude (Chinese Met. Admin.)
+            units	: 	degrees_north
+            _FillValue	: 	-9999
+            coverage_content_type	: 	coordinate
+
+    Variable: cma_lon
+    Type: float
+    Total Size: 4831920 values
+                19327680 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 4474 <storm> x 120 <date_time> ]
+    Coordinates:
+        Number of Attributes:        4
+            long_name	: 	Longitude (Chinese Met. Admin.)
+            units	: 	degrees_east
+            _FillValue	: 	-9999
+            coverage_content_type	: 	coordinate
+
+    Variable: cma_cat
+    Type: byte
+    Total Size: 4831920 values
+                4831920 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 6711 <storm> x 180 <date_time> ]
+    Coordinates:
+        Number of Attributes:        8
+            long_name	: 	Storm category
+            units	: 	1
+            valid_min	: 	0
+            valid_max	: 	9
+            _FillValue	: 	-15
+            flag_values	: 	( 0, 1, 2, 3, 4, 5, 6, 9 )
+            flag_names	: 	weaker_than_tropical_depression_or_unknown tropical_depression tropical_storm severe_tropical_storm typhoon severe_typhoon super_typhoon extratrpoical
+            coverage_content_type	: 	thematicClassification
+
+    Variable: cma_wind
+    Type: short
+    Total Size: 4831920 values
+                9663840 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 6711 <storm> x 180 <date_time> ]
+    Coordinates:
+        Number of Attributes:        6
+            long_name	: 	Maximum sustained wind speed
+            units	: 	kts
+            valid_min	: 	1
+            valid_max	: 	250
+            _FillValue	: 	-9999
+            coverage_content_type	: 	physicalMeasurement
+
+    Variable: cma_pres
+    Type: short
+    Total Size: 4831920 values
+                9663840 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 6711 <storm> x 180 <date_time> ]
+    Coordinates:
+        Number of Attributes:        6
+            long_name	: 	Minimum central pressure
+            units	: 	mb
+            valid_min	: 	700
+            valid_max	: 	1050
+            _FillValue	: 	-9999
+            coverage_content_type	: 	physicalMeasurement
+
+    Variable: hko_lat
+    Type: float
+    Total Size: 4831920 values
+                19327680 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 4474 <storm> x 120 <date_time> ]
+    Coordinates:
+        Number of Attributes:        4
+            long_name	: 	Latitude (Hong Kong Observatory)
+            units	: 	degrees_north
+            _FillValue	: 	-9999
+            coverage_content_type	: 	coordinate
+
+    Variable: hko_lon
+    Type: float
+    Total Size: 4831920 values
+                19327680 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 4474 <storm> x 120 <date_time> ]
+    Coordinates:
+        Number of Attributes:        4
+            long_name	: 	Longitude (Hong Kong Observatory)
+            units	: 	degrees_east
+            _FillValue	: 	-9999
+            coverage_content_type	: 	coordinate
+
+    Variable: hko_cat
+    Type: character
+    Total Size: 28991520 values
+                28991520 bytes
+    Number of Dimensions: 3
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> x 6 <char6> ]
+    Chunking Info:	[ 6711 <storm> x 180 <date_time> x 2 <char6> ]
+    Coordinates:
+        Number of Attributes:        3
+            long_name	: 	Storm category
+            Note	: 	Even though HKO changed the category meanings in 2009. We have made all systems (including before 2009) consistent with the latest definitions
+            coverage_content_type	: 	thematicClassification
+
+    Variable: hko_wind
+    Type: short
+    Total Size: 4831920 values
+                9663840 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 6711 <storm> x 180 <date_time> ]
+    Coordinates:
+        Number of Attributes:        6
+            long_name	: 	Maximum sustained wind speed
+            units	: 	kts
+            valid_min	: 	1
+            valid_max	: 	250
+            _FillValue	: 	-9999
+            coverage_content_type	: 	physicalMeasurement
+
+    Variable: hko_pres
+    Type: short
+    Total Size: 4831920 values
+                9663840 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 6711 <storm> x 180 <date_time> ]
+    Coordinates:
+        Number of Attributes:        6
+            long_name	: 	Minimum central pressure
+            units	: 	mb
+            valid_min	: 	700
+            valid_max	: 	1050
+            _FillValue	: 	-9999
+            coverage_content_type	: 	physicalMeasurement
+
+    Variable: newdelhi_lat
+    Type: float
+    Total Size: 4831920 values
+                19327680 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 4474 <storm> x 120 <date_time> ]
+    Coordinates:
+        Number of Attributes:        4
+            long_name	: 	Latitude (RSMC New Delhi)
+            units	: 	degrees_north
+            _FillValue	: 	-9999
+            coverage_content_type	: 	coordinate
+
+    Variable: newdelhi_lon
+    Type: float
+    Total Size: 4831920 values
+                19327680 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 4474 <storm> x 120 <date_time> ]
+    Coordinates:
+        Number of Attributes:        4
+            long_name	: 	Longitude (RSMC New Delhi)
+            units	: 	degrees_east
+            _FillValue	: 	-9999
+            coverage_content_type	: 	coordinate
+
+    Variable: newdelhi_grade
+    Type: character
+    Total Size: 48319200 values
+                48319200 bytes
+    Number of Dimensions: 3
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> x 10 <char10> ]
+    Chunking Info:	[ 4474 <storm> x 120 <date_time> x 3 <char10> ]
+    Coordinates:
+        Number of Attributes:        2
+            long_name	: 	Storm grade
+            coverage_content_type	: 	thematicClassification
+
+    Variable: newdelhi_wind
+    Type: short
+    Total Size: 4831920 values
+                9663840 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 6711 <storm> x 180 <date_time> ]
+    Coordinates:
+        Number of Attributes:        6
+            long_name	: 	Maximum sustained wind speed
+            units	: 	kts
+            valid_min	: 	1
+            valid_max	: 	250
+            _FillValue	: 	-9999
+            coverage_content_type	: 	physicalMeasurement
+
+    Variable: newdelhi_pres
+    Type: short
+    Total Size: 4831920 values
+                9663840 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 6711 <storm> x 180 <date_time> ]
+    Coordinates:
+        Number of Attributes:        6
+            long_name	: 	Minimum central pressure
+            units	: 	mb
+            valid_min	: 	700
+            valid_max	: 	1050
+            _FillValue	: 	-9999
+            coverage_content_type	: 	physicalMeasurement
+
+    Variable: newdelhi_ci
+    Type: short
+    Total Size: 4831920 values
+                9663840 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 6711 <storm> x 180 <date_time> ]
+    Coordinates:
+        Number of Attributes:        8
+            long_name	: 	Dvorak current intensity (RWMC New Delhi)
+            standard_name	: 	dvorak_tropical_cyclone_current_intensity_number
+            units	: 	1
+            scale_factor	: 	0.1
+            valid_min	: 	 0
+            valid_max	: 	 8
+            _FillValue	: 	-9999
+            coverage_content_type	: 	thematicClassification
+
+    Variable: newdelhi_dp
+    Type: short
+    Total Size: 4831920 values
+                9663840 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 6711 <storm> x 180 <date_time> ]
+    Coordinates:
+        Number of Attributes:        6
+            long_name	: 	Storm pressure drop
+            units	: 	mb
+            valid_min	: 	1
+            valid_max	: 	250
+            _FillValue	: 	-9999
+            coverage_content_type	: 	physicalMeasurement
+
+    Variable: newdelhi_poci
+    Type: short
+    Total Size: 4831920 values
+                9663840 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 6711 <storm> x 180 <date_time> ]
+    Coordinates:
+        Number of Attributes:        6
+            long_name	: 	Pressure of outermost closed isobar
+            units	: 	mb
+            valid_min	: 	900
+            valid_max	: 	1050
+            _FillValue	: 	-9999
+            coverage_content_type	: 	physicalMeasurement
+
+    Variable: reunion_lat
+    Type: float
+    Total Size: 4831920 values
+                19327680 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 4474 <storm> x 120 <date_time> ]
+    Coordinates:
+        Number of Attributes:        4
+            long_name	: 	Latitude (RSMC La Reunion)
+            units	: 	degrees_north
+            _FillValue	: 	-9999
+            coverage_content_type	: 	coordinate
+
+    Variable: reunion_lon
+    Type: float
+    Total Size: 4831920 values
+                19327680 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 4474 <storm> x 120 <date_time> ]
+    Coordinates:
+        Number of Attributes:        4
+            long_name	: 	Longitude (RSMC La Reunion)
+            units	: 	degrees_east
+            _FillValue	: 	-9999
+            coverage_content_type	: 	coordinate
+
+    Variable: reunion_type
+    Type: byte
+    Total Size: 4831920 values
+                4831920 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 6711 <storm> x 180 <date_time> ]
+    Coordinates:
+        Number of Attributes:        7
+            long_name	: 	Storm type
+            valid_min	: 	1
+            valid_max	: 	9
+            _FillValue	: 	-15
+            flag_values	: 	( 1, 2, 3, 4, 5, 6, 7, 8, 9 )
+            flag_names	: 	tropical_disturbance tropical_depression_winds_less_than_34 tropical_storm_winds_34_to_63 tropical_cyclone_winds_64_or_more extratropical dissipating subtropical_cyclone overland unknown
+            coverage_content_type	: 	thematicClassification
+
+    Variable: reunion_wind
+    Type: short
+    Total Size: 4831920 values
+                9663840 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 6711 <storm> x 180 <date_time> ]
+    Coordinates:
+        Number of Attributes:        6
+            long_name	: 	Maximum sustained wind speed
+            units	: 	kts
+            valid_min	: 	1
+            valid_max	: 	250
+            _FillValue	: 	-9999
+            coverage_content_type	: 	physicalMeasurement
+
+    Variable: reunion_pres
+    Type: short
+    Total Size: 4831920 values
+                9663840 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 6711 <storm> x 180 <date_time> ]
+    Coordinates:
+        Number of Attributes:        6
+            long_name	: 	Minimum central pressure
+            units	: 	mb
+            valid_min	: 	700
+            valid_max	: 	1050
+            _FillValue	: 	-9999
+            coverage_content_type	: 	physicalMeasurement
+
+    Variable: reunion_tnum
+    Type: short
+    Total Size: 4831920 values
+                9663840 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 6711 <storm> x 180 <date_time> ]
+    Coordinates:
+        Number of Attributes:        7
+            long_name	: 	Dvorak T number
+            units	: 	1
+            scale_factor	: 	0.1
+            valid_min	: 	 0
+            valid_max	: 	 8
+            _FillValue	: 	-9999
+            coverage_content_type	: 	thematicClassification
+
+    Variable: reunion_ci
+    Type: short
+    Total Size: 4831920 values
+                9663840 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 6711 <storm> x 180 <date_time> ]
+    Coordinates:
+        Number of Attributes:        8
+            long_name	: 	Dvorak Current Intensity (CI)
+            standard_name	: 	dvorak_tropical_cyclone_current_intensity_number
+            units	: 	1
+            scale_factor	: 	0.1
+            valid_min	: 	 0
+            valid_max	: 	 8
+            _FillValue	: 	-9999
+            coverage_content_type	: 	thematicClassification
+
+    Variable: reunion_rmw
+    Type: short
+    Total Size: 4831920 values
+                9663840 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 6711 <storm> x 180 <date_time> ]
+    Coordinates:
+        Number of Attributes:        7
+            long_name	: 	Radius of maximum winds
+            standard_name	: 	radius_of_tropical_cyclone_maximum_sustained_wind_speed
+            units	: 	nmile
+            valid_min	: 	1
+            valid_max	: 	250
+            _FillValue	: 	-9999
+            coverage_content_type	: 	physicalMeasurement
+
+    Variable: reunion_r34
+    Type: short
+    Total Size: 19327680 values
+                38655360 bytes
+    Number of Dimensions: 3
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> x 4 <quadrant> ]
+    Chunking Info:	[ 4474 <storm> x 120 <date_time> x 1 <quadrant> ]
+    Coordinates:
+        Number of Attributes:        6
+            long_name	: 	Radius of 34 knot winds (storm force)
+            units	: 	nmile
+            valid_min	: 	1
+            valid_max	: 	5500
+            _FillValue	: 	-9999
+            coverage_content_type	: 	physicalMeasurement
+
+    Variable: reunion_r50
+    Type: short
+    Total Size: 19327680 values
+                38655360 bytes
+    Number of Dimensions: 3
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> x 4 <quadrant> ]
+    Chunking Info:	[ 4474 <storm> x 120 <date_time> x 1 <quadrant> ]
+    Coordinates:
+        Number of Attributes:        6
+            long_name	: 	Radius of 50 knot winds (gale force)
+            units	: 	nmile
+            valid_min	: 	1
+            valid_max	: 	5500
+            _FillValue	: 	-9999
+            coverage_content_type	: 	physicalMeasurement
+
+    Variable: reunion_r64
+    Type: short
+    Total Size: 19327680 values
+                38655360 bytes
+    Number of Dimensions: 3
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> x 4 <quadrant> ]
+    Chunking Info:	[ 4474 <storm> x 120 <date_time> x 1 <quadrant> ]
+    Coordinates:
+        Number of Attributes:        6
+            long_name	: 	Radius of 64 knot winds (hurricane force)
+            units	: 	nmile
+            valid_min	: 	1
+            valid_max	: 	5500
+            _FillValue	: 	-9999
+            coverage_content_type	: 	physicalMeasurement
+
+    Variable: bom_lat
+    Type: float
+    Total Size: 4831920 values
+                19327680 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 4474 <storm> x 120 <date_time> ]
+    Coordinates:
+        Number of Attributes:        4
+            long_name	: 	Latitude (Australian BoM)
+            units	: 	degrees_north
+            _FillValue	: 	-9999
+            coverage_content_type	: 	coordinate
+
+    Variable: bom_lon
+    Type: float
+    Total Size: 4831920 values
+                19327680 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 4474 <storm> x 120 <date_time> ]
+    Coordinates:
+        Number of Attributes:        4
+            long_name	: 	Longitude (Australian BoM)
+            units	: 	degrees_east
+            _FillValue	: 	-9999
+            coverage_content_type	: 	coordinate
+
+    Variable: bom_type
+    Type: byte
+    Total Size: 4831920 values
+                4831920 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 6711 <storm> x 180 <date_time> ]
+    Coordinates:
+        Number of Attributes:        7
+            long_name	: 	Cyclone type
+            valid_min	: 	10
+            valid_max	: 	91
+            _FillValue	: 	-15
+            flag_values	: 	( 10, 20, 21, 30, 40, 50, 51, 52, 60, 70, ... [Total of 15 values] )
+            flag_names	: 	tropics_disturbance_no_closed_isobar tropical_depression_wind_lt_34_and_1_closed_isobar tropical_storm_wind_34_to_63_in_1_or_2_quadrants tropical_storm_wind_34_to_63_in_3_or_4_quadrants wind_gt_63_knots extratropical_no_gales extratropical_with_gales extratropical_wind_unknown dissipating_no_gales subtropical_cyclone_no_gales subtropical_cyclone_with_gales subtropical_cyclone_wind_unknown overland_no_gales overland_with_gales tropical_cold_cored_monsoon_low
+            coverage_content_type	: 	thematicClassification
+
+    Variable: bom_wind
+    Type: short
+    Total Size: 4831920 values
+                9663840 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 6711 <storm> x 180 <date_time> ]
+    Coordinates:
+        Number of Attributes:        6
+            long_name	: 	Maximum sustained wind speed
+            units	: 	kts
+            valid_min	: 	1
+            valid_max	: 	250
+            _FillValue	: 	-9999
+            coverage_content_type	: 	physicalMeasurement
+
+    Variable: bom_pres
+    Type: short
+    Total Size: 4831920 values
+                9663840 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 6711 <storm> x 180 <date_time> ]
+    Coordinates:
+        Number of Attributes:        6
+            long_name	: 	Minimum central pressure
+            units	: 	mb
+            valid_min	: 	700
+            valid_max	: 	1050
+            _FillValue	: 	-9999
+            coverage_content_type	: 	physicalMeasurement
+
+    Variable: bom_tnum
+    Type: short
+    Total Size: 4831920 values
+                9663840 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 6711 <storm> x 180 <date_time> ]
+    Coordinates:
+        Number of Attributes:        7
+            long_name	: 	Dvorak T number
+            units	: 	1
+            scale_factor	: 	0.1
+            valid_min	: 	 0
+            valid_max	: 	 8
+            _FillValue	: 	-9999
+            coverage_content_type	: 	thematicClassification
+
+    Variable: bom_ci
+    Type: short
+    Total Size: 4831920 values
+                9663840 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 6711 <storm> x 180 <date_time> ]
+    Coordinates:
+        Number of Attributes:        8
+            long_name	: 	Dvorak Current Intensity (CI)
+            standard_name	: 	dvorak_tropical_cyclone_current_intensity_number
+            units	: 	1
+            scale_factor	: 	0.1
+            valid_min	: 	 0
+            valid_max	: 	 8
+            _FillValue	: 	-9999
+            coverage_content_type	: 	thematicClassification
+
+    Variable: bom_rmw
+    Type: short
+    Total Size: 4831920 values
+                9663840 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 6711 <storm> x 180 <date_time> ]
+    Coordinates:
+        Number of Attributes:        7
+            long_name	: 	Radius of maximum winds
+            standard_name	: 	radius_of_tropical_cyclone_maximum_sustained_wind_speed
+            units	: 	nmile
+            valid_min	: 	1
+            valid_max	: 	1000
+            _FillValue	: 	-9999
+            coverage_content_type	: 	physicalMeasurement
+
+    Variable: bom_r34
+    Type: short
+    Total Size: 19327680 values
+                38655360 bytes
+    Number of Dimensions: 3
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> x 4 <quadrant> ]
+    Chunking Info:	[ 4474 <storm> x 120 <date_time> x 1 <quadrant> ]
+    Coordinates:
+        Number of Attributes:        6
+            long_name	: 	Radius of 34 knot winds (storm force)
+            units	: 	nmile
+            valid_min	: 	1
+            valid_max	: 	2000
+            _FillValue	: 	-9999
+            coverage_content_type	: 	physicalMeasurement
+
+    Variable: bom_r50
+    Type: short
+    Total Size: 19327680 values
+                38655360 bytes
+    Number of Dimensions: 3
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> x 4 <quadrant> ]
+    Chunking Info:	[ 4474 <storm> x 120 <date_time> x 1 <quadrant> ]
+    Coordinates:
+        Number of Attributes:        6
+            long_name	: 	Radius of 50 knot winds (gale force)
+            units	: 	nmile
+            valid_min	: 	1
+            valid_max	: 	2000
+            _FillValue	: 	-9999
+            coverage_content_type	: 	physicalMeasurement
+
+    Variable: bom_r64
+    Type: short
+    Total Size: 19327680 values
+                38655360 bytes
+    Number of Dimensions: 3
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> x 4 <quadrant> ]
+    Chunking Info:	[ 4474 <storm> x 120 <date_time> x 1 <quadrant> ]
+    Coordinates:
+        Number of Attributes:        6
+            long_name	: 	Radius of 64 knot winds (hurricane force)
+            units	: 	nmile
+            valid_min	: 	1
+            valid_max	: 	2000
+            _FillValue	: 	-9999
+            coverage_content_type	: 	physicalMeasurement
+
+    Variable: bom_roci
+    Type: short
+    Total Size: 4831920 values
+                9663840 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 6711 <storm> x 180 <date_time> ]
+    Coordinates:
+        Number of Attributes:        6
+            long_name	: 	Radius of outermost closed isobar
+            units	: 	nmile
+            valid_min	: 	1
+            valid_max	: 	2000
+            _FillValue	: 	-9999
+            coverage_content_type	: 	physicalMeasurement
+
+    Variable: bom_poci
+    Type: short
+    Total Size: 4831920 values
+                9663840 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 6711 <storm> x 180 <date_time> ]
+    Coordinates:
+        Number of Attributes:        6
+            long_name	: 	Environmental pressure
+            units	: 	mb
+            valid_min	: 	900
+            valid_max	: 	1050
+            _FillValue	: 	-9999
+            coverage_content_type	: 	physicalMeasurement
+
+    Variable: bom_eye
+    Type: short
+    Total Size: 4831920 values
+                9663840 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 6711 <storm> x 180 <date_time> ]
+    Coordinates:
+        Number of Attributes:        7
+            long_name	: 	Eye diameter
+            standard_name	: 	radius_of_tropical_cyclone_eye
+            units	: 	nmile
+            valid_min	: 	1
+            valid_max	: 	200
+            _FillValue	: 	-9999
+            coverage_content_type	: 	physicalMeasurement
+
+    Variable: bom_pos_method
+    Type: byte
+    Total Size: 4831920 values
+                4831920 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 6711 <storm> x 180 <date_time> ]
+    Coordinates:
+        Number of Attributes:        5
+            long_name	: 	Method used to derive position
+            _FillValue	: 	-15
+            flag_values	: 	( 1, 2, 3, 4, 5, 6, 7, 8, 10, 11, ... [Total of 12 values] )
+            flag_names	: 	no_sat_no_radar_no_obs no_sat_no_radar_obs_only sat_ir_vis_no_clear_eye sat_ir_vis_clearly_defined_eye aircraft_radar_report landbased_radar_report sat_ir_vis_and_radar_and_obs report_inside_eye sat_scatterometer sat_microwave manned_aircraft_recon UAV_aircraft_recon
+            coverage_content_type	: 	qualityInformation
+
+    Variable: bom_pres_method
+    Type: byte
+    Total Size: 4831920 values
+                4831920 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 6711 <storm> x 180 <date_time> ]
+    Coordinates:
+        Number of Attributes:        5
+            long_name	: 	Method used to derive intensity
+            _FillValue	: 	-15
+            flag_values	: 	( 1, 2, 3, 4, 5, 6, 7, 8, 9 )
+            flag_names	: 	aircraft_or_dropsonde over_wat_obs over_land_obs instrument_unknown_type derived_Dvorak derived_from_wind_W_P_relationship estimate_from_surrounding_obs extrapolation_from_radar other
+            coverage_content_type	: 	qualityInformation
+
+    Variable: nadi_lat
+    Type: float
+    Total Size: 4831920 values
+                19327680 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 4474 <storm> x 120 <date_time> ]
+    Coordinates:
+        Number of Attributes:        4
+            long_name	: 	Latitude (RSMC Fiji)
+            units	: 	degrees_north
+            _FillValue	: 	-9999
+            coverage_content_type	: 	coordinate
+
+    Variable: nadi_lon
+    Type: float
+    Total Size: 4831920 values
+                19327680 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 4474 <storm> x 120 <date_time> ]
+    Coordinates:
+        Number of Attributes:        4
+            long_name	: 	Longitude (RSMC Fiji)
+            units	: 	degrees_east
+            _FillValue	: 	-9999
+            coverage_content_type	: 	coordinate
+
+    Variable: nadi_cat
+    Type: byte
+    Total Size: 4831920 values
+                4831920 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 6711 <storm> x 180 <date_time> ]
+    Coordinates:
+        Number of Attributes:        4
+            long_name	: 	Storm category
+            units	: 	1
+            _FillValue	: 	-15
+            coverage_content_type	: 	thematicClassification
+
+    Variable: nadi_wind
+    Type: short
+    Total Size: 4831920 values
+                9663840 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 6711 <storm> x 180 <date_time> ]
+    Coordinates:
+        Number of Attributes:        6
+            long_name	: 	Maximum sustained wind speed
+            units	: 	kts
+            valid_min	: 	1
+            valid_max	: 	250
+            _FillValue	: 	-9999
+            coverage_content_type	: 	physicalMeasurement
+
+    Variable: nadi_pres
+    Type: short
+    Total Size: 4831920 values
+                9663840 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 6711 <storm> x 180 <date_time> ]
+    Coordinates:
+        Number of Attributes:        6
+            long_name	: 	Minimum central pressure
+            units	: 	mb
+            valid_min	: 	700
+            valid_max	: 	1050
+            _FillValue	: 	-9999
+            coverage_content_type	: 	physicalMeasurement
+
+    Variable: wellington_lat
+    Type: float
+    Total Size: 4831920 values
+                19327680 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 4474 <storm> x 120 <date_time> ]
+    Coordinates:
+        Number of Attributes:        4
+            long_name	: 	Latitude (RSMC Wellington)
+            units	: 	degrees_north
+            _FillValue	: 	-9999
+            coverage_content_type	: 	coordinate
+
+    Variable: wellington_lon
+    Type: float
+    Total Size: 4831920 values
+                19327680 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 4474 <storm> x 120 <date_time> ]
+    Coordinates:
+        Number of Attributes:        4
+            long_name	: 	Longitude (RSMC Wellington)
+            units	: 	degrees_east
+            _FillValue	: 	-9999
+            coverage_content_type	: 	coordinate
+
+    Variable: wellington_wind
+    Type: short
+    Total Size: 4831920 values
+                9663840 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 6711 <storm> x 180 <date_time> ]
+    Coordinates:
+        Number of Attributes:        6
+            long_name	: 	Maximum sustained wind speed
+            units	: 	kts
+            valid_min	: 	1
+            valid_max	: 	250
+            _FillValue	: 	-9999
+            coverage_content_type	: 	physicalMeasurement
+
+    Variable: wellington_pres
+    Type: short
+    Total Size: 4831920 values
+                9663840 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 6711 <storm> x 180 <date_time> ]
+    Coordinates:
+        Number of Attributes:        6
+            long_name	: 	Minimum central pressure
+            units	: 	mb
+            valid_min	: 	700
+            valid_max	: 	1050
+            _FillValue	: 	-9999
+            coverage_content_type	: 	physicalMeasurement
+
+    Variable: ds824_lat
+    Type: float
+    Total Size: 4831920 values
+                19327680 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 4474 <storm> x 120 <date_time> ]
+    Coordinates:
+        Number of Attributes:        4
+            long_name	: 	Latitude (DS824 dataset)
+            units	: 	degrees_north
+            _FillValue	: 	-9999
+            coverage_content_type	: 	coordinate
+
+    Variable: ds824_lon
+    Type: float
+    Total Size: 4831920 values
+                19327680 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 4474 <storm> x 120 <date_time> ]
+    Coordinates:
+        Number of Attributes:        4
+            long_name	: 	Longitude (DS824 dataset)
+            units	: 	degrees_east
+            _FillValue	: 	-9999
+            coverage_content_type	: 	coordinate
+
+    Variable: ds824_stage
+    Type: character
+    Total Size: 9663840 values
+                9663840 bytes
+    Number of Dimensions: 3
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> x 2 <char2> ]
+    Chunking Info:	[ 6711 <storm> x 180 <date_time> x 1 <char2> ]
+    Coordinates:
+        Number of Attributes:        2
+            long_name	: 	Storm classification
+            coverage_content_type	: 	thematicClassification
+
+    Variable: ds824_wind
+    Type: short
+    Total Size: 4831920 values
+                9663840 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 6711 <storm> x 180 <date_time> ]
+    Coordinates:
+        Number of Attributes:        7
+            long_name	: 	Maximum sustained wind speed
+            standard_name	: 	tropical_cyclone_maximum_sustained_wind_speed
+            units	: 	kts
+            valid_min	: 	1
+            valid_max	: 	250
+            _FillValue	: 	-9999
+            coverage_content_type	: 	physicalMeasurement
+
+    Variable: ds824_pres
+    Type: short
+    Total Size: 4831920 values
+                9663840 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 6711 <storm> x 180 <date_time> ]
+    Coordinates:
+        Number of Attributes:        6
+            long_name	: 	Minimum central pressure
+            units	: 	mb
+            valid_min	: 	700
+            valid_max	: 	1050
+            _FillValue	: 	-9999
+            coverage_content_type	: 	physicalMeasurement
+
+    Variable: td9636_lat
+    Type: float
+    Total Size: 4831920 values
+                19327680 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 4474 <storm> x 120 <date_time> ]
+    Coordinates:
+        Number of Attributes:        4
+            long_name	: 	Latitude (TD-9636 dataset)
+            units	: 	degrees_north
+            _FillValue	: 	-9999
+            coverage_content_type	: 	coordinate
+
+    Variable: td9636_lon
+    Type: float
+    Total Size: 4831920 values
+                19327680 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 4474 <storm> x 120 <date_time> ]
+    Coordinates:
+        Number of Attributes:        4
+            long_name	: 	Longitude (TD-9636 dataset)
+            units	: 	degrees_east
+            _FillValue	: 	-9999
+            coverage_content_type	: 	coordinate
+
+    Variable: td9636_stage
+    Type: byte
+    Total Size: 4831920 values
+                4831920 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 6711 <storm> x 180 <date_time> ]
+    Coordinates:
+        Number of Attributes:        8
+            long_name	: 	Storm classification
+            valid_min	: 	0
+            valid_max	: 	7
+            _FillValue	: 	-15
+            flag_values	: 	( 0, 1, 2, 3, 4, 5, 6, 7 )
+            flag_names	: 	tropical_disturbance tropical_depression tropical_storm point_where_wind_reached_64_knots hurricane extratropical disspiating unknown_intensity_or_doubtful_track
+            Note	: 	Winds referred to in the stages differs for the North Indian. The Hurricane category means Wind > 48 knots and flag=3 means when wind reached that intensity
+            coverage_content_type	: 	thematicClassification
+
+    Variable: td9636_wind
+    Type: short
+    Total Size: 4831920 values
+                9663840 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 6711 <storm> x 180 <date_time> ]
+    Coordinates:
+        Number of Attributes:        7
+            long_name	: 	Maximum sustained wind speed
+            standard_name	: 	tropical_cyclone_maximum_sustained_wind_speed
+            units	: 	kts
+            valid_min	: 	1
+            valid_max	: 	250
+            _FillValue	: 	-9999
+            coverage_content_type	: 	physicalMeasurement
+
+    Variable: td9636_pres
+    Type: short
+    Total Size: 4831920 values
+                9663840 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 6711 <storm> x 180 <date_time> ]
+    Coordinates:
+        Number of Attributes:        6
+            long_name	: 	Minimum central pressure
+            units	: 	mb
+            valid_min	: 	700
+            valid_max	: 	1050
+            _FillValue	: 	-9999
+            coverage_content_type	: 	physicalMeasurement
+
+    Variable: td9635_lat
+    Type: float
+    Total Size: 4831920 values
+                19327680 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 4474 <storm> x 120 <date_time> ]
+    Coordinates:
+        Number of Attributes:        4
+            long_name	: 	Latitude (TD-9635 dataset)
+            units	: 	degrees_north
+            _FillValue	: 	-9999
+            coverage_content_type	: 	coordinate
+
+    Variable: td9635_lon
+    Type: float
+    Total Size: 4831920 values
+                19327680 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 4474 <storm> x 120 <date_time> ]
+    Coordinates:
+        Number of Attributes:        4
+            long_name	: 	Longitude (TD-9635 dataset)
+            units	: 	degrees_east
+            _FillValue	: 	-9999
+            coverage_content_type	: 	coordinate
+
+    Variable: td9635_wind
+    Type: short
+    Total Size: 4831920 values
+                9663840 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 6711 <storm> x 180 <date_time> ]
+    Coordinates:
+        Number of Attributes:        7
+            long_name	: 	Maximum sustained wind speed
+            standard_name	: 	tropical_cyclone_maximum_sustained_wind_speed
+            units	: 	kts
+            valid_min	: 	1
+            valid_max	: 	250
+            _FillValue	: 	-9999
+            coverage_content_type	: 	physicalMeasurement
+
+    Variable: td9635_pres
+    Type: short
+    Total Size: 4831920 values
+                9663840 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 6711 <storm> x 180 <date_time> ]
+    Coordinates:
+        Number of Attributes:        6
+            long_name	: 	Minimum central pressure
+            units	: 	mb
+            valid_min	: 	700
+            valid_max	: 	1050
+            _FillValue	: 	-9999
+            coverage_content_type	: 	physicalMeasurement
+
+    Variable: td9635_roci
+    Type: short
+    Total Size: 4831920 values
+                9663840 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 6711 <storm> x 180 <date_time> ]
+    Coordinates:
+        Number of Attributes:        6
+            long_name	: 	Radius of outermost closed isober
+            units	: 	nmile
+            valid_min	: 	1
+            valid_max	: 	2999
+            _FillValue	: 	-9999
+            coverage_content_type	: 	physicalMeasurement
+
+    Variable: neumann_lat
+    Type: float
+    Total Size: 4831920 values
+                19327680 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 4474 <storm> x 120 <date_time> ]
+    Coordinates:
+        Number of Attributes:        4
+            long_name	: 	Latitude (Neumann dataset)
+            units	: 	degrees_north
+            _FillValue	: 	-9999
+            coverage_content_type	: 	coordinate
+
+    Variable: neumann_lon
+    Type: float
+    Total Size: 4831920 values
+                19327680 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 4474 <storm> x 120 <date_time> ]
+    Coordinates:
+        Number of Attributes:        4
+            long_name	: 	Longitude (Neumann dataset)
+            units	: 	degrees_east
+            _FillValue	: 	-9999
+            coverage_content_type	: 	coordinate
+
+    Variable: neumann_class
+    Type: character
+    Total Size: 9663840 values
+                9663840 bytes
+    Number of Dimensions: 3
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> x 2 <char2> ]
+    Chunking Info:	[ 6711 <storm> x 180 <date_time> x 1 <char2> ]
+    Coordinates:
+        Number of Attributes:        2
+            long_name	: 	Storm classification
+            coverage_content_type	: 	thematicClassification
+
+    Variable: neumann_wind
+    Type: short
+    Total Size: 4831920 values
+                9663840 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 6711 <storm> x 180 <date_time> ]
+    Coordinates:
+        Number of Attributes:        7
+            long_name	: 	Maximum sustained wind speed
+            standard_name	: 	tropical_cyclone_maximum_sustained_wind_speed
+            units	: 	kts
+            valid_min	: 	1
+            valid_max	: 	250
+            _FillValue	: 	-9999
+            coverage_content_type	: 	physicalMeasurement
+
+    Variable: neumann_pres
+    Type: short
+    Total Size: 4831920 values
+                9663840 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 6711 <storm> x 180 <date_time> ]
+    Coordinates:
+        Number of Attributes:        6
+            long_name	: 	Minimum central pressure
+            units	: 	mb
+            valid_min	: 	700
+            valid_max	: 	1050
+            _FillValue	: 	-9999
+            coverage_content_type	: 	physicalMeasurement
+
+    Variable: mlc_lat
+    Type: float
+    Total Size: 4831920 values
+                19327680 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 4474 <storm> x 120 <date_time> ]
+    Coordinates:
+        Number of Attributes:        4
+            long_name	: 	Latitude (M. L. Chenoweth dataset)
+            units	: 	degrees_north
+            _FillValue	: 	-9999
+            coverage_content_type	: 	coordinate
+
+    Variable: mlc_lon
+    Type: float
+    Total Size: 4831920 values
+                19327680 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 4474 <storm> x 120 <date_time> ]
+    Coordinates:
+        Number of Attributes:        4
+            long_name	: 	Longitude (M. L. Chenoweth dataset)
+            units	: 	degrees_east
+            _FillValue	: 	-9999
+            coverage_content_type	: 	coordinate
+
+    Variable: mlc_class
+    Type: character
+    Total Size: 9663840 values
+                9663840 bytes
+    Number of Dimensions: 3
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> x 2 <char2> ]
+    Chunking Info:	[ 6711 <storm> x 180 <date_time> x 1 <char2> ]
+    Coordinates:
+        Number of Attributes:        2
+            long_name	: 	Storm classification
+            coverage_content_type	: 	thematicClassification
+
+    Variable: mlc_wind
+    Type: short
+    Total Size: 4831920 values
+                9663840 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 6711 <storm> x 180 <date_time> ]
+    Coordinates:
+        Number of Attributes:        7
+            long_name	: 	Maximum sustained wind speed
+            standard_name	: 	tropical_cyclone_maximum_sustained_wind_speed
+            units	: 	kts
+            valid_min	: 	1
+            valid_max	: 	250
+            _FillValue	: 	-9999
+            coverage_content_type	: 	physicalMeasurement
+
+    Variable: mlc_pres
+    Type: short
+    Total Size: 4831920 values
+                9663840 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 6711 <storm> x 180 <date_time> ]
+    Coordinates:
+        Number of Attributes:        6
+            long_name	: 	Minimum central pressure
+            units	: 	mb
+            valid_min	: 	700
+            valid_max	: 	1050
+            _FillValue	: 	-9999
+            coverage_content_type	: 	physicalMeasurement
+
+    Variable: usa_gust
+    Type: short
+    Total Size: 4831920 values
+                9663840 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 6711 <storm> x 180 <date_time> ]
+    Coordinates:
+        Number of Attributes:        8
+            long_name	: 	Maximum reported wind gust from a US agency
+            standard_name	: 	wind_speed_of_gust
+            units	: 	kts
+            valid_min	: 	1
+            valid_max	: 	350
+            _FillValue	: 	-9999
+            coordinates	: 	time lon lat
+            coverage_content_type	: 	physicalMeasurement
+
+    Variable: bom_gust
+    Type: short
+    Total Size: 4831920 values
+                9663840 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 6711 <storm> x 180 <date_time> ]
+    Coordinates:
+        Number of Attributes:        8
+            long_name	: 	Maximum reported wind gust from BoM
+            standard_name	: 	wind_speed_of_gust
+            units	: 	kts
+            valid_min	: 	1
+            valid_max	: 	350
+            _FillValue	: 	-9999
+            coordinates	: 	time lon lat
+            coverage_content_type	: 	physicalMeasurement
+
+    Variable: bom_gust_per
+    Type: short
+    Total Size: 4831920 values
+                9663840 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 6711 <storm> x 180 <date_time> ]
+    Coordinates:
+        Number of Attributes:        7
+            long_name	: 	Time period of the wind gust from BoM
+            units	: 	second
+            valid_min	: 	1
+            valid_max	: 	9999
+            _FillValue	: 	-9999
+            coordinates	: 	time lon lat
+            coverage_content_type	: 	physicalMeasurement
+
+    Variable: reunion_gust
+    Type: short
+    Total Size: 4831920 values
+                9663840 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 6711 <storm> x 180 <date_time> ]
+    Coordinates:
+        Number of Attributes:        8
+            long_name	: 	Maximum reported wind gust from Reunion
+            standard_name	: 	wind_speed_of_gust
+            units	: 	kts
+            valid_min	: 	1
+            valid_max	: 	350
+            _FillValue	: 	-9999
+            coordinates	: 	time lon lat
+            coverage_content_type	: 	physicalMeasurement
+
+    Variable: reunion_gust_per
+    Type: short
+    Total Size: 4831920 values
+                9663840 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 6711 <storm> x 180 <date_time> ]
+    Coordinates:
+        Number of Attributes:        7
+            long_name	: 	Time period of the wind gust from Reunion
+            units	: 	second
+            valid_min	: 	1
+            valid_max	: 	9999
+            _FillValue	: 	-9999
+            coordinates	: 	time lon lat
+            coverage_content_type	: 	physicalMeasurement
+
+    Variable: usa_seahgt
+    Type: short
+    Total Size: 4831920 values
+                9663840 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 6711 <storm> x 180 <date_time> ]
+    Coordinates:
+        Number of Attributes:        6
+            long_name	: 	Wave height for given radii
+            units	: 	ft
+            valid_min	: 	1
+            valid_max	: 	998
+            _FillValue	: 	-9999
+            coverage_content_type	: 	physicalMeasurement
+
+    Variable: usa_searad
+    Type: short
+    Total Size: 19327680 values
+                38655360 bytes
+    Number of Dimensions: 3
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> x 4 <quadrant> ]
+    Chunking Info:	[ 4474 <storm> x 120 <date_time> x 1 <quadrant> ]
+    Coordinates:
+        Number of Attributes:        6
+            long_name	: 	Radial extent of given sea height
+            units	: 	nmile
+            valid_min	: 	1
+            valid_max	: 	998
+            _FillValue	: 	-9999
+            coverage_content_type	: 	physicalMeasurement
+
+    Variable: storm_speed
+    Type: short
+    Total Size: 4831920 values
+                9663840 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 6711 <storm> x 180 <date_time> ]
+    Coordinates:
+        Number of Attributes:        6
+            long_name	: 	Storm translation speed
+            units	: 	kts
+            valid_min	: 	0
+            valid_max	: 	998
+            _FillValue	: 	-9999
+            coverage_content_type	: 	physicalMeasurement
+
+    Variable: storm_dir
+    Type: short
+    Total Size: 4831920 values
+                9663840 bytes
+    Number of Dimensions: 2
+    Dimensions and sizes:	[ 13422 <storm> x 360 <date_time> ]
+    Chunking Info:	[ 6711 <storm> x 180 <date_time> ]
+    Coordinates:
+        Number of Attributes:        7
+            long_name	: 	Storm translation direction
+            units	: 	degrees
+            valid_min	: 	0
+            valid_max	: 	360
+            _FillValue	: 	-9999
+            Note	: 	Unit is degrees east of north
+            coverage_content_type	: 	physicalMeasurement
+
+ 
