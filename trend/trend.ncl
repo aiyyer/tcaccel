@@ -20,16 +20,16 @@ begin
 
   basinAnalysis = "NA"
   fileName = "../tcMotion.nc"
-  startYear = 1949
+  startYear = 1966
   endYear   = 2019
   variable = (/"speed","accelSpeed","accelCurve"/)
-  ivar       = 1
+  ivar       = 0
 
  ; threshFlag = 1
  ; sfac       = 1.25
   
-  threshFlag = 1
-  sfac       = 1.
+  threshFlag = 0
+  sfac       = 1.5
 
 
   var = variable(ivar)
@@ -37,10 +37,10 @@ begin
   
 ; choose the latitude band
   
-;  latS =   0. ; 5.0
-;  dlat =  20.  ;10. ;10.0
-;  latN = latS + dlat    
-;  nn   = 7
+  latS =   5. ; 5.0
+  dlat =  20.  ;10. ;10.0
+  latN = latS + dlat    
+  nn   = 6
 
 ; entire basin 
   latS = -90. ; 5.0
@@ -49,7 +49,7 @@ begin
   nn = 1
 
 ;  latS = 20. ; 5.0
-;  dlat = 30.  ;10. ;10.0
+;  dlat = 25.  ;10. ;10.0
 ;  latN = latS + dlat    
 ;  nn = 1
 
@@ -186,7 +186,7 @@ begin
                   end if
                   
 ;-------------------------------------------------------------------------                
-                if ( chartostring(nature(i,j,:)) .ne. "ET" .and.  chartostring(nature(i,j,:)) .ne. "NR" ) then
+              if ( chartostring(nature(i,j,:)) .ne. "ET" .and.  chartostring(nature(i,j,:)) .ne. "NR" ) then
 
                   if (.not.ismissing(A) ) ;;;.and. abs(A) .le. Amax ) then
 
@@ -203,7 +203,7 @@ begin
                   end if ;Amax
                   
                   
-             end if ; nature
+          end if ; nature
 ;-------------------------------------------------------------------------
                   
                end if ; lat
@@ -249,14 +249,14 @@ begin
     
     if ( threshFlag .eq. 1 ) then
       thresh =  ave  + sfac*std
-      print ( "thresh = " + thresh)
+      print ( "thresh = " + thresh  + " sfac = " + sfac )
       yearlyThresh =  yearlyThresh@_FillValue
       yearlyThresh = where ( yearly .gt. thresh, yearly, yearly@_FillValue)
     end if
     
     if ( threshFlag .eq. -1 ) then
       thresh =  ave  - sfac*std
-      print ( "thresh = " + thresh)
+      print ( "thresh = " + thresh + " sfac = " + sfac )
       yearlyThresh = where ( yearly .lt. thresh, yearly, yearly@_FillValue)
     end if
     
@@ -374,5 +374,9 @@ begin
   ncdf->latSouth=latSouth
   ncdf->latNorth=latNorth
 
+  if ( threshFlag .eq. 1 ) then
+    ncdf->threshFlag=threshFlag
+    ncdf->sfac=sfac
+  end if
 end
 

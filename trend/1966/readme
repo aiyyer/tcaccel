@@ -1,0 +1,10 @@
+Speed
+A: NO ET, NR
+B: All
+
+
+
+Accel
+one = sfac = 1
+two = sfac = 1.25
+three = sfac = 1.5

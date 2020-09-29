@@ -12,24 +12,24 @@
 
 begin
 
+  dir = "1966/"
+
+  file1 = dir + "speed_NA_B.nc"
+  file2 = dir + "speed_NA_A.nc"
 
 
-  file1 = "dat_atl_all.nc"
-  file2 = "dat_atl_noET_noNR.nc"
   vari = "Speed"
+  ;vari = "Tangential Acceleration"
 
 
-  file1 = "dat_atl_all_accelS_sfac1.nc"
-  file2 = "dat_atl_noET_noNR_accelS_sfac1.nc"
-  vari = "Tangential Acceleration"
 
-  
+  ; all 
   ncdf = addfile(file1 ,"r")  ; open output netCDF file
   startYear1 = ncdf->startYear
   endYear1   = ncdf->endYear
   ave1   = ncdf->ave
 
-
+ ; no ET NR
   ncdf = addfile(file2 ,"r")  ; open output netCDF file
   startYear2 = ncdf->startYear
   endYear2   = ncdf->endYear
@@ -77,7 +77,7 @@ begin
 ; plotting parameters
 ; This illustrates one approach. Overlays could also be used.
 ;************************************************
-   wks  = gsn_open_wks("pdf","trend")             ; send graphics to PNG file
+   wks  = gsn_open_wks("png","trend")             ; send graphics to PNG file
    
    res                     = True                   ; plot mods desired
    res@xyMarkLineModes     = (/"Lines","Lines","Lines","Lines"/)  ; choose which have markers
@@ -106,13 +106,28 @@ begin
 ;   plotDat = new ( (/2,nn/),"float")
 ;   plotDat(0,:) = trend
 ;   plotDat(1,:) = signi
-
+   
+   res@gsnDraw             = False       ; Don't draw plots
+   res@gsnFrame            = False       ; Don't advance frame
+   
    res@tiYAxisString = vari
    res@tiXAxisString = "Year"
 
-   plot  = gsn_csm_xy(wks,x,dat,res)           ; create plot
 
 
+
+   res@tiMainString      = "(a) North Atlantic"
+   res@trYMinF  = 16.0                   ; min value on y-axis
+   res@trYMaxF = 28.0
+   
+   plot1  = gsn_csm_xy(wks,x,dat(0:1,:),res)           ; create plot
+
+
+   res@pmLegendDisplayMode    = "Never"            ; turn on legend
+   plot2  = gsn_csm_xy(wks,x,dat(2:3,:),res)           ; create plot
+   overlay(plot1,plot2)
+   draw(plot1)
+   frame(wks)
 end
 
 

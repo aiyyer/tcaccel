@@ -19,20 +19,21 @@ begin
   fileIn = addfile( fileName, "r" )
   
   variable = (/"speed","accelSpeed","accelCurve"/)
-  basinAnalysis = "NA"
-; 
-; user inputs
+  basinAnalysis = "NA" 
   startYear = 1966
   endYear   = 2019
 ;  
 ; choose the latitude bands
 ;
-  latS     =   5.
+;========================================================================
+  latS     =  5.
   latN     =  55.
   binWidth =  10.
-  dlat     = 5.0
-  nBin     = 9
-  nmax = 80000
+  dlat     =  5.0
+  nBin     =  9 
+;=======================================================================
+  
+  nmax     = 80000
   histoDat   = new ((/nBin,nmax/), "double" )
   histoCount = new (nBin, "integer" )
 ;
@@ -44,7 +45,6 @@ begin
     lat1(i) = latS    + i*dlat
     lat2(i) = lat1(i) + binWidth
     cen = .5*(lat1(i) + lat2(i) )
-;   print ( i + " " + cen + " " + lat1(i) + " " + lat2(i))
   end do
   x =  .5*(lat1 + lat2)
 ;  
@@ -92,9 +92,7 @@ begin
  outputText = new ((/nBin,3/), "string" )
   
   do ivar = 0,2
-
     print ( "IVAR = " + ivar)
-
 ; initialize arrays
 
     histoCount = 0
@@ -103,7 +101,6 @@ begin
     dat := fileIn->$var$
     print ("Processing " + var )
 
-    ;printVarSummary(dat)
     
     if ( var .eq. "speed" .or. var .eq. "speedIB") then
       Amax = 60.*3.6
@@ -145,7 +142,7 @@ begin
           
           
 ;   storm must live at least 2 days
-          if (  numDays .ge. 2 ) then
+          if (  numDays .ge. 3 ) then
             
 
             
@@ -154,7 +151,7 @@ begin
               if ( basin(i,j) .eq. basinAnalysis ) then
 
                 if ( sflag .eq. 0 ) then
-                  print ( i + " " + stormCount + " " + cd_calendar( time(i,0) , -3) )
+                  ;print ( i + " " + stormCount + " " + cd_calendar( time(i,0) , -3) )
 
                   stormCount=stormCount+1
                   sflag = 1
@@ -162,7 +159,7 @@ begin
                 
                 A= dat(i,j)
                 
-                if ( chartostring(nature(i,j,:)) .ne. "ET" ) ;  .and. chartostring(nature(i,j,:)) .ne. "NR" ) then
+                if ( chartostring(nature(i,j,:)) .ne. "ET" .and. chartostring(nature(i,j,:)) .ne. "NR" ) then
                   
                   if ( (Lat(i,j) .ge. latS) .and. (Lat(i,j) .le. latN) ) 
                     
@@ -198,7 +195,7 @@ begin
         end if ;time
       end if ;numobs
     end do ;i
-    exit
+
 ;..................................................................
 ;
 ;
