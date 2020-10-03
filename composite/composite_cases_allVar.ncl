@@ -28,9 +28,9 @@ begin
 
 
 ;=================================================
-  LatS =  10
-  LatN =  20
-  basinAnalysis = "WP" 
+  LatS =  30
+  LatN =  40
+  basinAnalysis = "NA" 
   accelType     = "tang" ;"curv" ;"tang"
 
   iA = 0
@@ -43,7 +43,10 @@ begin
 
 
   dir = "./" 
+  ;fileName = dir + "tcAcc_dates_" + accelType + "_ETonly_" + LatN + "_" + LatS+"_"+ basinAnalysis + ".nc"
+
   fileName = dir + "tcAcc_dates_" + accelType + "_" + LatN + "_" + LatS+"_"+ basinAnalysis + ".nc"
+
   inFile = addfile( fileName, "r" )
  
 
