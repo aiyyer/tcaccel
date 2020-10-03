@@ -7,7 +7,9 @@
 ; A. Aiyyer
 ; Aug 30, 2020
 ;.............................................................................
-;   Input  -> tcSpeed.nc which is created by tc_speed.ncl
+;   Input  -> tcMotion.nc
+;
+;-----------------------------------------------------------------------------
 
 ;
 begin
@@ -16,17 +18,16 @@ begin
   startYear = 1966
   endYear   = 2019
   nYears    = endYear - startYear + 1
+  basinAnalysis = "WP" 
 
-  
-  ;latS =  30.
-  ;latN =  50.
-
-  ; full basin
+; full basin
   latS =  0.
   latN =  90.
 
 ;--------------------------------------------------------------------------      
-  fileName = "../tcSpeed_WP_1965_2019.nc"
+  fileName = "../tcMotion.nc"
+
+  
   fileIn = addfile( fileName, "r" )
   time        = fileIn->time
 ; we expect time units to be in days
@@ -47,7 +48,8 @@ begin
   accelC   = fileIn->accelCurve  ;curvature/normal
 ; read the speeds  
   speed   = fileIn->speed
-    
+  basin = fileIn->basin
+
   time      = fileIn->time
   Lat       = fileIn->lat
   Lon       = fileIn->lon
@@ -94,46 +96,48 @@ begin
    do i = 0,nStorms-1
      if ( numobs(i) .ne. 0 ) then
        numDays = todouble(time(i,numobs(i)-1) - time(i,0))
-;storm must live at least 2 days
-       if (  numDays .ge. 0 ) then
+              
+;storm must live at least 3 days
+       if (  numDays .ge. 3 ) then
          if ( time(i,0) .ge. startTime .and. time(i, numobs(i)-1) .le. endTime ) then
-           ist = ist + 1
            
-           
-; now lets see how many NR, TS, MX and ET records are there
 
-
-           
-           do j = 0, numobs(i)-1
-              if ( Lat(i,j) .ge. latS .and. Lat(i,j) .le. latN ) then  
-                totCount = totCount+1
-                if ( chartostring(nature(i,j,:)) .eq. "NR" .or. chartostring(nature(i,j,:)) .eq. "MX") then
-                  nrCount = nrCount + 1
-                end if             
-                if ( chartostring(nature(i,j,:)) .eq. "ET" ) then
-                  etCount = etCount + 1
-                end if
-                if ( chartostring(nature(i,j,:)) .eq. "TS" )
-                  tsCount        = tsCount + 1
-                end if
-                if ( chartostring(nature(i,j,:)) .eq. "DS" )
-                  dsCount        = dsCount + 1
-                  ;print ( "DS = " + i )
-                end if
-                if ( chartostring(nature(i,j,:)) .eq. "SS" )
-                  ssCount        = ssCount + 1
-                end if
-
-                
-             end if
-           end do ;j
-           
+; now lets see how many NR, TS, MX and ET records are there           
+             
+           if ( basin(i,0) .eq. basinAnalysis ) then
+             ist = ist + 1
+             do j = 0, numobs(i)-1    
+               
+               if ( Lat(i,j) .ge. latS .and. Lat(i,j) .le. latN ) then  
+                 totCount = totCount+1
+                 if ( chartostring(nature(i,j,:)) .eq. "NR" .or. chartostring(nature(i,j,:)) .eq. "MX") then
+                   nrCount = nrCount + 1
+                 end if             
+                 if ( chartostring(nature(i,j,:)) .eq. "ET" ) then
+                   etCount = etCount + 1
+                 end if
+                 if ( chartostring(nature(i,j,:)) .eq. "TS" )
+                   tsCount        = tsCount + 1
+                 end if
+                 if ( chartostring(nature(i,j,:)) .eq. "DS" )
+                   dsCount        = dsCount + 1
+                                ;print ( "DS = " + i )
+                 end if
+                 if ( chartostring(nature(i,j,:)) .eq. "SS" )
+                   ssCount        = ssCount + 1
+                 end if
+                 
+                 
+               end if
+               
+             end do ;j
+           end if
            
          end if
        end if
      end if
    end do ;i
-
+   
 
    
   print ( "nStorms = " + nStorms + " " + "qual storms = " + ist )
