@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2020.6.19)  29 SEP 2020 14:36
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2020.6.19)  2 OCT 2020 13:30
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -3057,7 +3057,10 @@ LaTeX Info: Redefining \vec on input line 14.
 LaTeX Warning: Label `tab:ATLSA' multiply defined.
 
 
-LaTeX Warning: Label `tab:ATLSA' multiply defined.
+LaTeX Warning: Label `tab:ATLAC' multiply defined.
+
+
+LaTeX Warning: Label `fig:atl_speed' multiply defined.
 
 )
 \openout1 = `manuscript.aux'.
@@ -3196,46 +3199,46 @@ Package natbib Warning: Citation `BCSEH2019a' on page 2 undefined on input line
 
 [2]
 
-LaTeX Warning: Reference `fig:distWP' on page 3 undefined on input line 129.
+LaTeX Warning: Reference `fig:distWP' on page 3 undefined on input line 133.
 
 
-LaTeX Warning: Reference `tab:AC1' on page 3 undefined on input line 129.
+LaTeX Warning: Reference `tab:AC1' on page 3 undefined on input line 133.
 
 
-LaTeX Warning: Reference `tab:AT2' on page 3 undefined on input line 129.
+LaTeX Warning: Reference `tab:AT2' on page 3 undefined on input line 133.
 
 [3]
 <composite_tang_40_30_NA_zero.pdf, id=42, 614.295pt x 794.97pt>
 File: composite_tang_40_30_NA_zero.pdf Graphic file (type pdf)
 <use composite_tang_40_30_NA_zero.pdf>
 Package pdftex.def Info: composite_tang_40_30_NA_zero.pdf  used on input line 1
-61.
+65.
 (pdftex.def)             Requested size: 478.43153pt x 353.23145pt.
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <9> not available
-(Font)              Font shape `T1/ptm/b/n' tried instead on input line 162.
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 166.
 
 
-Package natbib Warning: Citation `KHE2000' on page 4 undefined on input line 16
-9.
+Package natbib Warning: Citation `KHE2000' on page 4 undefined on input line 17
+3.
 
 
-Package natbib Warning: Citation `MGY2003' on page 4 undefined on input line 16
-9.
+Package natbib Warning: Citation `MGY2003' on page 4 undefined on input line 17
+3.
 
 
-Package natbib Warning: Citation `RJD2008' on page 4 undefined on input line 16
-9.
+Package natbib Warning: Citation `RJD2008' on page 4 undefined on input line 17
+3.
 
 
-Package natbib Warning: Citation `RJ2014' on page 4 undefined on input line 169
+Package natbib Warning: Citation `RJ2014' on page 4 undefined on input line 173
 .
 
 
-Package natbib Warning: Citation `K2019' on page 4 undefined on input line 169.
+Package natbib Warning: Citation `K2019' on page 4 undefined on input line 173.
 
 
 
-Package natbib Warning: Citation `K2019' on page 4 undefined on input line 177.
+Package natbib Warning: Citation `K2019' on page 4 undefined on input line 181.
 
 
 [4] [5 <./composite_tang_40_30_NA_zero.pdf>]
@@ -3243,53 +3246,79 @@ Package natbib Warning: Citation `K2019' on page 4 undefined on input line 177.
 File: composite_tang_40_30_NA_500hPa.pdf Graphic file (type pdf)
 <use composite_tang_40_30_NA_500hPa.pdf>
 Package pdftex.def Info: composite_tang_40_30_NA_500hPa.pdf  used on input line
- 185.
+ 189.
 (pdftex.def)             Requested size: 478.43153pt x 353.23145pt.
- [6 <./composite_tang_40_30_NA_500hPa.pdf>]
 
-LaTeX Warning: Reference `fig:AS' on page 7 undefined on input line 201.
 
-[7]
+LaTeX Warning: Reference `fig:AS' on page 6 undefined on input line 205.
+
+[6] [7 <./composite_tang_40_30_NA_500hPa.pdf>]
 No file manuscript.bbl.
 [8]
+Overfull \hbox (27.8118pt too wide) in paragraph at lines 397--416
+ []$[]$ 
+ []
+
+
+Overfull \hbox (27.8118pt too wide) in paragraph at lines 428--443
+ []$[]$ 
+ []
+
 <katrina.png, id=106, 618.31pt x 652.4375pt>
 File: katrina.png Graphic file (type png)
 <use katrina.png>
-Package pdftex.def Info: katrina.png  used on input line 425.
+Package pdftex.def Info: katrina.png  used on input line 457.
 (pdftex.def)             Requested size: 199.16928pt x 210.1581pt.
- [9] [10 <./katrina.png>]
-<distribution_NA.png, id=120, 997.7275pt x 331.2375pt>
+[9] [10 <./katrina.png>]
+<distribution_NA.png, id=121, 997.7275pt x 331.2375pt>
 File: distribution_NA.png Graphic file (type png)
 <use distribution_NA.png>
-Package pdftex.def Info: distribution_NA.png  used on input line 441.
+Package pdftex.def Info: distribution_NA.png  used on input line 473.
 (pdftex.def)             Requested size: 453.24931pt x 150.47574pt.
-<altl_speed_trend.png, id=121, 768.8725pt x 742.775pt>
-File: altl_speed_trend.png Graphic file (type png)
-<use altl_speed_trend.png>
-Package pdftex.def Info: altl_speed_trend.png  used on input line 461.
-(pdftex.def)             Requested size: 199.16928pt x 192.40291pt.
- [11 <./distribution_NA.png> <./altl_speed_trend.png>]pdfTeX warning (ext4): de
-stination with the same identifier (name{appendix.A}) has been already used, du
-plicate ignored
+ [11 <./distribution_NA.png>]
+<atl_speed_trend.png, id=126, 768.8725pt x 796.9775pt>
+File: atl_speed_trend.png Graphic file (type png)
+<use atl_speed_trend.png>
+Package pdftex.def Info: atl_speed_trend.png  used on input line 494.
+(pdftex.def)             Requested size: 199.16928pt x 206.44312pt.
+<wpa_speed_trend.png, id=127, 768.8725pt x 796.9775pt>
+File: wpa_speed_trend.png Graphic file (type png)
+<use wpa_speed_trend.png>
+Package pdftex.def Info: wpa_speed_trend.png  used on input line 495.
+(pdftex.def)             Requested size: 199.16928pt x 206.44312pt.
+ [12 <./atl_speed_trend.png> <./wpa_speed_trend.png>]
+<atl_tang_no_etnr.png, id=133, 768.8725pt x 796.9775pt>
+File: atl_tang_no_etnr.png Graphic file (type png)
+<use atl_tang_no_etnr.png>
+Package pdftex.def Info: atl_tang_no_etnr.png  used on input line 510.
+(pdftex.def)             Requested size: 199.16928pt x 206.44312pt.
+<atl_tang_20_40_no_etnr.png, id=134, 768.8725pt x 796.9775pt>
+File: atl_tang_20_40_no_etnr.png Graphic file (type png)
+<use atl_tang_20_40_no_etnr.png>
+Package pdftex.def Info: atl_tang_20_40_no_etnr.png  used on input line 511.
+(pdftex.def)             Requested size: 199.16928pt x 206.44312pt.
+ [13 <./atl_tang_no_etnr.png> <./atl_tang_20_40_no_etnr.png>]pdfTeX warning (ex
+t4): destination with the same identifier (name{appendix.A}) has been already u
+sed, duplicate ignored
 <to be read again> 
                    \relax 
-l.593 \appendixfigures
+l.643 \appendixfigures
                         %% needs to be added in front of appendix figurespdfTeX
  warning (ext4): destination with the same identifier (name{appendix.A}) has be
 en already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.604 \appendixtables
+l.654 \appendixtables
                         %% needs to be added in front of appendix tables
-[12]
+[14]
 
 Package natbib Warning: There were undefined citations.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 634.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 634.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 684.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 684.
 (./manuscript.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 634.
-Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 634.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 684.
+Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 684.
 
 
 LaTeX Warning: There were undefined references.
@@ -3297,16 +3326,16 @@ LaTeX Warning: There were undefined references.
 
 LaTeX Warning: There were multiply-defined labels.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 634.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 684.
  ) 
 Here is how much of TeX's memory you used:
- 12770 strings out of 492671
- 163818 string characters out of 6134270
- 316178 words of memory out of 5000000
- 16420 multiletter control sequences out of 15000+600000
+ 12790 strings out of 492671
+ 164253 string characters out of 6134270
+ 324536 words of memory out of 5000000
+ 16433 multiletter control sequences out of 15000+600000
  46884 words of font info for 78 fonts, out of 8000000 for 9000
  1137 hyphenation exceptions out of 8191
- 43i,10n,40p,1553b,425s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 43i,10n,40p,1553b,424s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texliv
 e/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texlive/texm
 f-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist
@@ -3322,10 +3351,10 @@ xlive/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share/texlive/texmf-
 dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type
 1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utm
 ri8a.pfb>
-Output written on manuscript.pdf (12 pages, 1387481 bytes).
+Output written on manuscript.pdf (14 pages, 1642859 bytes).
 PDF statistics:
- 195 PDF objects out of 1000 (max. 8388607)
- 157 compressed objects within 2 object streams
- 50 named destinations out of 1000 (max. 500000)
- 38 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 209 PDF objects out of 1000 (max. 8388607)
+ 166 compressed objects within 2 object streams
+ 54 named destinations out of 1000 (max. 500000)
+ 53 words of extra memory for PDF output out of 10000 (max. 10000000)
 

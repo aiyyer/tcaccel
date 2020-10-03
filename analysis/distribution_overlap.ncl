@@ -19,7 +19,7 @@ begin
   fileIn = addfile( fileName, "r" )
   
   variable = (/"speed","accelSpeed","accelCurve"/)
-  basinAnalysis = "NA" 
+  basinAnalysis = "WP" ; "NA" 
   startYear = 1966
   endYear   = 2019
 ;  
@@ -80,7 +80,7 @@ begin
 
 
   startTime = cd_inv_calendar(startYear,1,1,0,0,0,time@units,  0)
-  endTime = cd_inv_calendar(endYear,12,31,24,0,0,time@units, 0)
+  endTime   = cd_inv_calendar(endYear,12,31,23,0,0,time@units, 0)
 
   print ( cd_calendar(startTime,-3) + " " +  cd_calendar(endTime,-3) )
 
@@ -159,7 +159,7 @@ begin
                 
                 A= dat(i,j)
                 
-                if ( chartostring(nature(i,j,:)) .ne. "ET" .and. chartostring(nature(i,j,:)) .ne. "NR" ) then
+               ;; if ( chartostring(nature(i,j,:)) .ne. "ET" .and. chartostring(nature(i,j,:)) .ne. "NR" ) then
                   
                   if ( (Lat(i,j) .ge. latS) .and. (Lat(i,j) .le. latN) ) 
                     
@@ -186,7 +186,7 @@ begin
                     
                   end if ;lat
                   
-                end if ; nat
+               ;; end if ; nat
 
               end if ;basin
             

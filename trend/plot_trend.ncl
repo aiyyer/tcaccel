@@ -11,11 +11,15 @@
 begin
   
   ncdf = addfile("1966/speed_WP_B.nc" ,"r")  ; open output netCDF file
+  ncdf = addfile("dat.nc","r")
+  
   startYear = ncdf->startYear
   endYear   = ncdf->endYear
   ave       = ncdf->ave
-
+  latSouth  = ncdf->latSouth
+  latNorth  = ncdf->latNorth
   vari = "Speed"
+  vari = "Tangential Acceleration"
 
   
   x = ispan(startYear,endYear,1)
@@ -81,7 +85,8 @@ begin
 
    res@gsnDraw             = False       ; Don't draw plots
    res@gsnFrame            = False       ; Don't advance frame
-   
+   res@xyLineThicknesses   = (/4,1/)                ; set second line to 2
+ 
  
 ;   do i = 0,0
 ;   plot  = gsn_csm_xy (wks,x,ave(i,:),res)           ; create plot
@@ -92,14 +97,18 @@ begin
 
 
 
-   res@trYMinF  = 16.0                   ; min value on y-axis
-   res@trYMaxF  = 28.0                   ; max value on y-axis
+   res@trYMinF  = 10.0                   ; min value on y-axis
+   res@trYMaxF  = 60.0                   ; max value on y-axis
    
-   plot1  = gsn_csm_xy (wks,x,dat(0,:),res)           ; create plot
-   plot2  = gsn_csm_xy (wks,x,dat(1,:),res)           ; create plot
+   ;plot1  = gsn_csm_xy (wks,x,dat(0,:),res)           ; create plot
+   ;plot2  = gsn_csm_xy (wks,x,dat(1,:),res)           ; create plot
 
-   overlay(plot1,plot2)
-   draw(plot1)
+
+
+   plot  = gsn_csm_xy (wks,x,ave,res)           ; create plot
+
+   ;overlay(plot1,plot2)
+   draw(plot)
    frame(wks)
 
 end
