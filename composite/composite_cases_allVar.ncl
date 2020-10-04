@@ -32,7 +32,7 @@ begin
   LatN =  40
   basinAnalysis = "NA" 
   accelType     = "tang" ;"curv" ;"tang"
-
+ 
 ;  iA = 0
 ;  iB = 2
 ;  if ( accelType .eq. "curv" ) then
@@ -40,8 +40,8 @@ begin
 ;    iB = 2
 ;  end if
 
-iA = 1
-iB = 1
+iA = 0
+iB = 2
 
   dir = "./" 
   ;fileName = dir + "tcAcc_dates_" + accelType + "_ETonly_" + LatN + "_" + LatS+"_"+ basinAnalysis + ".nc"
@@ -57,7 +57,7 @@ iB = 1
   climTimUnits = inClim->time@units
   print (climTimUnits)
 
-  types = (/"Low","High","Zero"/)
+  types = (/"Zero","Low","High"/)
 
   sfac    := inFile->sfac
 

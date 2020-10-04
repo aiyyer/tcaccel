@@ -90,7 +90,7 @@ begin
   icount = 0
 
 ; define output arrays  
-  N = 5000
+  N = 400
   iHigh = 0
   iHighET = 0
 
@@ -225,7 +225,7 @@ begin
         LatZero(iZero)     =  Lat(i,j)
         LonZero(iZero)     =  Lon(i,j)
         timeZero(iZero)    = time(i,j)
-        print (iZero+ " " + A + " " +   datA(0,ii))
+        ;print (iZero+ " " + A + " " +   datA(0,ii))
         iZero=iZero+1
       end if
     end do
