@@ -56,8 +56,6 @@ begin
   dat = fileIn->accelSpeed
   fileName = "tcAcc_dates_tang"  + "_" + LatN + "_" + LatS+"_"+ basinAnalysis + ".nc"
   
-  ;dat = fileIn->accelCurve
-  ;fileName = "tcAcc_dates_curv"  + "_" + LatN + "_" + LatS+"_"+ basinAnalysis + ".nc"
 
 
   if ( dat@units .eq. "m/s per day" ) then
@@ -127,7 +125,7 @@ begin
 ;===================================================================================
 ;===================================================================================  
 ;===================================================================================
-    STcount  = 0
+  STcount  = 0
 
 ; loop over storms  
     do i = 0,nStorms-1
@@ -171,6 +169,7 @@ begin
     end do ;i
     
     print ( "icount = " + icount )
+    
     ave = avg( datA(0,0:icount-1) )
     std = stddev(datA(0,0:icount-1) )
     med = dim_median( datA(0,0:icount-1) )
@@ -206,7 +205,7 @@ begin
       accelHigh(iHigh)   =  dat(i,j)
       LatHigh(iHigh)     =  Lat(i,j)
       LonHigh(iHigh)     =  Lon(i,j)
-      timeHigh(iHigh)    = time(i,j)
+      timeHigh(iLow)    = time(i,j)
       iHigh = iHigh + 1  
     end do
 
@@ -230,9 +229,7 @@ begin
       end if
     end do
 
-
-
-
+    exit
     
 ;  
     accelLow!0 = "LowCount"
@@ -245,14 +242,12 @@ begin
     LonHigh!0 = "HighCount"
     timeHigh!0 = "HighCount"
     
-       ;
+    ;
     accelZero!0 = "ZeroCount"
     LatZero!0 = "ZeroCount"
     LonZero!0 = "ZeroCount"
     timeZero!0 = "ZeroCount"
    
-
-
 
 
     
@@ -263,79 +258,27 @@ begin
     outFile->LatS=LatS
     outFile->LatN=LatN
     
-    N=iHigh-1
-    accelHigh2 :=accelHigh(0:N)
-    LatHigh2 :=LatHigh(0:N)
-    LonHigh2 :=LonHigh(0:N)
-    timeHigh2 :=timeHigh(0:N)
-    
-    outFile->accelHigh=accelHigh2
-    outFile->LatHigh=LatHigh2
-    outFile->LonHigh=LonHigh2
-    outFile->timeHigh=timeHigh2
-    outFile->HighCount=N
-                                ;print ( iStormHigh2 + " " + jStormHigh2 + " " + LatHigh2 + " " + LonHigh2 )
-    print ("rapid accel cases:")
-    print ( "mean accel = " + avg(accelHigh2) + " " + "median accel = " + dim_median(accelHigh2) )
-    print ( "max accel = " + max(accelHigh2) + " " + "min accel = " + min(accelHigh2) )
-    
-    
-    print ( "mean lat = " + avg(LatHigh2) + " " + "median lat = " + dim_median(LatHigh2) )
-    print ( "max lat = " + max(LatHigh2) + " " + "min lat = " + min(LatHigh2) )
-    
-    N=iLow-1
-    accelLow2 :=accelLow(0:N)
-    LatLow2   :=LatLow(0:N)
-    LonLow2   :=LonLow(0:N)
-    timeLow2  :=timeLow(0:N)
-    
-    outFile->accelLow=accelLow2
-    outFile->LatLow=LatLow2
-    outFile->LonLow=LonLow2
-    outFile->timeLow=timeLow2
-    outFile->LowCount=N
-    
-
-
     N=iZero-1
     accelZero2 :=accelZero(0:N)
-    LatZero2   :=LatZero(0:N)
-    LonZero2   :=LonZero(0:N)
-    timeZero2  :=timeZero(0:N)
+    LatZero2 :=LatZero(0:N)
+    LonZero2 :=LonZero(0:N)
+    timeZero2 :=timeZero(0:N)
     
     outFile->accelZero=accelZero2
     outFile->LatZero=LatZero2
     outFile->LonZero=LonZero2
     outFile->timeZero=timeZero2
     outFile->ZeroCount=N
+ 
 
-
-    print (" " )
-    print ("zero accel cases:")
-    print ( "mean accel = " + avg(accelZero2) + " " + "median accel = " + dim_median(accelZero2) )
-    print ( "max accel = " + max(accelZero2) + " " + "min accel = " + min(accelZero2) )
-    print ( "mean lat = " + avg(LatZero2) + " " + "median lat = " + dim_median(LatZero2) )
+    
     print ( "mean lat = " + avg(LatZero2) + " " + "median lat = " + dim_median(LatZero2) )
     print ( "max lat = " + max(LatZero2) + " " + "min lat = " + min(LatZero2) )
     
-    print ( "iLow , iHigh, iZero = "  + iLow + " " + iHigh + " " + iZero)
-    print ( "iLowET , iHighET, iZero = "  + iLowET + " " + iHighET + " " + iZeroET)
     
     
-
+    print ( "iZero = "  + iZero )
     
-    print (" " )
-    print ("rapid decel cases:")
-    print ( "mean accel = " + avg(accelLow2) + " " + "median accel = " + dim_median(accelLow2) )
-    print (  "max accel  = " + max(accelLow2) + " " + "min     accel = " + min(accelLow2) )
-    print (  "mean lat = " + avg(LatLow2) + " max lat = " + max(LatLow2) + " " + "min lat = " + min(LatLow2) )
-    
-    print ( "mean lat = " + avg(LatLow2) + " " + "median lat = " + dim_median(LatLow2) )
-    print ( "max lat = " + max(LatLow2) + " " + "min lat = " + min(LatLow2) )
-    
-    
-    
-    print ( "iLow , iHigh, iZero = "  + iLow + " " + iHigh + " " + iZero)
 
   
 ;===================================================================================

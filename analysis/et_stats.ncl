@@ -15,10 +15,16 @@
 ; NCSU Tropical Dynamics Group
 ;
 ; Nov 28, 2019
+; Oct 04, 2020: Now we demand that each storm lives at least 3 days
 ;
+;
+;
+
 ;----------------------------------------------------------------------------
 ; Does a storm undergo ET? This is a tricky question. The numbers can be
 ; slightly different if:
+;
+;
 ; (a) We just identify storms that were designated as ET      = greatest ET fraction
 ; (b) we demand (a) and that the storm had to live > n days  for n<3, not much sensitivity
 ; (c) we also demand that the storm was classified as TS before ET
@@ -34,13 +40,12 @@ begin
   startYear = 1966
   endYear   = 2019
   nYears    = endYear - startYear + 1
-  basinAnalysis ="NA" ; "--" ;"--" ;"NA"  
+  basinAnalysis ="NA"
   print ( "Start Year = " + startYear + " end year = " + endYear)
 
 ;--------------------------------------------------------------------------      
 
 ; the ibtracs file  
-;  fileName = "/home/anant/data50/data/ibtracs/IBTrACS.since1980.v04r00.nc"
   fileName = "../IBTrACS.ALL.v04r00.nc"
   fileIn = addfile( fileName, "r" )
 ;
@@ -53,7 +58,7 @@ begin
   wmo_wind    = fileIn->usa_wind ;use usa instead of wmo for ATL
 ;--------------------------------------------------------------------------        
   if ( wmo_wind@units .eq. "kts" ) then
-    WindThresh = 34.  ; threshold for TC
+    WindThresh = 33.  ; threshold for TC
   else
     print ("Units of wmo_wind not kts. Unexpected error! Terminating Code")
     exit
@@ -95,25 +100,29 @@ begin
       basinId =  chartostring(basin(i,0,:))
 
       if ( basinId .eq. basinAnalysis) then
-        
-; storm must live at least 2 day
-        numDays = tofloat(time(i,numobs(i)-1) - time(i,0))
-        if (  numDays .ge. 2 ) then 
-          
-;    maxSpeed = max(wmo_wind(i,:))
-;    if ( ismissing(maxSpeed) ) then
-;      flag = 0
-;      print ("missing max speed  " + i )
-;    else
-;      if ( maxSpeed .lt. WindThresh ) then
-;        flag = 0
-;      end if
-;    end if
-;   
-;    stormFlag = 0
 
-          stormFlag = 1
-; also now keep track of the storm count for this year
+; optional filter based on peak wind speed
+        flag = 1
+        maxSpeed = max(wmo_wind(i,:))
+        if ( ismissing(maxSpeed) ) then
+          flag = 0
+          print ("missing max speed  " + i )
+        else
+          if ( maxSpeed .lt. WindThresh ) then
+            flag = 0
+          end if
+        end if
+        
+
+; override max wind threshold. comment this line if you wish to exclude depressions
+        flag = 1
+; storm must live at least N days
+        
+        numDays = tofloat(time(i,numobs(i)-1) - time(i,0))
+        if ( flag .eq. 1 .and.  numDays .ge. 3 ) then 
+          
+          stormFlag = 1  ; this storm is good to go for our stats
+
           j=3 ;use j=3 to get just one point along the track
           date=cd_calendar(time(i,j),-5)
 ; define the year by the first data in the track
@@ -122,8 +131,7 @@ begin
           
           ETFlag = 0 ; a flag that keeps track of whether a storm became ET or not
           TSFlag = 0 ; a flag that keeps track of whether a storm was a named TS
-          SSFlag = 0 ; a flag that keeps track of whether a storm was a named Subtropical
-          
+          SSFlag = 0 ; a flag that keeps track of whether a storm was a named Subtropical          
           TSj = -9
           ETj = -9
           SSj = -9
@@ -178,10 +186,6 @@ begin
 ;          end if
 ;----------------------------------------------------------------------------------------
 
-            
-            
-
-
 ; looser restricion. 
 ;             
             if ( StypeA .ne. "ET" .and. TSFlag .eq. 0) then
@@ -191,23 +195,19 @@ begin
           end do ;j`end loop over each track
             
 ; Include this storm as a legit TS->ET case only if it was designated as a TS
-; prior to being classified as ET. This happens for i=9092, 13207 for example.
+; prior to being classified as ET. 
 ; at least 15-20 such cases found.
           
           if ( ETFlag .eq. 1 ) then
-            ;if (  TSj .lt. ETj ) then
+            if (  TSj .lt. ETj ) then
               yearlyETCount(k) = yearlyETCount(k) + 1
               ETLat(iET) =  lat(i,ETj)
               iET = iET + 1
-            ;else
-            ;  print ("ET before TS? " + i )
-            ;  ires  = ires + 1
-            ;end if
+            else
+              print ("ET before TS? " + i )
+              ires  = ires + 1
+            end if
           end if
-
-
-            
-
           
 ; update the storm count if this storm met our specs for a valid storm      
           if (stormFlag .eq. 1 ) then
