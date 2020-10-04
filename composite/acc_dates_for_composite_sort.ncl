@@ -53,11 +53,11 @@ begin
   startTime = cd_inv_calendar(startYear,1,1,0,0,0,time@units,  0)
   endTime = cd_inv_calendar(endYear,12,31,24,0,0,time@units, 0)
 ;
-  ;dat = fileIn->accelSpeed
-  ;fileName = "tcAcc_dates_tang"  + "_" + LatN + "_" + LatS+"_"+ basinAnalysis + ".nc"
+  dat = fileIn->accelSpeed
+  fileName = "tcAcc_dates_tang"  + "_" + LatN + "_" + LatS+"_"+ basinAnalysis + ".nc"
   
-  dat = fileIn->accelCurve
-  fileName = "tcAcc_dates_curv"  + "_" + LatN + "_" + LatS+"_"+ basinAnalysis + ".nc"
+  ;dat = fileIn->accelCurve
+  ;fileName = "tcAcc_dates_curv"  + "_" + LatN + "_" + LatS+"_"+ basinAnalysis + ".nc"
 
 
   if ( dat@units .eq. "m/s per day" ) then
@@ -206,7 +206,7 @@ begin
       accelHigh(iHigh)   =  dat(i,j)
       LatHigh(iHigh)     =  Lat(i,j)
       LonHigh(iHigh)     =  Lon(i,j)
-      timeHigh(iLow)    = time(i,j)
+      timeHigh(iHigh)    = time(i,j)
       iHigh = iHigh + 1  
     end do
     

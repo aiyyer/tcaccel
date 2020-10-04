@@ -33,14 +33,15 @@ begin
   basinAnalysis = "NA" 
   accelType     = "tang" ;"curv" ;"tang"
 
-  iA = 0
-  iB = 2
-  if ( accelType .eq. "curv" ) then
-    iA = 1
-    iB = 2
-  end if
+;  iA = 0
+;  iB = 2
+;  if ( accelType .eq. "curv" ) then
+;    iA = 1
+;    iB = 2
+;  end if
 
-
+iA = 1
+iB = 1
 
   dir = "./" 
   ;fileName = dir + "tcAcc_dates_" + accelType + "_ETonly_" + LatN + "_" + LatS+"_"+ basinAnalysis + ".nc"
@@ -68,24 +69,26 @@ begin
       RecLat    := inFile->LatZero
       RecLon    := inFile->LonZero
       RecDate   := inFile->timeZero
-      iStormZero:=inFile->iStormZero
-      jStormZero:=inFile->jStormZero
+      ;iStormZero:=inFile->iStormZero
+      ;jStormZero:=inFile->jStormZero
     end if
     
     if ( type .eq. "High" ) then
       RecLat  := inFile->LatHigh
       RecLon  := inFile->LonHigh
       RecDate := inFile->timeHigh
-      iStorm  := inFile->iStormHigh
-      jStorm  := inFile->jStormHigh
+      ;iStorm  := inFile->iStormHigh
+      ;jStorm  := inFile->jStormHigh
+    ;print (cd_calendar(RecDate,-3) + " " + RecLat + " " + RecLon)
+
     end if
     
     if (type .eq. "Low" ) then
       RecLat  := inFile->LatLow
       RecLon  := inFile->LonLow
       RecDate := inFile->timeLow
-      iStorm:=inFile->iStormLow
-      jStorm:=inFile->jStormLow
+      ;iStorm:=inFile->iStormLow
+      ;jStorm:=inFile->jStormLow
     end if
     
     outFile = "laggedComp_" + accelType + "_"  + type  + "_" + LatN + "_" + LatS+"_"+ basinAnalysis + ".nc"
@@ -135,7 +138,7 @@ begin
     end if
     
     RecDate := RecDate2(0:ic-1)
-; print (cd_calendar(RecDate,-3) + " " + RecLat + " " + RecLon)
+    print (cd_calendar(RecDate,-3) + " " + RecLat + " " + RecLon)
     NR = ic
     print ( "Num within the lat range = " + NR)
     
@@ -173,15 +176,16 @@ begin
       nlag = (lagP-lagN)/dt + 1
       
       do i = 0,NR-1
-        
+        ;printVarSummary(RecDate)
         dateTemp = tointeger(cd_calendar(RecDate(i),0))
         month = dateTemp(0,1)
         year  = dateTemp(0,0)
         
+        ;print (i + " " + dateTemp + " "  +  month + " " + year + " " )
         if ( month .ge. 6 .and. month .le. 11 .and. year .lt. 2016) then
           LA := RecLat(i)
           LL := RecLon(i)       
-;        print ( "processing storm num: " + count + " " + cd_calendar(RecDate(i),-3))
+        print ( "processing storm num: " + count + " " + cd_calendar(RecDate(i),-3))
           
 ;--------------------------------------------------------------------------------------------------- 
           lagCount = 0
@@ -234,8 +238,8 @@ begin
               DatArray    := new( (/nlag,nz,ny,nx/) , "float" )
               AnomArray   := DatArray	
               DatSqArray  := DatArray
-                                ;climArray   := DatArray
-                                ;climSqArray := DatArray
+              ;climArray   := DatArray
+              ;climSqArray := DatArray
             end if
             
             

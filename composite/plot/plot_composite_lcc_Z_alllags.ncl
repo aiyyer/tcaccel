@@ -174,9 +174,10 @@ begin
 
   if (flag .eq. 1 ) then
     accelType     = "tang"
-    dir = "~/data50/data/tcaccel/one/tang/" 
+    dir = "../" ;"~/data50/data/tcaccel/one/tang/" 
     plot = new(9,"graphic")
-    types = (/"High","Zero","Low"/)
+   types = (/"High","Zero","Low"/)
+    types = (/"Low","Low","Low"/)
     titles = (/"Rapid Tangential Acceleration","Near Zero Tangential Acceleration","Rapid Tangential Deceleration"/)    
     nmain = 3
   else
