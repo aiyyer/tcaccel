@@ -174,15 +174,14 @@ begin
 
   if (flag .eq. 1 ) then
     accelType     = "tang"
-    dir = "../" ;"~/data50/data/tcaccel/one/tang/" 
+    dir = "/home/anant/data50/data/tcaccel/composite/one/"
     plot = new(9,"graphic")
-   types = (/"High","Zero","Low"/)
-    types = (/"Low","Low","Low"/)
+    types = (/"High","Zero","Low"/)
     titles = (/"Rapid Tangential Acceleration","Near Zero Tangential Acceleration","Rapid Tangential Deceleration"/)    
     nmain = 3
   else
     accelType     = "curv"
-    dir = "~/data50/data/tcaccel/one/curv/" 
+    dir = "/home/anant/data50/data/tcaccel/composite/one/"
     plot = new(6,"graphic")
     types = (/"High","Zero"/)  
     titles = (/"Rapid Curvature Acceleration","Near Zero Curvature Acceleration"/)
@@ -192,22 +191,14 @@ begin
 
 
   pltName = "composite_" + accelType  + "_" + LatN + "_" + LatS+"_"+ basinAnalysis
-  pltType = "pdf"                       ; send graphics to PNG file
+  pltType = "png"                       ; send graphics to PNG file
 
 
   wks    = gsn_open_wks(pltType,pltName)
   resAnom                      = True     ; plot mods desired
 
 
- ; gsn_define_colormap(wks,"GreenMagenta16" )
-;gsn_define_colormap(wks,"NCV_blu_red") 
-
-  gsn_define_colormap(wks,"temp_diff_18lev")
-  ;gsn_define_colormap(wks,"sunshine_diff_12lev")
-
-  ;gsn_define_colormap(wks,"hotcolr_19lev")
-  
-;  gsn_reverse_colormap(wks)      
+  gsn_define_colormap(wks,"UKM_hadcrut") ;temp_diff_18lev")
 
 
   resAnom@cnFillOn            =  True    ; turn on color fill
@@ -261,7 +252,7 @@ begin
                                 ;gsres@gsMarkerThicknessF = 0.1
   gsres@gsMarkerSizeF = 0.01
 
-  resC@gsnContourLineThicknessesScale = 2
+  resC@gsnContourLineThicknessesScale = 4
   
 
   res1000=resC
@@ -400,23 +391,13 @@ begin
       anomaly&lon = lonArray
       composite&lon = lonArray
       cenLon = 0.0
-
-      
-; create filled plot for composite anomalies
-; retrieve the colors and white the near zero values
-      colors = gsn_retrieve_colormap(wks)     ; retrieve color map for editing. dimensioned (103,3)
-
-
-      colors(12,:) = 1.0
-      colors(10,:) = 1.0
-
-      gsn_define_colormap(wks,colors)         ; redefine colormap to workstation, color map now includes a gray
-
-
       
       plot1    = gsn_csm_contour_map(wks,anomaly, resAnom)
 
 ; now contours for the composite
+      resC@cnLineColor = "darkorange1"
+      resC@cnMonoLineColor = "True"
+
       plot2    = gsn_csm_contour(wks,composite, resC)
       
 ;---------------------------------------------------------
@@ -430,7 +411,7 @@ begin
       printVarSummary(composite)
 
 ; locate the minimum (that is the composite storm center)
-      dtemp = composite({cenLat-10:cenLat+10}, {cenLon-10:cenLon+10} )
+      dtemp = composite({cenLat-10:cenLat+10}, {cenLon-10:cenLon+20} )
       a1D      = ndtooned(dtemp)
       dsizes_a = dimsizes(dtemp)
       inds  = ind_resolve(minind(a1D),dsizes_a)
@@ -455,7 +436,7 @@ begin
  ;    gsn_polymarker(wks,plot1,cenLon,cenLat,gsres)
       
       txres               = True                            
-      txres@txFontHeightF = .015             ; Set the font height
+      txres@txFontHeightF = .020             ; Set the font height
       
 
 ; plot the composite TC location
@@ -469,7 +450,10 @@ begin
 ;      hurri = gsn_add_text( wks, plot1, "+",lonMin,latMin,txres ) 
 
 ; mark the reference position by +
+
+       txres@txFontHeightF = .040             ; Set the font height
       hurri = gsn_add_text( wks, plot1, "+",cenLon,cenLat,txres )
+      txres@txFontHeightF = .020             ; Set the font height
 
 
 
