@@ -170,33 +170,47 @@ begin
 
   if (flag .eq. 1 ) then
     accelType     = "tang"
-    dir = "~/data50/data/tcaccel/one/tang/" 
-    plot = new(9,"graphic")
-    types = (/"High","Zero","Low"/)
-    titles = (/"Rapid Tangential Acceleration","Near Zero Tangential Acceleration","Rapid Tangential Deceleration"/)    
-    nmain = 3
+    dir = "/home/anant/data50/data/tcaccel/composite/one/"
+    ;plot = new(9,"graphic")
+    ;types = (/"High","Zero","Low"/)
+    ;titles = (/"Rapid Tangential Acceleration","Near Zero Tangential Acceleration","Rapid Tangential Deceleration"/)
+
+    types = (/"High","Zero"/)  
+    titles = (/"Rapid Tangential Acceleration","Rapid Tangential Deceleration"/)
+    plot = new(6,"graphic")
+    nmain = 2
   else
     accelType     = "curv"
-    dir = "~/data50/data/tcaccel/one/curv/" 
+    dir = "/home/anant/data50/data/tcaccel/composite/one"
     plot = new(6,"graphic")
     types = (/"High","Zero"/)  
     titles = (/"Rapid Curvature Acceleration","Near Zero Curvature Acceleration"/)
     nmain = 2
   end if
 
+  plot = new(6,"graphic")
 
+  labels = (/"a)","b)","c)","d)","e)","f)","g)","h)","i)"/)
+  labels = (/"a)","d)","b)","e)","c)","f)","g)","h)","i)"/)
 
   pltName = "composite_" + accelType  + "_" + LatN + "_" + LatS+"_"+ basinAnalysis
-  pltType = "pdf"                       ; send graphics to PNG file
+  pltType = "png"                       ; send graphics to PNG file
 
   wks    = gsn_open_wks(pltType,pltName)
   resAnom                      = True     ; plot mods desired
 
-  ;gsn_define_colormap(wks,"GreenMagenta16" ) ;CBR_coldhot") ;BlueWhiteOrangeRed")
+
+
+  gsn_define_colormap(wks,"UKM_hadcrut") ;temp_diff_18lev")
+
+; retrieve the colors and white the near zero values
+;      colors = gsn_retrieve_colormap(wks)     ; retrieve color map for editing. dimensioned (103,3)
+;      colors(12,:) = 1.0
+;      colors(10,:) = 1.0
+;      gsn_define_colormap(wks,colors)         ; redefine colormap to workstation, color map now includes a gray
+
+  
   ;gsn_reverse_colormap(wks)
-
-  gsn_define_colormap(wks,"temp_diff_18lev")
-
 
   
   resAnom@cnFillOn            =  True    ; turn on color fill
@@ -247,9 +261,8 @@ begin
   gsres               = True
   gsres@gsMarkerIndex = 16          ; Use filled dots for markers.
                                 ;gsres@gsMarkerThicknessF = 0.1
-  gsres@gsMarkerSizeF = 0.01
-
-  resC@gsnContourLineThicknessesScale = 2
+  gsres@gsMarkerSizeF = 0.015
+  resC@gsnContourLineThicknessesScale = 4
   
 
   res1000=resC
@@ -263,7 +276,6 @@ begin
 ;resAnom@lbLabelBarOn = False  
 
 
-  plot = new(9,"graphic")
 
 
   levels = (/300,500,850/)
@@ -362,7 +374,12 @@ begin
         resAnom@tiMainString         = " "
       end if
       
-
+      if ( ic .eq. 0 .or. ic .eq. 1  ) then
+        resAnom@tiMainString         = titles(imain)
+      else
+        resAnom@tiMainString         = " "
+      end if
+     
 ;---------------------------------------------------------
       comp = f->compZ(ilag,{level},:,:)
       compAnom = f->compAnomZ(ilag,{level},:,:)
@@ -372,8 +389,13 @@ begin
       compAnom@units  = ""
       comp@long_name = " "      
       comp@units  = ""
-      resAnom@gsnRightString       = level + "hPa"
-      resAnom@gsnLeftString        = "Day = " + day
+      resAnom@gsnRightString       =  level + "hPa"
+      resAnom@gsnLeftString        = labels(ic)
+      resAnom@gsnCenterString        = " " ;+ " Day = " + day
+
+      resAnom@gsnStringFontHeightF = 0.02
+
+      
       lonArray = compAnom&lon
       lonArray = lonArray - cenLon
       compAnom&lon = lonArray
@@ -383,17 +405,14 @@ begin
 
 
 ; create filled plot for composite anomalies
-; retrieve the colors and white the near zero values
-      colors = gsn_retrieve_colormap(wks)     ; retrieve color map for editing. dimensioned (103,3)
-      colors(12,:) = 1.0
-      colors(10,:) = 1.0
-      gsn_define_colormap(wks,colors)         ; redefine colormap to workstation, color map now includes a gray
 
       
       plot1    = gsn_csm_contour_map(wks,compAnom, resAnom)
 
 
-      
+      resC@cnLineColor = "darkorange1"
+      resC@cnMonoLineColor = "True"
+
       plot2    = gsn_csm_contour(wks,comp, resC)
       
 ;---------------------------------------------------------
@@ -454,7 +473,7 @@ begin
   resP@gsnPanelYWhiteSpacePercent = 5
   resP@gsnPanelXWhiteSpacePercent = 5
   
-  gsn_panel(wks,plot,(/3,3/),resP) 
+  gsn_panel(wks,plot,(/3,2/),resP) 
 
 
  
