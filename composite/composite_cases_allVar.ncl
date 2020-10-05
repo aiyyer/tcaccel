@@ -31,7 +31,7 @@ begin
   LatS =  30
   LatN =  40
   basinAnalysis = "NA" 
-  accelType     = "tang" ;"curv" ;"tang"
+  accelType     = "curv" ;"tang"
  
 ;  iA = 0
 ;  iB = 2
@@ -44,7 +44,6 @@ iA = 0
 iB = 2
 
   dir = "./" 
-  ;fileName = dir + "tcAcc_dates_" + accelType + "_ETonly_" + LatN + "_" + LatS+"_"+ basinAnalysis + ".nc"
 
   fileName = dir + "tcAcc_dates_" + accelType + "_" + LatN + "_" + LatS+"_"+ basinAnalysis + ".nc"
 
@@ -90,8 +89,8 @@ iB = 2
       ;iStorm:=inFile->iStormLow
       ;jStorm:=inFile->jStormLow
     end if
-    
-    outFile = "laggedComp_" + accelType + "_"  + type  + "_" + LatN + "_" + LatS+"_"+ basinAnalysis + ".nc"
+   
+    outFile = "/lotus/projects/data/tcaccel/dat/one/laggedComp_" + accelType + "_"  + type  + "_" + LatN + "_" + LatS+"_"+ basinAnalysis + ".nc"
     system( "rm " + outFile )
     setfileoption("nc", "format", "NETCDF4") 
     ncdf = addfile(outFile ,"c")  ; open output netCDF file

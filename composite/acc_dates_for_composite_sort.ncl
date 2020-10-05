@@ -32,7 +32,7 @@ begin
   basinAnalysis = "NA"  ;WP
 
 ; sdev threshold factor = percentile
-  sfac  = 0.9
+  sfac  = 0.6
   
   print ( "sfac  = " + sfac )
 ; the sfac is used to determine the threshold accel, decel values.
@@ -53,11 +53,11 @@ begin
   startTime = cd_inv_calendar(startYear,1,1,0,0,0,time@units,  0)
   endTime = cd_inv_calendar(endYear,12,31,24,0,0,time@units, 0)
 ;
-  dat = fileIn->accelSpeed
-  fileName = "tcAcc_dates_tang"  + "_" + LatN + "_" + LatS+"_"+ basinAnalysis + ".nc"
+  ;dat = fileIn->accelSpeed
+  ;fileName = "tcAcc_dates_tang"  + "_" + LatN + "_" + LatS+"_"+ basinAnalysis + ".nc"
   
-  ;dat = fileIn->accelCurve
-  ;fileName = "tcAcc_dates_curv"  + "_" + LatN + "_" + LatS+"_"+ basinAnalysis + ".nc"
+  dat = fileIn->accelCurve
+  fileName = "tcAcc_dates_curv"  + "_" + LatN + "_" + LatS+"_"+ basinAnalysis + ".nc"
 
 
   if ( dat@units .eq. "m/s per day" ) then
@@ -90,7 +90,7 @@ begin
   icount = 0
 
 ; define output arrays  
-  N = 400
+  N = 4000
   iHigh = 0
   iHighET = 0
 
