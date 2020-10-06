@@ -19,7 +19,7 @@ begin
   fileIn = addfile( fileName, "r" )
   
   variable = (/"speed","accelSpeed","accelCurve"/)
-  basinAnalysis = "WP" ; "NA" 
+  basinAnalysis = "WP" 
   startYear = 1966
   endYear   = 2019
 ;  
@@ -134,25 +134,19 @@ begin
 ;..................................................................
     do i = 0,nStorms-1
       sflag = 0
-      if ( numobs(i) .gt. 0 ) then
+      
+      if ( numobs(i) .ne. 0 ) then
+        numDays = todouble(time(i,numobs(i)-1) - time(i,0))
         
-        if ( time(i,0) .ge. startTime .and. time(i,numobs(i)-1) .le. endTime ) then
-          
-          numDays = tofloat(time(i,numobs(i)-1) - time(i,0))
-          
-          
-;   storm must live at least 2 days
-          if (  numDays .ge. 3 ) then
-            
-
+;storm must live at least 3 days
+        if (  numDays .ge. 3 ) then
+          if ( time(i,0) .ge. startTime .and. time(i, numobs(i)-1) .le. endTime ) then
             
             do j = 0, numobs(i)-1
 
               if ( basin(i,j) .eq. basinAnalysis ) then
 
                 if ( sflag .eq. 0 ) then
-                  ;print ( i + " " + stormCount + " " + cd_calendar( time(i,0) , -3) )
-
                   stormCount=stormCount+1
                   sflag = 1
                 end if
@@ -186,7 +180,7 @@ begin
                     
                   end if ;lat
                   
-               ;; end if ; nat
+               ;;end if ; nat
 
               end if ;basin
             

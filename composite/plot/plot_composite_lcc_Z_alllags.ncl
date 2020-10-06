@@ -160,17 +160,11 @@ begin
 ; User Input
 ;***************************************************************
 
-
-
   flag = 1 ; for tang
-
   ;flag = 2 ; for curv
-
-
   LatS =  30
   LatN =  40
   basinAnalysis = "NA" 
-
 
   if (flag .eq. 1 ) then
     accelType     = "tang"
@@ -194,11 +188,38 @@ begin
   pltType = "png"                       ; send graphics to PNG file
 
 
+
+
+  sigFile  = "/home/anant/data50/data/tcaccel/composite/comp95.nc"
+
+  ncdf = addfile(sigFile ,"r")  ; open output netCDF file
+
+  comp300Sig95=ncdf->Z300Sig95
+  comp300Sig05=ncdf->Z300Sig05
+
+  
+  
+
+
+
+;---------------------------------------------------------------------------------------------
+;---------------------------------------------------------------------------------------------
+; ---------------------------------------------------------------------------------------------
   wks    = gsn_open_wks(pltType,pltName)
   resAnom                      = True     ; plot mods desired
+  
+ gsn_define_colormap(wks,"MPL_PRGn") ;
+ ;gsn_reverse_colormap(wks)
+
+; retrieve the colors and white the near zero values
+;  colors = gsn_retrieve_colormap(wks)     ; retrieve color map for editing. dimensioned (103,3)
+;  print (colors(:,0) + " " + colors(:,1) + " " +  colors(:,2) )
+;  colors(6,:) = 1.0
+;  colors(8,:) = 1.0
+;
+;  gsn_define_colormap(wks,colors)         ; redefine colormap to workstation, color map now includes a gray
 
 
-  gsn_define_colormap(wks,"UKM_hadcrut") ;temp_diff_18lev")
 
 
   resAnom@cnFillOn            =  True    ; turn on color fill
@@ -206,23 +227,20 @@ begin
   resAnom@cnLineLabelsOn      =  False       ; Turn off contour lines   
   resAnom@gsnDraw             = False       ; Don't draw plots
   resAnom@gsnFrame            = False       ; Don't advance frame
+  resAnom@cnInfoLabelOn     = False                ; turn off info label
 
 
-  
+
   resC = resAnom
   resC@cnFillOn             =  False    ; turn on color fill
+  resC@cnInfoLabelOn        = False                ; turn off info label  
   resC@cnLinesOn            =  True     ; Turn off contour lines
   resC@cnLineLabelsOn       =  False    ; Turn off contour lines   
-  
-  
-  
 
   minlat             =  20.                ; min lat to mask
   maxlat             =  70.                ; max lat to mask
   minlon             = -130.                ; min lon to mask
   maxlon             =  10.                ; max lon to mask
-
-
   minlon             = -60.                ; min lon to mask
   maxlon             =  60.                ; max lon to mask
 
@@ -243,17 +261,13 @@ begin
   
   
   resC@cnLevelSelectionMode = "ManualLevels"	; manually set the contour levels with the following 3 resources
-  
-  resAnom@cnInfoLabelOn     = False                ; turn off info label
-  resC@cnInfoLabelOn     = False                ; turn off info label  
+  resC@gsnContourLineThicknessesScale = 4
+
   
   gsres               = True
   gsres@gsMarkerIndex = 16          ; Use filled dots for markers.
-                                ;gsres@gsMarkerThicknessF = 0.1
+  gsres@gsMarkerThicknessF = 0.1
   gsres@gsMarkerSizeF = 0.01
-
-  resC@gsnContourLineThicknessesScale = 4
-  
 
   res1000=resC
   res1000@gsnContourNegLineDashPattern   = 1       ; sets negative contours to dash pattern 1
@@ -270,8 +284,13 @@ begin
 
 
   levels = (/300,500,700,850/)
-  iLevel = 1
+  iLevel = 0
+  level = levels(iLevel)
 
+
+
+
+  
   ic = 0    
 ; record the center of the TC 
 
@@ -286,7 +305,6 @@ begin
     hour = -48 + ilag*24 ;hard coded
     day  = -2 + ilag     ;hard coded
     
-    level = levels(iLevel)
 
 
 
@@ -294,8 +312,8 @@ begin
        resC@cnLevelSelectionMode = "ManualLevels"	; manually set the contour levels with the following 3 resources
 
     if (level .eq. 300 ) then
-      resAnom@cnMinLevelValF  = -9.			; set the minimum contour level
-      resAnom@cnMaxLevelValF  =  9.			; set the maximum contour level
+      resAnom@cnMinLevelValF  = -8.			; set the minimum contour level
+      resAnom@cnMaxLevelValF  =  8.			; set the maximum contour level
       resAnom@cnLevelSpacingF =  1.			; set the interval between contours
       resC@cnMinLevelValF  = 640.			; set the minimum contour level
       resC@cnMaxLevelValF  = 1600.			; set the maximum contour level
@@ -371,14 +389,31 @@ begin
 ;---------------------------------------------------------
       composite = f->compZ(ilag,{level},:,:)
       anomaly   = f->compAnomZ(ilag,{level},:,:)
-      anomaly   = anomaly*.01 ;in dam 
-      composite = composite*.01 ;in dam 
+
       anomaly@long_name = " " 
       anomaly@units  = ""
       composite@long_name = " "      
       composite@units  = ""
 
 
+      
+
+      if (level .eq. 300 ) then
+        if ( composite@level .ne. comp300Sig95@level) then
+          print ("Oh oh! incompatible leves, EXIT")
+          exit
+        end if
+        
+        if ( composite@level .ne. comp300Sig05@level) then
+          print ("Oh oh! incompatible leves, EXIT")
+          exit
+        end if
+        anomaly = where( (composite .ge. comp300Sig95).or.(composite .le. comp300Sig05), anomaly, anomaly@_FillValue)
+      end if
+
+      anomaly   = anomaly*.01 ;in dam 
+      composite = composite*.01 ;in dam 
+      
       
 ; now change the size of the left and center string labels
       resAnom@gsnStringFontHeightF = 0.017
@@ -421,7 +456,7 @@ begin
       lonMin = dtemp&lon(ilon)
 
 ; change color of contours
-      res1000@cnLineColor      = "purple"
+      res1000@cnLineColor      = "black"
       res1000@cnMonoLineColor = "True"
 
       plot3    = gsn_csm_contour(wks,composite, res1000)
@@ -452,22 +487,22 @@ begin
 ; mark the reference position by +
 
        txres@txFontHeightF = .040             ; Set the font height
-      hurri = gsn_add_text( wks, plot1, "+",cenLon,cenLat,txres )
-      txres@txFontHeightF = .020             ; Set the font height
+       hurri = gsn_add_text( wks, plot1, "+",cenLon,cenLat,txres )
+       txres@txFontHeightF = .020             ; Set the font height
+       
 
 
-
-      print ( latMin + " " + lonMin  +  " " + cenLat+ " " + cenLon +  " " + composite({cenLat},{0.}) + " " + composite({latMin},{lonMin}) )    
-
-      add_lc_labels(wks,plot1,minlat,maxlat,minlon,maxlon,lat_spacing,lon_spacing)
-      
-      
-      plot(ic) = plot1
-      
-      ic = ic + 1
-    end do
-  end do
-
+       print ( latMin + " " + lonMin  +  " " + cenLat+ " " + cenLon +  " " + composite({cenLat},{0.}) + " " + composite({latMin},{lonMin}) )    
+       
+       add_lc_labels(wks,plot1,minlat,maxlat,minlon,maxlon,lat_spacing,lon_spacing)
+       
+       
+       plot(ic) = plot1
+       
+       ic = ic + 1
+     end do
+   end do
+   
   resP                     = True                ; modify the panel plot    
   resP@gsnPanelLabelBar    = True                ; add common colorbar
   resP@lbLabelFontHeightF  = 0.007               ; make labels smaller

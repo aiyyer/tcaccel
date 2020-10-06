@@ -159,14 +159,16 @@ begin
 ;***************************************************************
 
   flag = 1 ; for tang
-
-  ;flag = 2 ; for curv
-
-
+  flag = 2 ; for curv
   LatS =  30
   LatN =  40
   basinAnalysis = "NA" 
 
+
+  sigFile  = "/home/anant/data50/data/tcaccel/composite/comp95.nc"
+  sigIn    = addfile(sigFile ,"r")  ; open output netCDF file
+
+  
 
   if (flag .eq. 1 ) then
     accelType     = "tang"
@@ -181,7 +183,7 @@ begin
     nmain = 2
   else
     accelType     = "curv"
-    dir = "/home/anant/data50/data/tcaccel/composite/one"
+    dir = "/home/anant/data50/data/tcaccel/composite/one/"
     plot = new(6,"graphic")
     types = (/"High","Zero"/)  
     titles = (/"Rapid Curvature Acceleration","Near Zero Curvature Acceleration"/)
@@ -201,7 +203,8 @@ begin
 
 
 
-  gsn_define_colormap(wks,"UKM_hadcrut") ;temp_diff_18lev")
+  ;gsn_define_colormap(wks,"UKM_hadcrut") ;temp_diff_18lev")
+ gsn_define_colormap(wks,"MPL_PRGn") ;
 
 ; retrieve the colors and white the near zero values
 ;      colors = gsn_retrieve_colormap(wks)     ; retrieve color map for editing. dimensioned (103,3)
@@ -298,6 +301,11 @@ begin
     day  = -2 + ilag     ;hard coded
     
     level = levels(iLevel)
+    
+    var = "Z"+level+"Sig95"
+    compSig95=sigIn->$var$
+    var = "Z"+level+"Sig05"
+    compSig05=sigIn->$var$
 
 
     if (level .eq. 300 ) then
@@ -381,8 +389,12 @@ begin
       end if
      
 ;---------------------------------------------------------
-      comp = f->compZ(ilag,{level},:,:)
-      compAnom = f->compAnomZ(ilag,{level},:,:)
+      comp     =    f->compZ(ilag,{level},:,:)
+      compAnom =    f->compAnomZ(ilag,{level},:,:)
+
+
+      compAnom =    where( (comp .lt. compSig95) .and.  (comp .gt. compSig05), compAnom@_FillValue, compAnom)
+      ;comp       =    where( (comp .ge. compSig95) .and.  (comp .gt. compSig05),     comp@_FillValue, comp)
       compAnom = compAnom*.01 ;in dam 
       comp = comp*.01 ;in dam 
       compAnom@long_name = " " 
@@ -406,7 +418,7 @@ begin
 
 ; create filled plot for composite anomalies
 
-      
+
       plot1    = gsn_csm_contour_map(wks,compAnom, resAnom)
 
 
@@ -439,7 +451,7 @@ begin
 
 ; change color of contours
       
-      res1000@cnLineColor = "purple"
+      res1000@cnLineColor = "black"
       res1000@cnMonoLineColor = "True"
       plot3    = gsn_csm_contour(wks,comp, res1000)
       overlay(plot1,plot2)

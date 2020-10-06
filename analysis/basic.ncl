@@ -18,7 +18,7 @@ begin
   startYear = 1966
   endYear   = 2019
   nYears    = endYear - startYear + 1
-  basinAnalysis = "WP" 
+  basinAnalysis = "NA" 
 
 ; full basin
   latS =  0.
@@ -94,19 +94,29 @@ begin
   
    ist = 0
    do i = 0,nStorms-1
+
+     sflag = 0
+     
      if ( numobs(i) .ne. 0 ) then
+
+
        numDays = todouble(time(i,numobs(i)-1) - time(i,0))
-              
+       
 ;storm must live at least 3 days
        if (  numDays .ge. 3 ) then
          if ( time(i,0) .ge. startTime .and. time(i, numobs(i)-1) .le. endTime ) then
            
-
+           
 ; now lets see how many NR, TS, MX and ET records are there           
-             
-           if ( basin(i,0) .eq. basinAnalysis ) then
-             ist = ist + 1
-             do j = 0, numobs(i)-1    
+           
+           do j = 0, numobs(i)-1    
+             if ( basin(i,j) .eq. basinAnalysis ) then
+               
+      
+                          if ( sflag .eq. 0 ) then
+                 ist = ist + 1
+                 sflag = 1
+               end if
                
                if ( Lat(i,j) .ge. latS .and. Lat(i,j) .le. latN ) then  
                  totCount = totCount+1
@@ -126,16 +136,16 @@ begin
                  if ( chartostring(nature(i,j,:)) .eq. "SS" )
                    ssCount        = ssCount + 1
                  end if
-                 
-                 
                end if
+             
                
-             end do ;j
-           end if
+             end if ;basin
+           end do ;j
            
          end if
        end if
      end if
+     
    end do ;i
    
 
