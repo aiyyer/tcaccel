@@ -24,17 +24,17 @@
 ; 
 
 
-;load "../../ncl/aiyyer_string_routines.ncl"
+load "../../ncl/aiyyer_string_routines.ncl"
 
 begin
 
 
 
-  compVar = "Z"  ; variable to composite
+  varComp = "Z"  ; variable to composite
   
   NumComps = 1000
   year1 = 1980
-  year2 = 2016
+  year2 = 2015
   units  = "days since 1858-11-17 00:00:00"
 
 
@@ -69,7 +69,6 @@ begin
   Ndates = dimsizes(dateAppend)
   
   N = 350 ; composite for N times
-  
 ; Generate N random indices 
   random_setallseed(36484749, 9494848)               ; Set seeds (suggested, NOT required)
   low   = 0
@@ -79,10 +78,7 @@ begin
   
   print ("Num of date/times = " + Ndates + " " + ic)
 
-
-
-
-;================================================================================================
+;=========================================================================
 
 
   
@@ -92,26 +88,25 @@ begin
   do imain = 0,NumComps-1
     print (imain + " " +  min(unf(:,imain)) + " " + max(unf(:,imain))  )
 
-
-
     dcount = 0
     do i = 0, N-1
       jj = unf(i,imain)
-      print ( imain + " " +  i + " " + " " + jj + " " + cd_calendar(dateAppend(jj),-3) )
+  
       
-      date_decoded  = tointeger(cd_calendar (dateAppend,0))
+      date_decoded  = tointeger(cd_calendar (dateAppend(jj),0))
       erafile =  ymd_string (date_decoded(0,0),date_decoded(0,1),date_decoded(0,2))   + ".nc"
-      print (erafile)
+      print (imain + " " + i + " " + erafile)
       filename = "/tamrind/era/3D/" + erafile
       f = addfile (filename, "r")
       units = f->time@units
-      eradate = ymdhdate(tointeger(dateAppend),units)
-      Dat := f->$varComp$({eradate},{1000:50},{-10.:80.},:)   ; hght fields
+     
+      eradate = ymdhdate(tointeger(cd_calendar(dateAppend(jj),-3)),units)
+     
+      Dat := f->$varComp$({eradate},{(/1000,850,500,300/)},{-10.:80.},:)   ; hght fields
       Dat!0 = "level"
       Dat!1 = "lat"
       Dat!2 = "lon"
-      print (eradate + " " + cd_calendar(eradate,-3) )
-      exit
+
       
       
       if ( firstTime .eq. 1 ) then
@@ -121,7 +116,7 @@ begin
         nx = dims(2)
         DatCompArray    := new( (/NumComps,nz,ny,nx/) , "float" )
 
-
+        DatCompArray = 0.0
         DatCompArray!0 = "count"
         DatCompArray!1 = "level"
         DatCompArray!2 = "lat"
@@ -136,16 +131,19 @@ begin
       end if
       
       dcount = dcount + 1
+
       DatCompArray(imain,:,:,:) = DatCompArray(imain,:,:,:)*(dcount-1)/dcount + Dat/dcount
+
+    print ( imain + " " +  i + " " + " " + jj + " " + cd_calendar(dateAppend(jj),-3)  + " " +  eradate + " " + cd_calendar(eradate,-3) + " " + dcount + " " +DatCompArray(imain,{500},{40.},{310.}) )
+
     end do
     
   end do
   
-  outFile = varComp+"_out.nc"
+  outFile = "/lotus/projects/data/tcaccel/" + varComp+"sig_out.nc"
   system( "rm " + outFile )
   setfileoption("nc", "format", "NETCDF4") 
   ncdf = addfile(outFile ,"c")  ; open output netCDF file
-  
   
   ncdf->N=N
   ncdf->DatCompArray=DatCompArray
