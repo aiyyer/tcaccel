@@ -17,7 +17,6 @@
 ;
 ; Updates
 ;
-; Dec 3 2019
 ;----------------------------------------------------------------------------
 ;----------------------------------------------------------------------------
 ;----------------------------------------------------------------------------
@@ -31,6 +30,18 @@ begin
 
 
   varComp = "Z"  ; variable to composite
+; height climo file
+  climFil = "/tamrind/climo/era/synoptic_climo_4xdaily_smooth.nc" 
+  inClim = addfile(climFil, "r" )
+  Zclim = inClim->Z(0,{(/1000,850,500,300/)},{-10:80},:)
+  printVarSummary(Zclim)
+  timeZclimUnits = Zclim&time@units
+  print (timeZclimUnits)
+
+
+  exit
+
+
   
   NumComps = 1000
   year1 = 1980
@@ -81,6 +92,7 @@ begin
 ;=========================================================================
 
 
+
   
 
   firstTime = 1
@@ -107,34 +119,42 @@ begin
       Dat!1 = "lat"
       Dat!2 = "lon"
 
-      
-      
-      if ( firstTime .eq. 1 ) then
+      date_decoded := cd_calendar(eradate,0)
+      dateClimo = cd_inv_calendar(1979,date_decoded(0,1),date_decoded(0,2),date_decoded(0,3),0,0,timeZclimUnits)
+
+
+      Dat = Dat - Zclim({dateClimo,-3},:,:)
+
+      print (cd_calendar(dateClimo,-3 ) + " " + cd_calendar(eradate,-3) )
+      exit
+
+         
+if ( firstTime .eq. 1 ) then
         dims = dimsizes(Dat)
         nz = dims(0)
         ny = dims(1)
         nx = dims(2)
-        DatCompArray    := new( (/NumComps,nz,ny,nx/) , "float" )
+        DatComp    := new( (/NumComps,nz,ny,nx/) , "float" )
 
-        DatCompArray = 0.0
-        DatCompArray!0 = "count"
-        DatCompArray!1 = "level"
-        DatCompArray!2 = "lat"
-        DatCompArray!3 = "lon"
+        DatComp = 0.0
+        DatComp!0 = "count"
+        DatComp!1 = "level"
+        DatComp!2 = "lat"
+        DatComp!3 = "lon"
         
-        DatCompArray&level = Dat&level
-        DatCompArray&lat   = Dat&lat
-        DatCompArray&lon   = Dat&lon
+        DatComp&level = Dat&level
+        DatComp&lat   = Dat&lat
+        DatComp&lon   = Dat&lon
         
-        
+        DatCompAnom = DatComp
         firstTime = 0
       end if
       
       dcount = dcount + 1
 
-      DatCompArray(imain,:,:,:) = DatCompArray(imain,:,:,:)*(dcount-1)/dcount + Dat/dcount
+      DatComp(imain,:,:,:) = DatComp(imain,:,:,:)*(dcount-1)/dcount + Dat/dcount
 
-    print ( imain + " " +  i + " " + " " + jj + " " + cd_calendar(dateAppend(jj),-3)  + " " +  eradate + " " + cd_calendar(eradate,-3) + " " + dcount + " " +DatCompArray(imain,{500},{40.},{310.}) )
+    print ( imain + " " +  i + " " + " " + jj + " " + cd_calendar(dateAppend(jj),-3)  + " " +  eradate + " " + cd_calendar(eradate,-3) + " " + dcount + " " +DatComp(imain,{500},{40.},{310.}) )
 
     end do
     
@@ -146,7 +166,7 @@ begin
   ncdf = addfile(outFile ,"c")  ; open output netCDF file
   
   ncdf->N=N
-  ncdf->DatCompArray=DatCompArray
+  ncdf->DatComp=DatComp
 
 
 
