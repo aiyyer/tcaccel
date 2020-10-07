@@ -28,6 +28,15 @@ load "../../ncl/aiyyer_string_routines.ncl"
 begin
 
   varComp = "Z"  ; variable to composite
+; height climo file
+  climFil = "/tamrind/climo/era/synoptic_climo_4xdaily_smooth.nc" 
+  inClim = addfile(climFil, "r" )
+ 
+  Zclim = inClim->Z(0,{(/1000,850,500,300/)},{-10:80},:)
+  printVarSummary(Zclim)
+  timeZclim = inClim->time
+  timeZclimUnits = timeZclim@units
+  print (timeZclimUnits)
 
   NumComps = 1000
   year1 = 1980
@@ -42,12 +51,10 @@ begin
     startTime =   cd_inv_calendar(iy,7,1,0,0,0,units,  0)
     endTime   =   cd_inv_calendar(iy,10,31,24,0,0,units, 0)
     ndays = tointeger(endTime - startTime)
-    x=ispan(0,ndays*4,1)*.25
-    
+    x=ispan(0,ndays*4,1)*.25    
     date := x
     date  = tofloat(x) +  tofloat(startTime)
     date@units = units
-    
     if (ic .eq. 0 ) then
       dateAppend = date
     else
@@ -63,8 +70,13 @@ begin
 ;  we will compoiste over N samples
 ;  We will repeat that NumComps times
 
+
+
+  ;print (dateAppend + " " +  cd_calendar(dateAppend,-3) )
+  ;exit
+
   Ndates = dimsizes(dateAppend)
-  
+
   N = 350 ; composite for N times
 ; Generate N random indices 
   random_setallseed(36484749, 9494848)               ; Set seeds (suggested, NOT required)
@@ -84,10 +96,22 @@ begin
   firstTime = 1
   
   do imain = 0,NumComps-1
-    print (imain + " " +  min(unf(:,imain)) + " " + max(unf(:,imain))  )
+
+    im =  min(unf(:,imain))
+    ik =  max(unf(:,imain))
+    jj =  unf(175,imain)
+
+    ;ave = tointeger(avg(unf(:,imain)))
+    ;sdv = tointeger(stddev(unf(:,imain)))
+    ;print (imain + " " +  cd_calendar (dateAppend(im),3) + " " +   cd_calendar (dateAppend(ik),3) + " " +  cd_calendar (dateAppend(jj),3) + " " + ave + " " + sdv)
+    
+  end do
+
+
+  do imain = 0,NumComps-1
 
     dcount = 0
-    do i = 0, N-1
+    do i = 100, 100 ;0, N-1
       jj = unf(i,imain)
       
       date_decoded  = tointeger(cd_calendar (dateAppend(jj),0))
@@ -104,6 +128,8 @@ begin
       Dat!1 = "lat"
       Dat!2 = "lon"
 
+      date_decoded := tointeger(cd_calendar(eradate,0))
+      dateClimo = cd_inv_calendar(1979,date_decoded(0,1),date_decoded(0,2),date_decoded(0,3),0,0,timeZclimUnits,0)
 
       if ( firstTime .eq. 1 ) then
         dims = dimsizes(Dat)
@@ -118,13 +144,22 @@ begin
         DatComp!3 = "lon"
         DatComp&level = Dat&level
         DatComp&lat   = Dat&lat
-        DatComp&lon   = Dat&lon        
+        DatComp&lon   = Dat&lon
+        
         firstTime = 0
       end if
       
       dcount = dcount + 1
+
+;      Zclim = inClim->Z({dateClimo},{(/1000,850,500,300/)},{-10:80},:)
+      
       Dat = Dat 
-;      print (cd_calendar(dateClimo,-3 ) + " " + cd_calendar(eradate,-3) + " " + Dat({500},{40},{310}) + " " + Zclim({500},{40},{310}) )
+      
+      if ( i .eq. 100 ) then
+      print (cd_calendar(dateClimo,-3 ) + " " + cd_calendar(eradate,-3) + " " + Dat({500},{40},{310})) ; + " " + Zclim({500},{40},{310}) )
+      end if
+     
+
          
       DatComp(imain,:,:,:) = DatComp(imain,:,:,:)*(dcount-1)/dcount + Dat/dcount
 
@@ -137,13 +172,12 @@ begin
     
   end do
   
-  outFile = "/lotus/projects/data/tcaccel/" + varComp+"sig_out.nc"
-  system( "rm " + outFile )
-  setfileoption("nc", "format", "NETCDF4") 
-  ncdf = addfile(outFile ,"c")  ; open output netCDF file
-  
-  ncdf->N=N
-  ncdf->DatComp=DatComp
+  ;outFile = "/lotus/projects/data/tcaccel/" + varComp+"sig_out.nc"
+  ;system( "rm " + outFile )
+  ;setfileoption("nc", "format", "NETCDF4") 
+  ;ncdf = addfile(outFile ,"c")  ; open output netCDF file
+  ;ncdf->N=N
+  ;ncdf->DatComp=DatComp
 
 
 
