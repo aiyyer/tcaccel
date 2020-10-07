@@ -165,8 +165,8 @@ begin
   basinAnalysis = "NA" 
 
 
-  sigFile  = "/home/anant/data50/data/tcaccel/composite/comp95.nc"
-  sigIn    = addfile(sigFile ,"r")  ; open output netCDF file
+ ; sigFile  = "/home/anant/data50/data/tcaccel/composite/comp95.nc"
+ ; sigIn    = addfile(sigFile ,"r")  ; open output netCDF file
 
   
 
@@ -190,56 +190,49 @@ begin
     nmain = 2
   end if
 
+
+  
   plot = new(6,"graphic")
 
   labels = (/"a)","b)","c)","d)","e)","f)","g)","h)","i)"/)
   labels = (/"a)","d)","b)","e)","c)","f)","g)","h)","i)"/)
 
-  pltName = "composite_" + accelType  + "_" + LatN + "_" + LatS+"_"+ basinAnalysis
+  pltName = "composite_" + accelType  + "_" + LatN + "_" + LatS+"_multilevel_"+ basinAnalysis
   pltType = "png"                       ; send graphics to PNG file
 
   wks    = gsn_open_wks(pltType,pltName)
-  resAnom                      = True     ; plot mods desired
 
 
+  
 
-  ;gsn_define_colormap(wks,"UKM_hadcrut") ;temp_diff_18lev")
- gsn_define_colormap(wks,"MPL_PRGn") ;
+  
+  gsn_define_colormap(wks,"MPL_PRGn") ;
 
+                                ;gsn_define_colormap(wks,"UKM_hadcrut") ;temp_diff_18lev")
 ; retrieve the colors and white the near zero values
 ;      colors = gsn_retrieve_colormap(wks)     ; retrieve color map for editing. dimensioned (103,3)
 ;      colors(12,:) = 1.0
 ;      colors(10,:) = 1.0
 ;      gsn_define_colormap(wks,colors)         ; redefine colormap to workstation, color map now includes a gray
-
-  
   ;gsn_reverse_colormap(wks)
 
-  
-  resAnom@cnFillOn            =  True    ; turn on color fill
-  resAnom@cnLinesOn           =  False       ; Turn off contour lines
-  resAnom@cnLineLabelsOn      =  False       ; Turn off contour lines   
-  resAnom@gsnDraw             = False       ; Don't draw plots
-  resAnom@gsnFrame            = False       ; Don't advance frame
-  
-  resC = resAnom
-  resC@cnFillOn             =  False    ; turn on color fill
-  resC@cnLinesOn            =  True     ; Turn off contour lines
-  resC@cnLineLabelsOn       =  False    ; Turn off contour lines   
-  
-  
-  resAnom@cnLevelSelectionMode = "ManualLevels"	; manually set the contour levels with the following 3 resources
-  
+
 
   minlat             =  20.                ; min lat to mask
   maxlat             =  70.                ; max lat to mask
   minlon             = -130.                ; min lon to mask
   maxlon             =  10.                ; max lon to mask
-
-
   minlon             = -60.                ; min lon to mask
   maxlon             =  60.                ; max lon to mask
+  
 
+  resAnom                      = True     ; plot mods desired
+  resAnom@cnFillOn            =  True    ; turn on color fill
+  resAnom@cnLinesOn           =  False       ; Turn off contour lines
+  resAnom@cnLineLabelsOn      =  False       ; Turn off contour lines   
+  resAnom@gsnDraw             =  False       ; Don't draw plots
+  resAnom@gsnFrame            =  False       ; Don't advance frame
+  resAnom@cnLevelSelectionMode = "ManualLevels"	; manually set the contour levels with the following 3 resources  
   resAnom@mpProjection          = "LambertConformal"; choose projection
   resAnom@gsnMaskLambertConformal = True            ; turn on lc masking
   resAnom@mpMinLatF             = minlat
@@ -248,22 +241,29 @@ begin
   resAnom@mpMaxLonF             = maxlon
   resAnom@mpOutlineOn           = False 
   resAnom@mpFillOn              = False
-  resAnom@lbLabelBarOn = False
-  
-                                ; resAnom@lbOrientation        = "vertical"   ; vertical label barb's
-                                ; resAnom@lbLabelFontHeightF   = 0.012        ; change font size
-                                ; resAnom@pmLabelBarWidthF     =  0.1     
-                                ; resAnom@pmLabelBarOrthogonalPosF = -0.01    ; move a bit to left
-  
-  
-  resC@cnLevelSelectionMode = "ManualLevels"	; manually set the contour levels with the following 3 resources
-  
+
   resAnom@cnInfoLabelOn     = False                ; turn off info label
+; resAnom@lbOrientation        = "vertical"   ; vertical label barb's
+; resAnom@lbLabelFontHeightF   = 0.012        ; change font size
+; resAnom@pmLabelBarWidthF     =  0.1     
+; resAnom@pmLabelBarOrthogonalPosF = -0.01    ; move a bit to left
+  resAnom@tiMainString         = " "
+  resAnom@lbTitleFontHeightF= .015                 ; make title smaller
+  resAnom@lbLabelFontHeightF =.015                 ; make labels larger
+  resAnom@lbLabelBarOn          = False
+  
+  resC = True
+  resC@cnFillOn             =  False    ; turn on color fill
+  resC@cnLinesOn            =  True     ; Turn off contour lines
+  resC@cnLineLabelsOn       =  False    ; Turn off contour lines   
+  resC@gsnDraw             =  False       ; Don't draw plots
+  resC@gsnFrame            =  False       ; Don't advance frame
+  resC@cnLevelSelectionMode = "ManualLevels"	; manually set the contour levels with the following 3 resources
   resC@cnInfoLabelOn     = False                ; turn off info label  
   
   gsres               = True
   gsres@gsMarkerIndex = 16          ; Use filled dots for markers.
-                                ;gsres@gsMarkerThicknessF = 0.1
+  gsres@gsMarkerThicknessF = 0.1
   gsres@gsMarkerSizeF = 0.015
   resC@gsnContourLineThicknessesScale = 4
   
@@ -274,7 +274,7 @@ begin
   res1000@gsnContourLineThicknessesScale = 1
   
   
-  resAnom@tiMainString         = " "
+  
 ; resAnom@gsnCenterString      = cd_calendar(time,-3)  
 ;resAnom@lbLabelBarOn = False  
 
@@ -302,10 +302,10 @@ begin
     
     level = levels(iLevel)
     
-    var = "Z"+level+"Sig95"
-    compSig95=sigIn->$var$
-    var = "Z"+level+"Sig05"
-    compSig05=sigIn->$var$
+;;    var = "Z"+level+"Sig95"
+;;    compSig95=sigIn->$var$
+;;    var = "Z"+level+"Sig05"
+;;    compSig05=sigIn->$var$
 
 
     if (level .eq. 300 ) then
@@ -316,8 +316,6 @@ begin
       resC@cnMaxLevelValF  = 1600.			; set the maximum contour level
       resC@cnLevelSpacingF = 12.			; set the interval between contours
     end if
-
-
 
     if (level .eq. 500 ) then
       resAnom@cnMinLevelValF  = -5			; set the minimum contour level
@@ -393,7 +391,7 @@ begin
       compAnom =    f->compAnomZ(ilag,{level},:,:)
 
 
-      compAnom =    where( (comp .lt. compSig95) .and.  (comp .gt. compSig05), compAnom@_FillValue, compAnom)
+      ;compAnom =    where( (comp .lt. compSig95) .and.  (comp .gt. compSig05), compAnom@_FillValue, compAnom)
       ;comp       =    where( (comp .ge. compSig95) .and.  (comp .gt. compSig05),     comp@_FillValue, comp)
       compAnom = compAnom*.01 ;in dam 
       comp = comp*.01 ;in dam 
@@ -480,7 +478,8 @@ begin
   end do
 
   resP                     = True                ; modify the panel plot    
-  ;resP@gsnPanelLabelBar    = True                ; add common colorbar
+  resP@gsnPanelLabelBar    = True                ; add common colorbar
+  resP@cnLabelBarEndStyle   = "ExcludeOuterBoxes" ; remove the two end boxes from the labelbar
   resP@lbLabelFontHeightF  = 0.007               ; make labels smaller
   resP@gsnPanelYWhiteSpacePercent = 5
   resP@gsnPanelXWhiteSpacePercent = 5

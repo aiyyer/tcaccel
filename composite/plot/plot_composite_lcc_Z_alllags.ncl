@@ -161,7 +161,7 @@ begin
 ;***************************************************************
 
   flag = 1 ; for tang
-  ;flag = 2 ; for curv
+  flag = 2 ; for curv
   LatS =  30
   LatN =  40
   basinAnalysis = "NA" 
@@ -169,10 +169,17 @@ begin
   if (flag .eq. 1 ) then
     accelType     = "tang"
     dir = "/home/anant/data50/data/tcaccel/composite/one/"
-    plot = new(9,"graphic")
-    types = (/"High","Zero","Low"/)
-    titles = (/"Rapid Tangential Acceleration","Near Zero Tangential Acceleration","Rapid Tangential Deceleration"/)    
-    nmain = 3
+
+;    plot = new(9,"graphic")
+;    types = (/"High","Zero","Low"/)
+;    nmain = 3
+;    titles = (/"Rapid Tangential Acceleration","Near Zero Tangential Acceleration","Rapid Tangential Deceleration"/)
+
+    types = (/"High","Low"/)
+    titles = (/"Rapid Tangential Acceleration","Rapid Tangential Deceleration"/)    
+    plot = new(6,"graphic")
+    nmain = 2
+
   else
     accelType     = "curv"
     dir = "/home/anant/data50/data/tcaccel/composite/one/"
@@ -184,7 +191,7 @@ begin
 
 
 
-  pltName = "composite_" + accelType  + "_" + LatN + "_" + LatS+"_"+ basinAnalysis
+  pltName = "composite_" + accelType  + "_" + LatN + "_" + LatS+"_alllags_"+ basinAnalysis
   pltType = "png"                       ; send graphics to PNG file
 
 
@@ -284,7 +291,7 @@ begin
 
 
   levels = (/300,500,700,850/)
-  iLevel = 0
+  iLevel = 1
   level = levels(iLevel)
 
 
@@ -312,9 +319,9 @@ begin
        resC@cnLevelSelectionMode = "ManualLevels"	; manually set the contour levels with the following 3 resources
 
     if (level .eq. 300 ) then
-      resAnom@cnMinLevelValF  = -8.			; set the minimum contour level
-      resAnom@cnMaxLevelValF  =  8.			; set the maximum contour level
-      resAnom@cnLevelSpacingF =  1.			; set the interval between contours
+      resAnom@cnMinLevelValF  = -10.			; set the minimum contour level
+      resAnom@cnMaxLevelValF  =  10.			; set the maximum contour level
+      resAnom@cnLevelSpacingF =  2.			; set the interval between contours
       resC@cnMinLevelValF  = 640.			; set the minimum contour level
       resC@cnMaxLevelValF  = 1600.			; set the maximum contour level
       resC@cnLevelSpacingF = 12.			; set the interval between contours
@@ -495,8 +502,6 @@ begin
        print ( latMin + " " + lonMin  +  " " + cenLat+ " " + cenLon +  " " + composite({cenLat},{0.}) + " " + composite({latMin},{lonMin}) )    
        
        add_lc_labels(wks,plot1,minlat,maxlat,minlon,maxlon,lat_spacing,lon_spacing)
-       
-       
        plot(ic) = plot1
        
        ic = ic + 1
@@ -505,6 +510,7 @@ begin
    
   resP                     = True                ; modify the panel plot    
   resP@gsnPanelLabelBar    = True                ; add common colorbar
+  resP@cnLabelBarEndStyle   = "ExcludeOuterBoxes" ; remove the two end boxes from the labelbar
   resP@lbLabelFontHeightF  = 0.007               ; make labels smaller
   resP@gsnPanelYWhiteSpacePercent = 5
   resP@gsnPanelXWhiteSpacePercent = 5
