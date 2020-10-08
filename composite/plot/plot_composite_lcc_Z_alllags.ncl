@@ -12,6 +12,7 @@
 ;
 ;
 ;***************************************************************
+
 ; code adapted from ncl examples
 ;***************************************************************
 ;
@@ -161,10 +162,38 @@ begin
 ;***************************************************************
 
   flag = 1 ; for tang
-  flag = 2 ; for curv
+  ;flag = 2 ; for curv
   LatS =  30
   LatN =  40
   basinAnalysis = "NA" 
+
+
+  levels   = (/300,500,700,850/)
+  iLevel   = 1
+  level    = levels(iLevel)
+  varSig95 = "Z"+level+"Sig95"
+  varSig05 = "Z"+level+"Sig05"
+
+  
+  sigFile  = "/home/anant/data50/data/tcaccel/composite/comp95.nc"
+  ncdf = addfile(sigFile ,"r")  ; open output netCDF file
+
+  
+  compSig95=ncdf->$varSig95$
+  compSig05=ncdf->$varSig05$
+
+; also get the 1000 hPa anomalies since this is plotted on every panel
+
+
+;;  level2 = 1000  
+;;  varSig95 = "Z"+level2+"Sig95"
+;;  varSig05 = "Z"+level2+"Sig05"
+
+;;  comp1000Sig95=ncdf->$varSig95$
+;;  comp1000Sig05=ncdf->$varSig05$
+
+  
+  
 
   if (flag .eq. 1 ) then
     accelType     = "tang"
@@ -197,15 +226,6 @@ begin
 
 
 
-  sigFile  = "/home/anant/data50/data/tcaccel/composite/comp95.nc"
-
-  ncdf = addfile(sigFile ,"r")  ; open output netCDF file
-
-  comp300Sig95=ncdf->Z300Sig95
-  comp300Sig05=ncdf->Z300Sig05
-
-  
-  
 
 
 
@@ -285,14 +305,6 @@ begin
   resAnom@tiMainString         = " "
 ; resAnom@gsnCenterString      = cd_calendar(time,-3)  
 ;resAnom@lbLabelBarOn = False  
-
-
-
-
-
-  levels = (/300,500,700,850/)
-  iLevel = 1
-  level = levels(iLevel)
 
 
 
@@ -405,18 +417,21 @@ begin
 
       
 
-      if (level .eq. 300 ) then
-        if ( composite@level .ne. comp300Sig95@level) then
-          print ("Oh oh! incompatible leves, EXIT")
-          exit
-        end if
-        
-        if ( composite@level .ne. comp300Sig05@level) then
-          print ("Oh oh! incompatible leves, EXIT")
-          exit
-        end if
-        anomaly = where( (composite .ge. comp300Sig95).or.(composite .le. comp300Sig05), anomaly, anomaly@_FillValue)
+      if ( composite@level .ne. compSig95@level) then
+        print ("Oh oh! incompatible leves, EXIT")
+        print (  composite@level  + " " +  compSig95@level )
+        exit
       end if
+      
+      if ( composite@level .ne. compSig05@level) then
+        print ("Oh oh! incompatible leves, EXIT")
+        exit
+      end if
+
+      ;print ( anomaly( {20:60},{-30:30}) + " "  + compSig95( {20:60},{-30:30}) + " "  + compSig05( {20:60},{-30:30}) )
+      
+      
+      anomaly = where( (anomaly .ge. compSig95).or.(anomaly .le. compSig05), anomaly, anomaly@_FillValue)
 
       anomaly   = anomaly*.01 ;in dam 
       composite = composite*.01 ;in dam 
@@ -428,6 +443,8 @@ begin
       resAnom@gsnLeftString        = labels(ic)
       resAnom@gsnCenterString        =  " Day = " + day
 
+      print ( "cenLon = " + cenLon)
+      
       lonArray = anomaly&lon
       lonArray = lonArray - cenLon
       anomaly&lon = lonArray
@@ -445,6 +462,9 @@ begin
 ;---------------------------------------------------------
 ; now add the 1000 hPa anomaly contours
       composite := f->compAnomZ(ilag,{1000.},:,:)
+;;;;      composite= where( (composite .ge. comp1000Sig95).or.(composite .le. comp1000Sig05), composite, composite@_FillValue)
+
+      
       composite  = composite*.01 ;in dam 
       composite@long_name = " "      
       composite@units  = ""
