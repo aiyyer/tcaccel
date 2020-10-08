@@ -28,6 +28,16 @@ load "../../ncl/aiyyer_string_routines.ncl"
 begin
 
   varComp = "Z"  ; variable to composite
+; height climo file
+  climFil = "/tamrind/climo/era/synoptic_climo_4xdaily_smooth.nc" 
+  inClim = addfile(climFil, "r" )
+ 
+  Zclim = inClim->Z(:,{(/1000,850,500,300/)},{-10:80},:)
+  printVarSummary(Zclim)
+  timeZclim = inClim->time
+
+  timeZclimUnits = timeZclim@units
+  print (timeZclimUnits)
 
   NumComps = 1000
   year1 = 1980
@@ -104,6 +114,8 @@ begin
       Dat!1 = "lat"
       Dat!2 = "lon"
 
+      date_decoded := tointeger(cd_calendar(eradate,0))
+      dateClimo = cd_inv_calendar(1979,date_decoded(0,1),date_decoded(0,2),date_decoded(0,3),0,0,timeZclimUnits,0)
 
       if ( firstTime .eq. 1 ) then
         dims = dimsizes(Dat)
@@ -118,13 +130,22 @@ begin
         DatComp!3 = "lon"
         DatComp&level = Dat&level
         DatComp&lat   = Dat&lat
-        DatComp&lon   = Dat&lon        
+        DatComp&lon   = Dat&lon
+        
         firstTime = 0
       end if
       
       dcount = dcount + 1
-      Dat = Dat 
+
+;      Zclim = inClim->Z({dateClimo},{(/1000,850,500,300/)},{-10:80},:)
+      
+      Dat = Dat - Zclim({dateClimo},:,:,:)
+      
+      
 ;      print (cd_calendar(dateClimo,-3 ) + " " + cd_calendar(eradate,-3) + " " + Dat({500},{40},{310}) + " " + Zclim({500},{40},{310}) )
+
+     
+
          
       DatComp(imain,:,:,:) = DatComp(imain,:,:,:)*(dcount-1)/dcount + Dat/dcount
 

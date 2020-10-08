@@ -2,13 +2,13 @@ begin
 
 
 ; read the data with 1000 composites made with random samples
-  fili = "/home/anant/data50/data/tcaccel/composite/Zsig_out.nc"
+  fili = "Zsig_out.nc"
   f      = addfile (fili, "r")
 
  
 
-  level = 850
-  compSig := f->DatCompArray(:,{level},:,:)
+  level = 500
+  compSig := f->DatComp(:,{level},:,:)
   printVarSummary(compSig)
   dims = dimsizes(compSig)
   nt = dims(0)
@@ -44,21 +44,21 @@ begin
   print (N95 + " " + N05)
   
 
-  Z850Sig95  = compSig(N95,:,:)
-  Z850Sig05  = compSig(N05,:,:)
+  Z500Sig95  = compSig(N95,:,:)
+  Z500Sig05  = compSig(N05,:,:)
 
-  printVarSummary(Z850Sig95)
-  printVarSummary(Z850Sig05)
+  printVarSummary(Z500Sig95)
+  printVarSummary(Z500Sig05)
   print (N95 + " " + N05)
 
-  outFile = "comp95.nc"
+  outFile = "/lotus/projects/data/tcaccel/comp95.nc"
   
   ;system( "rm " + outFile )
   setfileoption("nc", "format", "NETCDF4") 
   ncdf = addfile(outFile ,"w")  ; open output netCDF file
 
-  ncdf->Z850Sig95 = Z850Sig95
-  ncdf->Z850Sig05 = Z850Sig05
+  ncdf->Z500Sig95 = Z500Sig95
+  ncdf->Z500Sig05 = Z500Sig05
 
   
 end
