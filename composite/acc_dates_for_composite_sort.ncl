@@ -22,6 +22,9 @@ begin
 
 ;---------------------------------------------------------------------------  
 ; user inputs
+
+  accelType = 2; 1 = tang 2 = curv
+
   startYear = 1980
   endYear   = 2016
 
@@ -32,7 +35,7 @@ begin
   basinAnalysis = "NA"  ;WP
 
 ; sdev threshold factor = percentile
-  sfac  = 0.6
+  sfac  = 0.9
   
   print ( "sfac  = " + sfac )
 ; the sfac is used to determine the threshold accel, decel values.
@@ -53,12 +56,16 @@ begin
   startTime = cd_inv_calendar(startYear,1,1,0,0,0,time@units,  0)
   endTime = cd_inv_calendar(endYear,12,31,24,0,0,time@units, 0)
 ;
-  ;dat = fileIn->accelSpeed
-  ;fileName = "tcAcc_dates_tang"  + "_" + LatN + "_" + LatS+"_"+ basinAnalysis + ".nc"
-  
-  dat = fileIn->accelCurve
-  fileName = "tcAcc_dates_curv"  + "_" + LatN + "_" + LatS+"_"+ basinAnalysis + ".nc"
 
+
+  if ( accelType .eq. 1 ) then
+    dat = fileIn->accelSpeed
+    fileName = "tcAcc_dates_tang"  + "_" + LatN + "_" + LatS+"_"+ basinAnalysis + ".nc"
+  end if
+  if ( accelType .eq. 2 ) then
+    dat = fileIn->accelCurve
+    fileName = "tcAcc_dates_curv"  + "_" + LatN + "_" + LatS+"_"+ basinAnalysis + ".nc"
+end if
 
   if ( dat@units .eq. "m/s per day" ) then
     dat = dat*3.6 ; now km/hr per day

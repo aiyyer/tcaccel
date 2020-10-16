@@ -31,7 +31,7 @@ begin
   LatS =  30
   LatN =  40
   basinAnalysis = "NA" 
-  accelType     = "curv" ;"tang"
+  accelType     = "tang" ;"curv" ;"tang"
  
 ;  iA = 0
 ;  iB = 2
