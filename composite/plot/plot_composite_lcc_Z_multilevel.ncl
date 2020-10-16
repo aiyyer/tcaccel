@@ -158,15 +158,15 @@ begin
 ; User Input
 ;***************************************************************
 
-  flag = 1 ; for tang
+  ;flag = 1 ; for tang
   flag = 2 ; for curv
   LatS =  30
   LatN =  40
   basinAnalysis = "NA" 
 
 
- ; sigFile  = "/home/anant/data50/data/tcaccel/composite/comp95.nc"
- ; sigIn    = addfile(sigFile ,"r")  ; open output netCDF file
+  sigFile  = "/home/anant/data50/data/tcaccel/composite/comp95.nc"
+  ncdf = addfile(sigFile ,"r")  ; open output netCDF file
 
   
 
@@ -294,13 +294,19 @@ begin
   ilag = 2   ;lag over days 0=-2d,1=-1d,2=0d,3=+1d,4=+2d
 
   do iLevel = 0,2
+    level = levels(iLevel)
 
+    
+    varSig95 = "Z"+level+"Sig95"
+    varSig05 = "Z"+level+"Sig05"
+
+    compSig95=ncdf->$varSig95$
+    compSig05=ncdf->$varSig05$
 
 
     hour = -48 + ilag*24 ;hard coded
     day  = -2 + ilag     ;hard coded
     
-    level = levels(iLevel)
     
 ;;    var = "Z"+level+"Sig95"
 ;;    compSig95=sigIn->$var$
@@ -391,8 +397,10 @@ begin
       compAnom =    f->compAnomZ(ilag,{level},:,:)
 
 
-      ;compAnom =    where( (comp .lt. compSig95) .and.  (comp .gt. compSig05), compAnom@_FillValue, compAnom)
-      ;comp       =    where( (comp .ge. compSig95) .and.  (comp .gt. compSig05),     comp@_FillValue, comp)
+      compAnom =    where( (compAnom .lt. compSig95) .and.  (compAnom .gt. compSig05), compAnom@_FillValue, compAnom)
+
+
+      
       compAnom = compAnom*.01 ;in dam 
       comp = comp*.01 ;in dam 
       compAnom@long_name = " " 
