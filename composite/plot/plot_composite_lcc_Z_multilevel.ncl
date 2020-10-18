@@ -158,7 +158,7 @@ begin
 ; User Input
 ;***************************************************************
 
-  ;flag = 1 ; for tang
+  flag = 1 ; for tang
   flag = 2 ; for curv
   LatS =  30
   LatN =  40
@@ -177,7 +177,7 @@ begin
     ;types = (/"High","Zero","Low"/)
     ;titles = (/"Rapid Tangential Acceleration","Near Zero Tangential Acceleration","Rapid Tangential Deceleration"/)
 
-    types = (/"High","Zero"/)  
+    types = (/"High","Low"/)  
     titles = (/"Rapid Tangential Acceleration","Rapid Tangential Deceleration"/)
     plot = new(6,"graphic")
     nmain = 2
@@ -185,7 +185,7 @@ begin
     accelType     = "curv"
     dir = "/home/anant/data50/data/tcaccel/composite/one/"
     plot = new(6,"graphic")
-    types = (/"High","Zero"/)  
+    types = (/"High","Low"/)  
     titles = (/"Rapid Curvature Acceleration","Near Zero Curvature Acceleration"/)
     nmain = 2
   end if
@@ -307,11 +307,7 @@ begin
     hour = -48 + ilag*24 ;hard coded
     day  = -2 + ilag     ;hard coded
     
-    
-;;    var = "Z"+level+"Sig95"
-;;    compSig95=sigIn->$var$
-;;    var = "Z"+level+"Sig05"
-;;    compSig05=sigIn->$var$
+
 
 
     if (level .eq. 300 ) then
@@ -395,10 +391,10 @@ begin
 ;---------------------------------------------------------
       comp     =    f->compZ(ilag,{level},:,:)
       compAnom =    f->compAnomZ(ilag,{level},:,:)
-
-
+      
+      
       compAnom =    where( (compAnom .lt. compSig95) .and.  (compAnom .gt. compSig05), compAnom@_FillValue, compAnom)
-
+      
 
       
       compAnom = compAnom*.01 ;in dam 

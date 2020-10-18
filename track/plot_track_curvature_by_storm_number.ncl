@@ -27,11 +27,11 @@ begin
 ; user inputs
 ;   
 ; choose the stormNumber to plot
-; KATRINA 11886 HUGO 10135 IRMA 13087
+; KATRINA=11895 11886 HUGO 10135 IRMA 13087
 
   ;StormNum=  11895
   StormNum=  11887 ; 13099
-
+  StormNum = 13087 ;11895 ;13087
 
 ; the ibtracs file
   fileName = "../IBTrACS.ALL.v04r00.nc"
@@ -118,7 +118,7 @@ begin
   res@mpMaxLatF           =  LatR+15.
   res@mpMinLatF           =  LatR-25.
   res@mpMinLonF           =  LonR-20.
-  res@mpMaxLonF           =  LonR+20.
+  res@mpMaxLonF           =  LonR+30.
 
 ;  res@mpMaxLatF           =  LatR+30.
 ;  res@mpMinLatF           =  LatR-20.
@@ -127,12 +127,22 @@ begin
 
 
 
+;  Katrina 
+  res@mpMaxLatF           =  40.
+  res@mpMinLatF           =  10.
+  res@mpMinLonF           = -110.
+  res@mpMaxLonF           =  -60.
+
+
+
+
+; Irma 2017
   res@mpMaxLatF           =  40.
   res@mpMinLatF           = -10.
-  res@mpMinLonF           = -120.
-  res@mpMaxLonF           =  -40.
+  res@mpMinLonF           = -100.
+  res@mpMaxLonF           =  -20.
 
-
+  
   
   res@mpCenterLonF = .5*( res@mpMinLonF +  res@mpMaxLonF)
   res@mpGeophysicalLineThicknessF = 0.   
@@ -156,7 +166,7 @@ begin
 
   gsres@gsLineDashPattern = 0
   dum1=gsn_add_polyline(wks,plot,Lon,Lat,gsres)
-  colors  = (/"violet","navy blue","red","orange","black"/)
+  colors  = (/"violet","navy blue","red","orange","black","forestgreen","magenta"/)
 
   np=720
   circLat  = new(np,"double")
@@ -164,15 +174,15 @@ begin
   dtheta = circLon(0)
 
 
-  dumG  = new(20,"graphic")
+  dumG  = new(40,"graphic")
   jj    = 0
   imain = 0
 
 
-  jindex = (/10,24,34,43/)
- ; jindex = (/10,77,78,79/)
+  ;jindex = (/10,24,34,43/)  ;katrina
+  jindex = (/10,24,32,52,70,90/) ;irma
 
-  do jjj = 0,3
+  do jjj = 0,dimsizes(jindex)-1
 
     j = jindex(jjj)
 

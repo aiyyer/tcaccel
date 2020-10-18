@@ -162,7 +162,7 @@ begin
 ;***************************************************************
 
   flag = 1 ; for tang
-  ;flag = 2 ; for curv
+ ; flag = 2 ; for curv
   LatS =  30
   LatN =  40
   basinAnalysis = "NA" 
@@ -206,13 +206,13 @@ begin
 
     types = (/"High","Low"/)
     titles = (/"Rapid Tangential Acceleration","Rapid Tangential Deceleration"/)    
-    plot = new(6,"graphic")
+    plot = new(9,"graphic")
     nmain = 2
 
   else
     accelType     = "curv"
     dir = "/home/anant/data50/data/tcaccel/composite/one/"
-    plot = new(6,"graphic")
+    plot = new(9,"graphic")
     types = (/"High","Low"/)  
     titles = (/"Rapid Curvature Acceleration","Near Zero Curvature Acceleration"/)
     nmain = 2
@@ -265,11 +265,9 @@ begin
   resC@cnLineLabelsOn       =  False    ; Turn off contour lines   
 
   minlat             =  20.                ; min lat to mask
-  maxlat             =  70.                ; max lat to mask
-  minlon             = -130.                ; min lon to mask
-  maxlon             =  10.                ; max lon to mask
-  minlon             = -60.                ; min lon to mask
-  maxlon             =  60.                ; max lon to mask
+  maxlat             =  60.                ; max lat to mask
+  minlon             = -30.                ; min lon to mask
+  maxlon             =  30.                ; max lon to mask
 
   resAnom@mpProjection          = "LambertConformal"; choose projection
   resAnom@gsnMaskLambertConformal = True            ; turn on lc masking
@@ -308,7 +306,14 @@ begin
 
 
 
+; Arrays to store the TC and EC positions
 
+  latTC = new (5,float)
+  latEC = new (5,float)
+  lonTC = new (5,float)
+  lonEC = new (5,float)
+
+  
   
   ic = 0    
 ; record the center of the TC 
@@ -319,8 +324,8 @@ begin
   labels = (/"a)","b)","c)","d)","e)","f)","g)","h)","i)"/)
   
   ;do ilag = 1,3,1  ;lag over days 0=-2d,1=-1d,2=0d,3=+1d,4=+2d
-  do ilag = 0,4,2  ;lag over days 0=-2d,1=-1d,2=0d,3=+1d,4=+2d
-
+  do ilag = 0,4
+    
     hour = -48 + ilag*24 ;hard coded
     day  = -2 + ilag     ;hard coded
     
@@ -366,11 +371,11 @@ begin
     end if
     res1000@cnMinLevelValF  = -10.			; set the minimum contour level
     res1000@cnMaxLevelValF  =  10.			; set the maximum contour level
-    res1000@cnLevelSpacingF =  1.			; set the interval between contours
+    res1000@cnLevelSpacingF =  .5			; set the interval between contours
     
     
 ; loop over types
-    do imain = 0,nmain-1
+    do imain = 0,0
       type = types(imain)
       fili = "laggedComp_" + accelType + "_"  + type  + "_" + LatN + "_" + LatS+"_"+ basinAnalysis + ".nc"
 
@@ -462,7 +467,7 @@ begin
 ;---------------------------------------------------------
 ; now add the 1000 hPa anomaly contours
       composite := f->compAnomZ(ilag,{1000.},:,:)
-      composite= where( (composite .ge. comp1000Sig95).or.(composite .le. comp1000Sig05), composite, composite@_FillValue)
+      ;composite= where( (composite .ge. comp1000Sig95).or.(composite .le. comp1000Sig05), composite, composite@_FillValue)
 
       
       composite  = composite*.01 ;in dam 
@@ -473,14 +478,38 @@ begin
       printVarSummary(composite)
 
 ; locate the minimum (that is the composite storm center)
-      dtemp = composite({cenLat-10:cenLat+10}, {cenLon-10:cenLon+20} )
-      a1D      = ndtooned(dtemp)
-      dsizes_a = dimsizes(dtemp)
-      inds  = ind_resolve(minind(a1D),dsizes_a)
-      ilat = inds(0,0)        ; select the latitude index where the X array is at its' minimum  
-      ilon = inds(0,1)  
+      dtemp := composite({cenLat-10:cenLat+10}, {cenLon-10:cenLon+20} )
+      a1D      := ndtooned(dtemp)
+      dsizes_a := dimsizes(dtemp)
+      inds  := ind_resolve(minind(a1D),dsizes_a)
+      ilat := inds(0,0)        ; select the latitude index where the X array is at its' minimum  
+      ilon := inds(0,1)  
       latMin = dtemp&lat(ilat)
       lonMin = dtemp&lon(ilon)
+
+
+      latTC(ic) = latMin
+      lonTC(ic) = lonMin
+
+; locate the maximum (that is the composite EC high)
+
+      
+
+      
+      dtemp := anomaly({latMin-10.:latMin+20.}, {lonMin-30.:lonMin+30.} )
+      a1D   := ndtooned(dtemp)
+      dsizes_a := dimsizes(dtemp)
+      inds  := ind_resolve(maxind(a1D),dsizes_a)
+      ilat := inds(0,0)        ; select the latitude index where the X array is at its' minimum  
+      ilon := inds(0,1)  
+      latMax = dtemp&lat(ilat)
+      lonMax = dtemp&lon(ilon)
+
+      latEC(ic) = latMax
+      lonEC(ic) = lonMax
+
+      
+      
 
 ; change color of contours
       res1000@cnLineColor      = "black"
@@ -492,8 +521,8 @@ begin
 
 
 ;---Attach latitude labels
-      lat_spacing = 20   ; use integers here
-      lon_spacing = 20
+      lat_spacing = 5   ; use integers here
+      lon_spacing = 5
   
  ;    gsn_polymarker(wks,plot1,cenLon,cenLat,gsres)
       
@@ -507,7 +536,10 @@ begin
 ;      hurri = gsn_add_text( wks, plot1, "~F37~p~F",cenLon,cenLat,txres )
 
 ; use the hurricane symbol
-       hurri = gsn_add_text( wks, plot1, "~F37~p~F",lonMin,latMin,txres ) 
+      hurri = gsn_add_text( wks, plot1, "~F37~p~F",lonMin,latMin,txres )
+
+      ECHigh = gsn_add_text( wks, plot1, "H",lonMax,latMax,txres ) 
+
 
 ;      hurri = gsn_add_text( wks, plot1, "+",lonMin,latMin,txres ) 
 
@@ -536,11 +568,85 @@ begin
   resP@gsnPanelXWhiteSpacePercent = 5
 
   
-  gsn_panel(wks,plot,(/3,nmain/),resP) 
-  ;gsn_panel(wks,plot,(/3,2/),resP) 
+  gsn_panel(wks,plot,(/3,2/),resP) 
+  
 
+
+
+
+                                ;=========================================================================================
+
+
+
+  
+  resAnom@gsnLeftString          = "(a)"
+
+  resAnom@mpGridAndLimbOn        = True               ; turn on grid lines
+
+  resAnom@gsnCenterString        = " " ; "(a)" +  titles(imain-1)
+  resAnom@cnFillOn    = False
+  plot1    = gsn_csm_contour_map(wks,anomaly, resAnom)
+  add_lc_labels(wks,plot1,minlat,maxlat,minlon,maxlon,lat_spacing,lon_spacing)
 
  
+
+ 
+
+
+  gsres               = True
+  gsres@gsMarkerIndex = 16          ; Use filled dots for markers
+  gsres@gsMarkerSizeF     = .007          ; polymarker size
+  gsres@gsLineThicknessF = 3.0
+  
+
+
+  gsres@gsLineColor    =  "blue"
+  gsres@gsMarkerColor  =  "blue"
+
+
+  dumG1 = gsn_add_polyline(wks,plot1,lonTC,latTC,gsres)
+  gsres@gsMarkerIndex = 16          ; Use filled dots for markers
+  txres@txFontHeightF = .010             ; Set the font height
+  txres@txFontColor  =  "blue"
+
+
+
+
+  hurri2    = new(40,"graphic")
+  ECHigh2    = new(40,"graphic")
+
+  iik = 0
+  do i = 0,4
+
+    print (latTC(i) + " " + latEC(i) + " " + lonTC(i) + " " + lonEC(i) )
+    gsres@gsMarkerSizeF     = .007          ; polymarker size
+    txres@txFontHeightF = .010             ; Set the font height
+
+    
+
+ 
+    
+    ;hurri2(iik) = gsn_add_polymarker( wks, plot1,lonTC(i),latTC(i),gsres )
+    gsres@gsMarkerColor  =  "darkorange"
+    if ( i.eq. 0 ) then
+      gsres@gsMarkerSizeF     = .012          ; polymarker size
+      txres@txFontHeightF    = .012             ; Set the font height
+    end if
+    hurri = gsn_add_text( wks, plot1, "~F37~p~F",lonTC(i),latTC(i),txres )
+
+    ECHigh2(iik) = gsn_add_polymarker( wks, plot1,lonEC(i),latEC(i),gsres )
+
+    iik = iik+1
+  end do
+ 
+  gsres@gsLineColor    =  "darkorange"
+
+  dumG2 = gsn_add_polyline(wks,plot1,lonEC,latEC,gsres)
+
+  draw(plot1)
+  frame(wks)
+
+
   end
 ;==================================================================================================
 ;==================================================================================================

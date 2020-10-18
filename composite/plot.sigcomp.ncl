@@ -168,7 +168,7 @@ begin
 
   wks    = gsn_open_wks(pltType,pltName)
   resAnom                      = True     ; plot mods desired
-  gsn_define_colormap(wks,"UKM_hadcrut") ;temp_diff_18lev")
+  gsn_define_colormap(wks,"MPL_PRGn") ;
 
 
 
@@ -189,10 +189,10 @@ begin
   resAnom@mpMaxLonF             = maxlon
   resAnom@mpOutlineOn           = False 
   resAnom@mpFillOn              = False
-  resAnom@lbLabelBarOn = False
+  resAnom@lbLabelBarOn = True
   
   resAnom@cnFillOn            =  True    ; turn on color fill
-  resAnom@cnLinesOn           =  False       ; Turn off contour lines
+  resAnom@cnLinesOn           =  True       ; Turn off contour lines
   resAnom@cnLineLabelsOn      =  False       ; Turn off contour lines   
   resAnom@gsnDraw             = False       ; Don't draw plots
   resAnom@gsnFrame            = False       ; Don't advance frame
@@ -239,17 +239,17 @@ begin
   do iLevel = 0,2
     level = levels(iLevel)
     if (level .eq. 300 ) then
-      resAnom@cnMinLevelValF  = -10.			; set the minimum contour level
-      resAnom@cnMaxLevelValF  =  10.			; set the maximum contour level
-      resAnom@cnLevelSpacingF =  2.			; set the interval between contours
+      resAnom@cnMinLevelValF  = -5.			; set the minimum contour level
+      resAnom@cnMaxLevelValF  =  5.			; set the maximum contour level
+      resAnom@cnLevelSpacingF =  1.			; set the interval between contours
       resC@cnMinLevelValF  = 640.			; set the minimum contour level
       resC@cnMaxLevelValF  = 1600.			; set the maximum contour level
       resC@cnLevelSpacingF = 12.			; set the interval between contours
     end if
     if (level .eq. 500 ) then
-      resAnom@cnMinLevelValF  = -5			; set the minimum contour level
-      resAnom@cnMaxLevelValF  =  5.			; set the maximum contour level
-      resAnom@cnLevelSpacingF =  1.			; set the interval between contours
+      resAnom@cnMinLevelValF  = -2			; set the minimum contour level
+      resAnom@cnMaxLevelValF  =  2.			; set the maximum contour level
+      resAnom@cnLevelSpacingF =  .25			; set the interval between contours
       
       resC@cnMinLevelValF  = 460.			; set the minimum contour level
       resC@cnMaxLevelValF  = 600.			; set the maximum contour level
@@ -264,9 +264,9 @@ begin
       resC@cnLevelSpacingF = 3.			; set the interval between contours
     end if
     if (level .eq. 850 ) then
-      resAnom@cnMinLevelValF  = -5			; set the minimum contour level
-      resAnom@cnMaxLevelValF  =  5.			; set the maximum contour level
-      resAnom@cnLevelSpacingF =  1.			; set the interval between contours
+      resAnom@cnMinLevelValF  = -2.			; set the minimum contour level
+      resAnom@cnMaxLevelValF  =  2.			; set the maximum contour level
+      resAnom@cnLevelSpacingF =  .25			; set the interval between contours
       resC@cnMinLevelValF  = 120.			; set the minimum contour level
       resC@cnMaxLevelValF  = 180.			; set the maximum contour level
       resC@cnLevelSpacingF = 3.			; set the interval between contours
@@ -277,14 +277,14 @@ begin
     res1000@cnLevelSpacingF =  1.			; set the interval between contours
 
 
-    fili = "Zsig_out.nc"
-    f      = addfile (dir+fili, "r")
+    fili = "/home/anant/data50/data/tcaccel/composite/Zsig_out.nc"
+    f      = addfile (fili, "r")
     
-    comp := f->DatCompArray(ilag,{level},:,:)
+    comp := f->DatComp(ilag,{level},:,:)
     comp@long_name = "Z " + level      
     comp@units  = ""
     comp = comp*.01
-    plot1    = gsn_csm_contour_map(wks,comp, resC)
+    plot1    = gsn_csm_contour_map(wks,comp, resAnom)
     plot(ic) = plot1
     ic = ic + 1
 

@@ -1,13 +1,25 @@
+;----------------------------------------------------------------------------
+; a program to:
+;
+; Read the data file with 1000 composites derived from randomly sampled 
+; data and then determine the value for 95th% significance using a two
+; tailed method
+;
+;----------------------------------------------------------------------------
+; Aiyyer 
+; NCSU Tropical Dynamics Group
+;
+;----------------------------------------------------------------------------
+; Oct 14, 2020
+;----------------------------------------------------------------------------
+
 begin
 
-
-; read the data with 1000 composites made with random samples
-  fili = "Zsig_out.nc"
+; read the data with 300 composites made with random samples
+  fili = "/home/anant/data50/data/tcaccel/composite/Zsig_out.nc"
   f      = addfile (fili, "r")
 
- 
-
-  level = 500
+  level = 300
   compSig := f->DatComp(:,{level},:,:)
   printVarSummary(compSig)
   dims = dimsizes(compSig)
@@ -15,6 +27,18 @@ begin
   ny = dims(1)
   nx = dims(2)
 
+  outFile = "comp95.nc"
+  
+  ;system( "rm " + outFile )
+  setfileoption("nc", "format", "NETCDF4") 
+  ncdf = addfile(outFile ,"w")  ; open output netCDF file
+
+
+  N95  = tointeger(.975*nt)
+  N05  = tointeger(.025*nt) 
+  print (N95 + " " + N05)
+  
+  
   do j=0,ny-1
     do i = 0,nx-1
       top = max (  compSig(:,j,i) )
@@ -34,31 +58,19 @@ begin
 
 ;
 
-  N95  = tointeger(.95*nt) - 1
-  N05  = tointeger(.05*nt) - 1
 
-  print (N95 + " " + N05)
-
-  N95 = 975
-  N05 =  25
-  print (N95 + " " + N05)
   
 
-  Z500Sig95  = compSig(N95,:,:)
-  Z500Sig05  = compSig(N05,:,:)
+  Z300Sig95  = compSig(N95,:,:)
+  Z300Sig05  = compSig(N05,:,:)
 
-  printVarSummary(Z500Sig95)
-  printVarSummary(Z500Sig05)
+  printVarSummary(Z300Sig95)
+  printVarSummary(Z300Sig05)
   print (N95 + " " + N05)
 
-  outFile = "/lotus/projects/data/tcaccel/comp95.nc"
-  
-  ;system( "rm " + outFile )
-  setfileoption("nc", "format", "NETCDF4") 
-  ncdf = addfile(outFile ,"w")  ; open output netCDF file
 
-  ncdf->Z500Sig95 = Z500Sig95
-  ncdf->Z500Sig05 = Z500Sig05
+  ncdf->Z300Sig95 = Z300Sig95
+  ncdf->Z300Sig05 = Z300Sig05
 
   
 end
