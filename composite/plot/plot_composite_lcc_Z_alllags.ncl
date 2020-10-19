@@ -162,7 +162,7 @@ begin
 ;***************************************************************
 
   flag = 1 ; for tang
-  ;flag = 2 ; for curv
+  flag = 2 ; for curv
   LatS =  30
   LatN =  40
   basinAnalysis = "NA" 
@@ -206,13 +206,13 @@ begin
 
     types = (/"High","Low"/)
     titles = (/"Rapid Tangential Acceleration","Rapid Tangential Deceleration"/)    
-    plot = new(6,"graphic")
+    plot = new(10,"graphic")
     nmain = 2
 
   else
     accelType     = "curv"
     dir = "/home/anant/data50/data/tcaccel/composite/one/"
-    plot = new(6,"graphic")
+    plot = new(10,"graphic")
     types = (/"High","Low"/)  
     titles = (/"Rapid Curvature Acceleration","Near Zero Curvature Acceleration"/)
     nmain = 2
@@ -316,10 +316,10 @@ begin
   compLon = new( (/3,3/),"float")
   compLat = new( (/3,3/),"float")
 
-  labels = (/"a)","b)","c)","d)","e)","f)","g)","h)","i)"/)
+  labels = (/"a)","f)","b)","g)","c)","h)","d)","i)","e)","j)"/)
   
   ;do ilag = 1,3,1  ;lag over days 0=-2d,1=-1d,2=0d,3=+1d,4=+2d
-  do ilag = 0,4,2  ;lag over days 0=-2d,1=-1d,2=0d,3=+1d,4=+2d
+  do ilag = 0,4,1  ;lag over days 0=-2d,1=-1d,2=0d,3=+1d,4=+2d
 
     hour = -48 + ilag*24 ;hard coded
     day  = -2 + ilag     ;hard coded
@@ -392,13 +392,13 @@ begin
 
      
       if ( flag .eq. 1 ) then      
-        if ( ic .eq. 0 .or. ic .eq. 1 .or. ic .eq. 2 ) then
+        if ( ic .eq. 0 .or.  ic .eq. 1 ) then
           resAnom@tiMainString         = titles(imain)
         else
           resAnom@tiMainString         = " "
         end if
       else
-        if ( ic .eq. 0 .or. ic .eq. 1 ) then
+        if ( ic .eq. 0  .or.  ic .eq. 1 ) then
           resAnom@tiMainString         = titles(imain)
         else
           resAnom@tiMainString         = " "
@@ -536,7 +536,7 @@ begin
   resP@gsnPanelXWhiteSpacePercent = 5
 
   
-  gsn_panel(wks,plot,(/3,nmain/),resP) 
+  gsn_panel(wks,plot,(/5,nmain/),resP) 
   ;gsn_panel(wks,plot,(/3,2/),resP) 
 
 
