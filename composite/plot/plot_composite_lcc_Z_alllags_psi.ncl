@@ -220,7 +220,7 @@ begin
 
 
   pltName = "composite_" + accelType  + "_" + LatN + "_" + LatS+"_alllags_"+ basinAnalysis
-  pltType = "png"                       ; send graphics to PNG file
+  pltType = "ncgm"                       ; send graphics to PNG file
 
 
 
@@ -424,10 +424,10 @@ begin
 
 
 
-      U   = f->compAnomU(ilag,{level},:,:)
-      V   = f->compAnomV(ilag,{level},:,:)
+      U   = f->compU(ilag,{level},:,:)
+      V   = f->compV(ilag,{level},:,:)
 
-    
+      U = U - 3.0
 
       
       anomaly@long_name = " " 
@@ -453,8 +453,8 @@ begin
       
       
       anomaly = where( (anomaly .ge. compSig95).or.(anomaly .le. compSig05), anomaly, anomaly@_FillValue)
-      U = where( (anomaly .ge. compSig95).or.(anomaly .le. compSig05), U, U@_FillValue)
-      V = where( (anomaly .ge. compSig95).or.(anomaly .le. compSig05), V, V@_FillValue)
+      ;U = where( (anomaly .ge. compSig95).or.(anomaly .le. compSig05), U, U@_FillValue)
+      ;V = where( (anomaly .ge. compSig95).or.(anomaly .le. compSig05), V, V@_FillValue)
 
       anomaly   = anomaly*.01 ;in dam 
       composite = composite*.01 ;in dam 
@@ -512,9 +512,9 @@ begin
       res1000@cnLineColor      = "black"
       res1000@cnMonoLineColor = "True"
 
-      plot3    = gsn_csm_contour(wks,composite, res1000)
-      overlay(plot1,plot2)
-      overlay(plot1,plot3)
+      ;plot3    = gsn_csm_contour(wks,composite, res1000)
+      ;overlay(plot1,plot2)
+      ;overlay(plot1,plot3)
 
 
 ;---Attach latitude labels

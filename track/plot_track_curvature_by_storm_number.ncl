@@ -32,7 +32,7 @@ begin
   ;StormNum=  11895
   StormNum=  11887 ; 13099
   StormNum = 13087 ;11895 ;13087
-
+  StormNum=  11895
 ; the ibtracs file
   fileName = "../IBTrACS.ALL.v04r00.nc"
 ;
@@ -73,16 +73,14 @@ begin
       is = is + 1
     end if
   end do
-  
+;  
   time := time2(0:is-1)
   Lat  := lat2(0:is-1)
   Lon  := lon2(0:is-1)
-
-
+;
+;
   Lon := where(Lon.lt.0.,Lon+360.,Lon)
-
-  
-
+;
   N=is
 ;
 ;-----------------------------------------------------------------------
@@ -130,17 +128,17 @@ begin
 ;  Katrina 
   res@mpMaxLatF           =  40.
   res@mpMinLatF           =  10.
-  res@mpMinLonF           = -110.
-  res@mpMaxLonF           =  -60.
+  res@mpMinLonF           = -115.
+  res@mpMaxLonF           =  -65.
 
 
 
 
 ; Irma 2017
-  res@mpMaxLatF           =  40.
-  res@mpMinLatF           = -10.
-  res@mpMinLonF           = -100.
-  res@mpMaxLonF           =  -20.
+;  res@mpMaxLatF           =  40.
+;  res@mpMinLatF           = -10.
+;  res@mpMinLonF           = -100.
+;  res@mpMaxLonF           =  -20.
 
   
   
@@ -160,7 +158,7 @@ begin
   gsres               = True
   gsres@gsMarkerIndex = 16          ; Use filled dots for markers
   gsres@gsMarkerSizeF     = .007          ; polymarker size
-  gsres@gsLineThicknessF = 6.0
+  gsres@gsLineThicknessF = 10.0
 
 
 
@@ -179,8 +177,8 @@ begin
   imain = 0
 
 
-  ;jindex = (/10,24,34,43/)  ;katrina
-  jindex = (/10,24,32,52,70,90/) ;irma
+  jindex = (/10,24,34,43/)  ;katrina
+  ;jindex = (/10,24,32,52,70,90/) ;irma
 
   do jjj = 0,dimsizes(jindex)-1
 
@@ -241,7 +239,7 @@ begin
       
       
       gsres@gsLineColor= gsres@gsMarkerColor          ; set polymarker color
-      gsres@gsLineThicknessF = 1.0
+      gsres@gsLineThicknessF = 3.0
       
       dumG(jj) = gsn_add_polyline(wks,plot,circLon*pideg/pi,circLat*pideg/pi,gsres)
       jj=jj+1

@@ -12,17 +12,24 @@ begin
 
 
   dt = 24.*3600.*4. ; 4 days
-; rapid tang acceleration
 
-  dLon = 30.
+  
+; rapid tang acceleration
+; Motion of the High
+  lon2 = 28.8282
+  lon1 = 3.05176e-05
+  dLon = lon2-lon1
+ 
   lat  = 44.
   cp = (Rearth*cos(lat*piRad)*dLon*piRad)/ dt
 
   print ("Phase speed rapid accel  = " + cp)
   
-; rapid tang acceleration
+; rapid tang deceleration
 
-  dLon = 17
+  lon2 = 
+  lon1 = 
+  dLon = lon2-lon1
   lat  = 46.0
   cp = (Rearth*cos(lat*piRad)*dLon*piRad)/ dt
 

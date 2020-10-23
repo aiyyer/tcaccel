@@ -162,7 +162,7 @@ begin
 ;***************************************************************
 
   flag = 1 ; for tang
- ; flag = 2 ; for curv
+  flag = 2 ; for curv
   LatS =  30
   LatN =  40
   basinAnalysis = "NA" 
@@ -375,7 +375,7 @@ begin
     
     
 ; loop over types
-    do imain = 0,0
+    do imain = 1,1
       type = types(imain)
       fili = "laggedComp_" + accelType + "_"  + type  + "_" + LatN + "_" + LatS+"_"+ basinAnalysis + ".nc"
 
@@ -574,7 +574,7 @@ begin
 
 
 
-                                ;=========================================================================================
+;=========================================================================================
 
 
 
@@ -617,15 +617,9 @@ begin
 
   iik = 0
   do i = 0,4
-
     print (latTC(i) + " " + latEC(i) + " " + lonTC(i) + " " + lonEC(i) )
     gsres@gsMarkerSizeF     = .007          ; polymarker size
     txres@txFontHeightF = .010             ; Set the font height
-
-    
-
- 
-    
     ;hurri2(iik) = gsn_add_polymarker( wks, plot1,lonTC(i),latTC(i),gsres )
     gsres@gsMarkerColor  =  "darkorange"
     if ( i.eq. 0 ) then
@@ -633,9 +627,7 @@ begin
       txres@txFontHeightF    = .012             ; Set the font height
     end if
     hurri = gsn_add_text( wks, plot1, "~F37~p~F",lonTC(i),latTC(i),txres )
-
     ECHigh2(iik) = gsn_add_polymarker( wks, plot1,lonEC(i),latEC(i),gsres )
-
     iik = iik+1
   end do
  
@@ -645,6 +637,37 @@ begin
 
   draw(plot1)
   frame(wks)
+
+
+;==================================================================================================
+; phase speeds
+
+  
+  pi = 4.*atan(1.)
+  piRad = pi/180.
+  Rearth = 6.4e6
+  dt = 24.*3600.*4. ; 4 days
+
+
+
+  latAve = avg(latEC(2:4))
+  lon2 =  lonEC(4)
+  lon1 =  lonEC(0)
+  dLon =  lon2-lon1
+  print ( "dLon, aveLat= " + dLon + " " + latAve)
+  cp = (Rearth*cos(latAve*piRad)*dLon*piRad)/ dt
+  print ("Phase speed of EC High  = " + cp)
+
+
+  latAve = avg(latTC(2:4))
+  lon2 =  lonTC(4)
+  lon1 =  lonTC(0)
+  dLon =  lon2-lon1
+  print ( "dLon, aveLat= " + dLon + " " + latAve)
+  cp = (Rearth*cos(latAve*piRad)*dLon*piRad)/ dt
+  print ("speed of TC  = " + cp)
+
+  
 
 
   end
