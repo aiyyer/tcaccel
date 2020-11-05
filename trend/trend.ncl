@@ -25,7 +25,7 @@ begin
   variable = (/"speed","accelSpeed","accelCurve"/)
 
   ivar       =  1
-  threshFlag = -1
+  threshFlag =  1; -1
   sfac       =  1.
 
 
@@ -45,10 +45,10 @@ begin
   latN = latS + dlat    
   nn = 1
 
-;  latS = 20. ; 5.0
-;  dlat = 25.  ;10. ;10.0
-;  latN = latS + dlat    
-;  nn = 1
+  latS = 20. ; 5.0
+  dlat = 25.  ;10. ;10.0
+  latN = latS + dlat    
+  nn = 1
 
 
   
@@ -69,7 +69,9 @@ begin
   startTime = cd_inv_calendar(startYear,1,1,0,0,0,time@units,  0)
   endTime   = cd_inv_calendar(endYear,12,31,24,0,0,time@units, 0)
 ;
-  
+
+
+  print ( "reading " + var)
   dat := fileIn->$var$
   dat@name = var
   ;printVarSummary(dat)
@@ -247,14 +249,12 @@ begin
     if ( threshFlag .ne. 0 ) then
       yearlyThresh =  yearlyThresh@_FillValue
     end if
-    
     if ( threshFlag .eq. 1 ) then
       thresh =  ave  + sfac*std
       print ( "thresh = " + thresh  + " sfac = " + sfac )
       yearlyThresh =  yearlyThresh@_FillValue
       yearlyThresh = where ( yearly .gt. thresh, yearly, yearly@_FillValue)
     end if
-    
     if ( threshFlag .eq. -1 ) then
       thresh =  ave  - sfac*std
       print ( "thresh = " + thresh + " sfac = " + sfac )

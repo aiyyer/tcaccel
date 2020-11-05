@@ -1,0 +1,52 @@
+This is BibTeX, Version 0.99d (TeX Live 2019)
+Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
+The top-level auxiliary file: manuscript.aux
+The style file: copernicus.bst
+Database file #1: aiyyer_references.bib
+You're missing a field part---line 3443 of file aiyyer_references.bib
+ :    journal = 
+ :              ,
+I'm skipping whatever remains of this entry
+Warning--missing publisher in E2018
+You've used 17 entries,
+            2811 wiz_defined-function locations,
+            1218 strings with 14416 characters,
+and the built_in function-call counts, 19025 in all, are:
+= -- 2020
+> -- 909
+< -- 9
++ -- 400
+- -- 288
+* -- 1259
+:= -- 1988
+add.period$ -- 17
+call.type$ -- 17
+change.case$ -- 130
+chr.to.int$ -- 17
+cite$ -- 52
+duplicate$ -- 1803
+empty$ -- 932
+format.name$ -- 341
+if$ -- 3773
+int.to.chr$ -- 1
+int.to.str$ -- 1
+missing$ -- 217
+newline$ -- 60
+num.names$ -- 68
+pop$ -- 867
+preamble$ -- 1
+purify$ -- 130
+quote$ -- 0
+skip$ -- 978
+stack$ -- 0
+substring$ -- 714
+swap$ -- 1582
+text.length$ -- 2
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 150
+warning$ -- 1
+while$ -- 86
+width$ -- 0
+write$ -- 212
+(There was 1 error message)

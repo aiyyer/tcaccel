@@ -26,10 +26,9 @@
 %\usepackage{subfig}
 %\usepackage{rotating}
 
-
 \begin{document}
 
-\title{Along-Track Acceleration of Tropical Cyclones: A Proxy For Extratropical Interactions}
+\title{Ensemble Averaged Patterns and Long-term Trends of Acceleration of Tropical Cyclones -- A Proxy For Extratropical Interactions}
 
 
 % \Author[1]{given_name}{surname}
@@ -70,7 +69,7 @@
 
 
 \begin{abstract}
-  It is well known that rapid changes in tropical cyclone (TC) motion occur during interaction with extratropical wavetrains. While TC speed of motion, in general, has received much attention in the past, acceleration has not. Here, using a large data sample, we formally examine the synoptic-scale patterns associated with  tangential and normal components of TC acceleration. During rapid acceleration, a developing wavepacket in the extratropics is present and the TC ?????? with the TC straddled by an upstream trough and downstream ridge. This pattern is consistent with the process of extratropical transition (ET) of TCs. In contrast, during near-zero or rapid deceleration, the extratropical wavepacket remains poleward, with a ridge  located directly north of the storm center.  On average, the tangential acceleration peaks about 18 hours prior to the ET designation. The curvature acceleration increases before ET and stabilizes thereafter.
+  It is well known that rapid changes in tropical cyclone (TC) motion occur during interaction with extratropical wavetrains. While the forward speed of TCs has received much attention in the past, acceleration has not. Using a large data sample, we formally examined the synoptic-scale patterns associated with  tangential and normal components of TC acceleration. During rapid acceleration, a developing wavepacket in the extratropics is present and the TC ?????? with the TC straddled by an upstream trough and downstream ridge. This pattern is consistent with the process of extratropical transition (ET) of TCs. In contrast, during near-zero or rapid deceleration, the extratropical wavepacket remains poleward, with a ridge  located directly north of the storm center.  On average, the tangential acceleration peaks about 18 hours prior to the ET designation. The curvature acceleration increases before ET and stabilizes thereafter.
 %
  We also find a robust decrease in the annually averaged values of rapid acceleration over the past 38 years within the latitude band most commonly associated with ET over the Atlantic. Consequently, we hypothesize that trends in rapid acceleration can be used as an independent metric to assess changes in the extratropical stormtrack activity that mediate ET.
 \end{abstract}
@@ -80,17 +79,14 @@
 
 
 \introduction
-The motion of a tropical cyclone (TC) is known to be  governed by the large-scale environment surrounding it \citep[e.g.][]{Hodanish1993}. As noted by \cite{E2018}, it was recognized early on that the forward speed of a TC can be closely approximated by the surrounding wind field.  It is also understood that a TC is not an isolated vortex that is passively carried by a current. The background environment, typically, also has attendant gradients of potential vorticity, moisture, and wind shear. As also summarized by \cite{E2018}, a TC actively responds to these external stimuli. As a consequence, not only its structure and intensity are impacted, the large-scale flow may also change significantly. This, in turn, may also affect its motion. An example of the response to background gradient of potential vorticity is the generation of the so called $\beta-gyres$, which contribute to TC motion. Similarly, vertical shear can modulate the intensity of the TC via ventilation of low entropy air into the storm core. This in turn can also impact TC motion. On the other hand, a TC can influence the large-scale flow by exciting baroclinic waves in the extratropical stormtrack, leading to rapid downstream development and rearrangement of the flow. Thus, it can be contended that a TC is always interacting with its environment and the interaction is manifested in its motion.
+The motion of a tropical cyclone (TC), to a leading order, is known to be  governed by the large-scale environment surrounding it \citep[e.g.][]{Hodanish1993}. It was recognized early on that the forward speed of a TC can be closely approximated by the surrounding wind field \citep{E2018}.  It is also understood that a TC is not an isolated vortex that is passively carried by a current. The background environment also has attendant gradients of potential vorticity, moisture, and wind shear. A TC actively responds to these external stimuli. Consequently, this impacts not only the motion and intensity of the TC, but also the the large scale flow. For instance, the generation of the $\beta-gyres$, which infuences TC motion, is a response of the TC circulation to the background potential vorticity gradient. Similarly, vertical wind shear can modulate the intensity of the TC via ventilation of low entropy air into the storm core. This, in turn,  can also impact subsequent TC motion. On the other hand, a TC can influence the large-scale flow by exciting  waves in the extratropical stormtrack, leading to rapid downstream development and rearrangement of the flow. Thus, it can be contended that a TC is always interacting with its environment and the interaction is, in part, manifested in its motion.
 
-% 
+The aspects of TC motion that are particularly important for operational forecasts are track and forward speed. The track garners much attention for obvious reasons -- it  informs  potential locations that will be affected by a storm. TC forward speed is an important parameter that impacts storm surge, intensity changes and precipitation. There is a large body of published literature dealing with various research and operational problems related to TC tracks and speed. They are extensively documented in several recent reviews \citep[e.g.,][]{E2018}. The focus of this paper is the acceleration and deceleration of TCs. While Forecasters have long known that the TCs often speed up when approaching an extratropical wavetrain, relatively less attention appears to have been devoted in the research literature to details of TC acceleration. 
 
-The aspects of TC motion that are particularly important for operational forecasts are track and forward speed. The track garners much attention for obvious reasons -- it  informs  potential locations that will be affected by a storm. TC forward speed is an important parameter that impacts storm surge, intensity changes and precipitation. There is a large body of literature dealing with various research problems related to TC tracks and speed. They are extensively documented in several recent reviews \citep[e.g.,][]{E2018,other}. In contrast, while forecasters have long known that TCs speed up rapidly while approaching an extratropical wave-train, relatively less attention has been devoted in the research literature to details of TC acceleration. 
-
-
+When TCs move poleward, they encroach upon the extartropical stormtrack. This leads to an interaction between the TCs and the baroclinic eddies of the stormtrack. The outcome of this interaction is varied. Some TCs weaken and dissipate while others may strengthen and retain their tropical nature for some more time. In the Atlantic, approximately ?\% of storms undergo  extratropical transitoin (ET) - a complex process that  
 
 
-
-As noted by \cite{E2018}, steady progress has been made in our understanding of TC motion and this is reflected in our ability to forecast their tracks.
+%As noted by \cite{E2018}, steady progress has been made in our understanding of TC motion and this is reflected in our ability to forecast their tracks.
 
 
 
@@ -99,10 +95,14 @@ As noted by \cite{E2018}, steady progress has been made in our understanding of 
 
 
 \section{Data}
-We used the IBTrACS v4 \citep{KnappIBTRaCS} data for track information. We did not apply a threshold for maximum sustained winds, but discarded all storms that lasted less than two days.  We focused on the years 1966--2019, spanning the \emph{satellite era} for the North Atlantic and Pacific basins (e.g.. Beven et al. 2003; Landea 2007; Vecchi and Knutson), for which the TC data is deemed relatively more reliable as compared to previous years. Selected atmospheric fields were taken from the the European Center for Medium Range Weather Forecasting's (ECMWF) ERA-Interim (ERAi) reanalysis \citep{DUS11} for the period 1981--2016.
+We used the IBTrACS v4 \citep{KnappIBTRaCS} data for track information. We did not apply a threshold for maximum sustained winds, but discarded all storms that lasted less than three days. Thus our definition of a TC in this paper includes a few tropical depressions that lasted greater than 3 days. 
+
+{\bf Cite Kossin and the other paper here.}
+
+We focused on the years 1966--2019, spanning the \emph{satellite era} for the North Atlantic and Pacific basins (e.g.. Beven et al. 2003; Landea 2007; Vecchi and Knutson), for which the TC data is deemed relatively more reliable as compared to previous years. Selected atmospheric fields were taken from the the European Center for Medium Range Weather Forecasting's (ECMWF) ERA-Interim (ERAi) reanalysis \citep{DUS11} for the period 1981--2016.
 
 
- As our intent here was to examine the motion of tropical storms, in subsequent sections unless explicitly stated,  we focused on the track data prior to the completion of ET. To ascertain whether a tropical storm underwent ET, we used the \emph{nature} designation in the IBTraCS database that relies on the judgement of the forecasters from one or more agencies responsible for the ocean basin.  Admittedly, there will be some subjectivity in this designation. An alternative would be to employ a metric such as the cyclone phase space \citep{Hart2003}, usually calculated using meteorological fields from global numerical weather prediction models (e.g., reanalysis data). As we wish to be independent of modeled products to characterize the storm, we choose to use the forecaster designated storm nature. Furthermore, \cite{BCSEH2019a} found that the phase space calculation was sensitive to the choice of the reanalysis model. Occasionally, the nature of the storm is not recorded (NR) or, if there is an inconsistency among the agencies, it is designated as mixed (MX). In the north Atlantic, only a small fraction of track data ($\approx 0.5\%$) in the IBTrACs is designated as NR or MX. However, the fraction is higher in the North Pacific ($\approx 14\%$), and we return to this point in a subsequent section where it could introduce some uncertainty in our conclusion for this basin.
+ As our intent here was to examine the motion of tropical storms, in many of our analysis, we excluded instances when a given storm became extratropical. To ascertain whether a tropical storm underwent ET, we used the \emph{nature} designation in the IBTraCS database that relies on the judgement of the forecasters from one or more agencies responsible for the ocean basin.  Admittedly, there will be some subjectivity in this designation. An alternative would be to employ a metric such as the cyclone phase space \citep{Hart2003}, usually calculated using meteorological fields from global numerical weather prediction models (e.g., reanalysis). As we wish to be independent of modeled products to characterize the storm, we choose to use the forecaster designated storm nature. Furthermore, \cite{BCSEH2019a} found that the phase space calculation was sensitive to the choice of the reanalysis model. Occasionally, the nature of the storm is not recorded (NR) or, if there is an inconsistency among the agencies, it is designated as mixed (MX). In the north Atlantic, only a small fraction of track data ($\approx 0.5\%$) in the IBTrACs is designated as NR or MX. However, the fraction is higher in the North Pacific ($\approx 14\%$). As such, for this basin, we include all storm positions, irrespective of nature designation. We return to this point in a subsequent sections where it could introduce some uncertainty in our conclusion for this basin. For this reason, we focus on Atlantic TCs in this paper, and provide selected results for western North Pacific storms in Appendix B.
  
  
 \section{Tangential and curvature acceleration}
@@ -113,123 +113,16 @@ The acceleration of a hypothetical fluid element moving with the center of a TC 
     \label{eq:acc}
 \end{equation}
 %
-where $V$ is the forward speed and $R$ is the radius of curvature of the track at a given location. Here, $\mathbf{\hat{s}}$ and $\mathbf{\hat{n}}$ are orthogonal unit vectors in the so-called \emph{natural coordinate} system. The former is directed along the TC motion. The latter is directed along the radius of curvature of the track.  The first term in equation \ref{eq:acc} is the tangential acceleration and the second is the curvature or normal acceleration. The speed $V_j$ at any track location (given by index j)  is calculated as:
+where $V$ is the forward speed and $R$ is the radius of curvature of the track at a given location. Here, $\mathbf{\hat{s}}$ and $\mathbf{\hat{n}}$ are orthogonal unit vectors in the so-called \emph{natural coordinate} system. The former is directed along the TC motion. The latter is directed along the radius of curvature of the track.  The first term in eq. \ref{eq:acc} is the tangential acceleration and the second is the curvature or normal acceleration. The speed $V_j$ at any track location (given by index j)  is calculated as:
 %
 \begin{equation}
 V_j = \frac{(D_{j,j-1} +  D_{j,j+1})}{\delta t}
 \end{equation}
 %
-where $D$ refers to the distance between the two consecutive points, indexed as shown above, along the track. Since we used 3-hourly reports from the IBtracs, $\delta t = 6$ h. The tangential acceleration was calculated from the speed using centered differences. To calculate the curvature acceleration, it is necessary to first calculate the radius of curvature, R. For this, we  fitted a circle at each track point using the method described in Appendix A. Figure \ref{fig:track} illustrates R at five selected locations along the the track of hurricane Katrina (2005). 
-
-%approximated as follows. The latitude-longitude positions of the TC track are projected to a 2-dimensional surface using the Mercator transformation. Then, a circle is fitted to each set of three consecutive track points denoted by $\mathbf{X}_{j-1}, \mathbf{X}_j, \mathbf{X}_{j+1}$. The resulting circle is used to assign the radius of curvature of the track point  $\mathbf{X}_j$.  
+where $D$ refers to the distance between the two consecutive points, indexed as shown above, along the track. Since we used 3-hourly reports from the IBtracs, $\delta t = 6$ h. The tangential acceleration was calculated from the speed using centered differences. 
 
 
-\section{Basic Statistics}
-
-During 1966--2019, a total of 688 storms in the North Atlantic and 1676 storms in the western North Pacific passed the lifetime threshold of 2 days. 
-
-
-
-Figures \ref{fig:distNA} and \ref{fig:distWP} shows some basic statistics for TC speed and accelerations as a function of latitude. TC locations were sorted in $10^\circ$-wide latitude bins for this. Tables \ref{tab:AC1}-\ref{tab:AT2} provide the same data. The average speed of all North Atlantic storms (including over-land) is about 21 km/hr. The same for the western Pacific storms is about 19 km/hr. As expected, TC speed clearly varies with latitude. It is lower in the subtropics as compared to other latitudes. It increases sharply in the vicinity of $40^{o}$ N. 
-
-
-The tangential acceleration, as defined in eq. \ref{eq:acc}, can be positive or negative. The mean and median tangential acceleration in both basins remain near-zero equatorward of $30^\circ$N. This suggests that TCs in this region tend to translate steadily, or are equally likely to accelerate and decelerate. Poleward of $30^\circ$N, they are substantially positive, indicating that TCs in these latitudes are subject to rapid acceleration. For example, the mean tangential acceleration in the $30^\circ-40^\circ$N latitude band is about 5.4  km/hr day$^{-1}$ in the Atlantic and nearly 8  km/hr day$^{-1}$ in the Western Pacific.  The curvature acceleration, by our definition, takes only positive values and, and on average, steadily increases with latitude. The distribution of TC speed and tangential acceleration is relatively symmetric about the median value as compared to the curvature acceleration.
-
-%In essence, we draw a distinction between the propagation of extratropical and tropical systems. We reason that an extratropical cyclone embedded in the stormtrack is subject to baroclinic development and dynamics of Rossby wavepackets \citep[e.g.][]{K2019}.  In contrast, a tropical system is primarily subject to steering by the background flow. \cite The importance of this distinction will be emphasized further in a subsequent section.
-
-
-
-
-\section{Ensemble average flow for extremes in acceleration}
-
-We now examine the flow pattern associated with extremes in tangential and curvature acceleration of tropical storms. For this, storm-relative ensemble average fields are constructed as follows:
-
-\begin{itemize}
-    \item All TC track locations were binned into 10$^\circ$ wide latitude strips (e.g.,  10-20$^\circ$ N, 20-30$^\circ$ N, 30-40$^\circ$ N). For brevity, only results for the 30-40$^\circ$ N bin are discussed here.
-    
-    \item Taking all TC positions in each latitude bin, the mean ($\bar{A}$) and standard deviation ($\sigma$) of  acceleration (tangential and curvature separately) were calculated. 
-
-    \item The data in each bin were separated into three categories: (a) Rapid acceleration ($A > \bar A + s \sigma_A$); (b) Near Zero acceleration ($ |A - \bar{A}| < .025\sigma_A$); and (c) Rapid deceleration ($A  < \bar A - s\sigma_A$). We show results for s=1 here and note that they do not change qualitatively when we tried other values of s (=1.25, 1.5). TC positions that did not fall in these categories are discarded. Note: A TC could appear more than once within this latitude range at different times depending on its motion.
-    
-    \item Using the dates corresponding to each track position, ensemble average of large scale fields (e.g. geopotential) were calculated after shifting the grids such that the center of all storms are coincident. The centroid position of storms in that latitude range was used for the reference center and the reference time is denoted as Day-0.  This yields a storm-relative ensemble average view of the large scale atmospheric fields.
-    
-    \item  For curvature acceleration, which as defined here takes positive values, only the first two categories (rapid and near-zero) were considered.
-    
-\end{itemize}
-
-\subsection{Tangential Acceleration}
-
-%------------------------------------------------------------------------------------------
-\begin{figure*}[t]
-  \centering
-    \includegraphics[width=.95\textwidth, trim={0cm 8cm 0cm 4cm},clip]{composite_tang_40_30_NA_zero.pdf}
-  \caption{Storm-relative composite average geopotential heights (thick solid lines) and anomalies (color shaded) for all TCs located in the latitude bin 30-40$^o$N over the Atlantic. The composite fields are shown at three levels -- 300 hPa, 500 hPa and 850 hPa. In each panel, the anomalous 1000 hPa geopotential is shown using thinner purple contours. Left, center and right columns show the fields for rapid acceleration, near-zero and rapid deceleration respectively.}
-  \label{fig:lag0CompZ}
-\end{figure*}
-
-
-Figure \ref{fig:lag0CompZ} shows the composite geopotential heights (thick solid lines) and their anomalies (color shaded) calculated using all Atlantic TC locations within 30-40$^\circ$ N for the three categories of tangential acceleration. The anomalies were defined relative to a long term (1980--2016) climatology. The composite fields are shown at three levels -- 300 hPa, 500 hPa and 850 hPa. In each panel, the anomalous 1000 hPa geopotential is shown using thinner purple contours. It highlights the composite TC as well as the surface development within the stormtrack. 
-
-The ensemble average at reference time (Day=0) for rapid tangential acceleration cases (left column of Fig. \ref{fig:lag0CompZ}) shows the composite TC interacting with within a well defined extratropical wavepacket. The TC is straddled by an upstream trough and a downstream ridge. At 500 hPa, the geopotential anomalies of the TC and the upstream trough are clearly connected. The 1000 hPa geopotential anomaly field shows the near-surface cyclones and anticyclones of the extratropical stormtrack but is dominated by the cyclonic anomaly associated with the TC. The entire wavepacket shows upshear tilt of geopotential anomalies with height, indicating baroclinic growth. This arrangement of the TC and the extratropical wavepacket is consistent with the synoptic-scale flow that is typically associated with ET \citep[e.g.,][]{KHE2000,MGY2003,RJD2008,RJ2014,K2019}. We note that at this point, all storms in the ensemble average are still classified as \emph{tropical}. Thus, we interpret this composite as pre-ET completion state. 
-
-The ensemble average for near zero tangential acceleration cases (middle column of Fig. \ref{fig:lag0CompZ}) shows a very different synoptic scale pattern. The extratropical wavepacket is substantially poleward, with a ridge immediately north of the composite TC. The geopotential anomalies of the extratropical wavepacket and the composite TC appear to be distinct with no evidence of merger. Interestingly, the ensemble average for rapid tangential deceleration cases (right column of Fig. \ref{fig:lag0CompZ}) appears to be similar to the near-zero acceleration cases, albeit the downstream extratropical ridge is a little stronger in the latter. 
-
-%------------------------------------------------------------------------------------------
-% 
-To get a sense of the temporal evolution of the TC-extratropical wavepacket system, we now show the composites from Day-1 to Day+1 in Fig. \ref{fig:lagCompZ}. As in the previous figure, the three categories of acceleration are arranged in the respective columns. The rows now show the lagged composites of 500 hPa geopotential height (thick contours) and anomalies (color shaded). In each panel, the corresponding composite 1000 hPa geopotential height anomalies are shown by purple contours. 
-
-The ensemble average for rapid tangential acceleration cases (left column of Fig. \ref{fig:lagCompZ}) shows a TC moving rapidly towards a extratropical wavepacket. At day-1, the TC circulation is relatively symmetric as depicted by the contours of 1000 hPa geopotential height anomalies. At 500 hPa, the upstream trough is still at a distance while the downstream ridge has linked with the TC outflow. By Day+1, the composite storm has moved further poleward and eastward and is now located between the upper-level upstream trough and downstream ridge in a position that is optimal for surface baroclinic development. The 1000 hPa geopotential field is now asymmetric with a characteristic signal of a cold front.  Over the course of three days, at 500 hPa, the upstream trough as well as the downstream ridge-trough couplet appear to amplify while simultaneously propagating downstream. The 500 hPa geopotential gradient poleward of the storm is also amplified, indicating a strengthening jet streak. These developments are generally consistent with the process of ET. As summarized in \citet{K2019}, several mechanisms are at play: The poleward moving TC perturbs the extratropical flow and excites a developing Rossby wavepacket that disperses energy downstream. Furthermore, the outflow of the TC is a source of low potential vorticity (PV) air that further reinforces the downstream ridge. Overall, it is evident that the ensemble average evolution of rapid acceleration cases resembles the canonical ET process.
-
-On the other hand, for the near zero acceleration cases (middle column Fig. \ref{fig:lagCompZ}), the composite storm remains equatorward of the extratropical wavepacket and maintains a nearly symmetric structure. Furthermore, the extratropical wavepacket shows little change in amplitude and the constituent troughs and ridges remain nearly stationary, with little evidence of downstream development.  Thus, the near zero acceleration cases are not likely to be involved in ET. The rapid deceleration composite (right column Fig. \ref{fig:lagCompZ}) also shows that the extratropical wavepacket is poleward of the TC. However, by Day+1, there is evidence of amplification of the downstream ridge-trough couplet indicating development in the extratropical stormtrack related to the interaction with the TC.  This indicates a likelihood of ET at a later time.
-
-
-
-\begin{figure*}[t]
-  \centering
-    \includegraphics[width=.95\textwidth, trim={0cm 8cm 0cm 4cm},clip]{composite_tang_40_30_NA_500hPa.pdf}
-  \caption{}
-  \label{fig:lagCompZ}
-\end{figure*}
-%-------------------------------------------------------
-
-\subsection{Tangential Acceleration}
-
-
-
-%-------------------------------------------------------
-\section{Extratropical Transition}
-
-In this section, we further examine the relationship between TC acceleration and ET. 
-
-
-Fig. \ref{fig:AS} shows the temporal evolution of TC accelerations and speed relative to the time of ET. This was calculated by identifying all TCs that underwent ET and assigning hour 0 to the first instance of ET designation in the track. The figure shows the ensemble average over all 
-
-\subsection{Trends}
-
-
-\conclusions  %% \conclusions[modified heading if necessary]
-TEXT
-
-%% The following commands are for the statements about the availability of data sets and/or software code corresponding to the manuscript.
-%% It is strongly recommended to make use of these sections in case data sets and/or software code have been part of your research the article is based on.
-
-%\codeavailability{TEXT} %% use this section when having only software code available
-
-%\dataavailability{TEXT} %% use this section when having only data sets available
-
-
-%\codedataavailability{TEXT} %% use this section when having data sets and software code available
-
-
-%\sampleavailability{TEXT} %% use this section when having geoscientific samples available
-
-
-%\videosupplement{TEXT} %% use this section when having video supplements available
-
-
-\appendix
-\section{}    %% Appendix A
-A standard approach to calculating the radius of curvature, given a set of discrete points along a curve (in our case, a TC track) is to fit a circle through three consecutive points. For a curved line on a sphere, it can be shown that (Note: While the following expressions were derived independently for this work, no claim of originality is made since they are based on elementary principles of geometry):
+To calculate the curvature acceleration, it is necessary to first determine the radius of curvature, R. A standard approach to calculating R, given a set of discrete points along a curve (in our case, a TC track), is to fit a circle through three consecutive points. For a curved line on a sphere, it can be shown that: 
 
 
 \begin{subequations}
@@ -255,16 +148,166 @@ where, $T_1$, $T_2$, and $T_3$ are the latitudes of the 3 points while $N_1$, $N
 \tan{\mathbf{T}} = \pm {\frac{\cos{T_1}\cos{T_2}\sin{(N_2-N_1)} + \cos{T_1}\cos{T_3}\sin{(N_1-N_3)} + \cos{T_2}\cos{T_3}\sin{(N_3-N_2)}} {\sqrt{\alpha^2+\beta^2}}} \\ \tan{\mathbf{N}} = -{\frac{\alpha}{\beta}}
 \end{gather}
 %
-Where $\mathbf{T}$ and $\mathbf{N}$ are the latitude and longitude of the circle, respectively and $\alpha$ and $\beta$ are obtained using:
+Where $\mathbf{T}$ and $\mathbf{N}$ are the latitude and longitude, respectively of the circle's center, and $\alpha$ and $\beta$ are obtained using:
+
 \begin{gather}
 \alpha = \cos{T_1}(\sin{T_2}-\sin{T_3})\cos{N_1} + \cos{T_2}(\sin{T_3} -\sin{T_1})\cos{N_2} +\cos{T_3}(\sin{T_1}-\sin{T_2})\cos{N_3} \\
 \beta = \cos{T_1}(\sin{T_2}-\sin{T_3})\sin{N_1} + \cos{T_2}(\sin{T_3}-\sin{T_1}) \sin{N_2} +\cos{T_3}(\sin{T_1}-\sin{T_2})\sin{N_3}
 \end{gather}
 \end{subequations}
 
+While the expressions above were derived independently for this work, we make no claim of originality since they are based on elementary principles of geometry. Figure \ref{fig:track} shows some examples of the radius of curvature calculation for hurricanes Katrina (2005) and Irma (2017). 
 
-Figure \ref{fig:track} shows an example of the radius of curvature calculation for Hurricane Katrina. 
+\section{Basic Statistics}
 
+During 1966--2019, we identified 689 storms in the North Atlantic that met the 2-day threshold. Figure \ref{fig:distNA} shows some basic statistics for speed and accelerations as a function of latitude for Atlantic storms. TC locations were sorted in $10^\circ$-wide latitude bins for this and all instances classified as NR or ET were excluded. Table \ref{tab:distNA} provides the same data. 
+
+
+The average speed of all North Atlantic TCs (including over-land) is about 21 km/hr. As expected, TC speed clearly varies with latitude. It is lower in the subtropics as compared to other latitudes. It increases sharply in the vicinity of $40^{o}$ N. The tangential acceleration, as defined in eq. \ref{eq:acc}, can be positive or negative. The mean and median tangential acceleration remains near-zero equatorward of $30^\circ$N. This suggests that TCs in this region tend to translate steadily, or are equally likely to accelerate and decelerate. The tangential acceleration is substantially positive poleward of $30^\circ$N. TCs in these latitudes are subject to rapid acceleration. For example, the mean tangential acceleration in the $30^\circ-40^\circ$N latitude band is about 5.0  km/hr day$^{-1}$.  The curvature acceleration, by our definition, takes only positive values and, steadily increases with latitude. The distributions of TC speed and tangential acceleration are relatively symmetric about the median value as compared to the curvature acceleration.
+
+
+The corresponding information for western North Pacific for 1732 storms that met the 2-day threshold is presented in the appendix (Figure \ref{fig:distWP} and Table \ref{tab:distWP}). In this case, we consider all track points, including NR and ET for reasons discussed in section 2. The basic distribution of speed and accelerations are similar to the North Atlantic except that the storms, on average, were found to have negative tangential acceleration poleward of 40$^\circ$N.
+
+
+
+%In essence, we draw a distinction between the propagation of extratropical and tropical systems. We reason that an extratropical cyclone embedded in the stormtrack is subject to baroclinic development and dynamics of Rossby wavepackets \citep[e.g.][]{K2019}.  In contrast, a tropical system is primarily subject to steering by the background flow. \cite The importance of this distinction will be emphasized further in a subsequent section.
+
+
+
+
+\section{Ensemble average flow for extremes in acceleration}
+
+We now examine the flow pattern associated with extremes in tangential and curvature acceleration of tropical storms. For this, storm-relative ensemble average fields are constructed uisng ERA-interim gridded reanalysis over the period 1980--2015. We used the following method.
+
+\begin{itemize}
+    \item All TC track locations were binned into 10$^\circ$ wide latitude strips (e.g.,  10-20$^\circ$ N, 20-30$^\circ$ N, 30-40$^\circ$ N). Instances where storms were classified as ET or NR were excluded. For brevity, only results for the 30-40$^\circ$ N bin are discussed here. A total of 
+    3480 track points were identified for this latitude bin. Note that a particular TC could appear more than once in a latitude bin at different times. 
+    
+    \item The tangential and curvature acceleration of all TCs within each latitude bin were sorted in an ascending order.
+
+    \item The accelerations in each bin were separated into two categories based on whether they fell within: (a) The top 90th percentile of all sorted values; or (b) The bottom 10th percentile of all sorted values.
+    
+    \item For tangential acceleration, with both positive and negative values, we interpret these two categories as rapid acceleration and rapid deceleration respectively.
+    
+    \item For curvature acceleration, with only positive values, we interpret these two categories as rapid acceleration and near-zero acceleration respectively.
+
+    
+    \item For each category, we computed an ensemble average composite field of the geopotential field at selected levels. The composites were calculated after shifting the grids such that the center of all storms were coincident. The centroid position of storms was used for the composite storm center, and the corresponding time was denoted as Day-0. Lag-composites were created by shifting the dates backward and forward relative to Day-0.
+
+    \item For anomaly fields, we subtracted long-term synoptic climatology form the total field. The climatology was calculated for each day of the year by averaging data for that day over the years 1980-2015. This was followed by a 7-day running mean smoother. To account for diurnal fluctuations, the daily climatology calculated for each available synoptic hour in the ERA-interim data (00, 06, 12 and 18 UTC).
+    
+    
+    \item Statistical significance of anomaly fields shown in this section were evaluated by comparing them against 1000 composites created by randomly drawing dates from the period July--October, 1980--2015. The sample size for each composite was 350 for the 30-40$^\circ$ N bin. A two-tailed significance was evaluated at the 95\% confidence level with the null hypothesis being that the anomalies could have resulted from a random draw.
+    
+\end{itemize}
+
+\subsection{Tangential Acceleration}
+
+
+\subsubsection{Day 0 (reference day) composite}
+
+Figure \ref{fig:tangComp} shows  storm-centered composite geopotential heights (thick orange lines) and their anomalies (color shaded) for all Atlantic TCs located within 30-40$^\circ$ N. Two categories of tangential acceleration are shown: rapid acceleration (left column) and rapid deceleration (right column).   The  fields are shown at three levels -- 300 hPa, 500 hPa and 850 hPa. In each panel, the anomalous 1000 hPa geopotential is shown using thinner black contours. It highlights the composite TC and the surface development within the extratropical stormtrack. 
+
+The ensemble average for rapid tangential acceleration  (left column of Fig. \ref{fig:tangComp}) shows the composite TC interacting with a well defined extratropical wavepacket. The TC is straddled by an upstream trough and a downstream ridge. At 500 hPa, the geopotential anomalies of the TC and the upstream trough are close and, consequently, appear to be connected. This yields a negative tilt in the horizontal and indicates the onset of cyclonic wrap-up of the trough around the TC. The 1000-hPa geopotential anomaly field is dominated by the composite TC. It also shows the relatively weaker near-surface cyclones and anticyclones of the extratropical stormtrack. The entire wavepacket shows upshear tilt of geopotential anomalies with height, indicating baroclinic growth. This arrangement of the TC and the extratropical wavepacket is consistent with the synoptic-scale flow that is typically associated with ET \citep[e.g.,][]{KHE2000,MGY2003,RJD2008,RJ2014,K2019}. At this point, all storms in the ensemble were still classified as \emph{tropical}. Thus, we interpret this composite as pre-ET completion state. 
+
+The ensemble average for rapid tangential deceleration cases (right column of Fig. \ref{fig:tangComp}) shows an entirely different synoptic-scale pattern. The extratropical wavepacket is substantially poleward, with a ridge immediately north of the composite TC. The geopotential anomalies of the extratropical wavepacket and the composite TC appear to be distinct at all three levels, with no evidence of merger. The prominent synoptic structure is the cyclone-anticyclone dipole formed by the TC and the extratropical ridge.
+
+%------------------------------------------------------------------------------------------
+% 
+
+
+
+\subsubsection{Lag Composites}
+To get a sense of the temporal evolution of the entire system, we show lag composites for Day-2 to Day+2 in Fig. \ref{fig:lagtang}. As in the previous figure, the two categories of acceleration are arranged in the respective columns. The rows now show  500-hPa geopotential height (thick contours) and anomalies (color shaded). In each panel, the corresponding 1000-hPa geopotential height anomalies are shown by thin black contours. 
+
+The ensemble average for rapid tangential acceleration (left column of Fig. \ref{fig:lagtang}) shows a TC moving rapidly towards an extratropical wavepacket. At day-2, the TC circulation is relatively symmetric as depicted by the contours of 1000 hPa geopotential anomalies. The downstream extratropical ridge is prominent, but the upstream trough is much weaker at this time. On Day-1, the entire extratropical wavepacket has amplified and the 500 hPa geopotential anomalies of the TC and a developing upstream trough have merged. This process continues through Day 0. By Day+1, the composite storm has moved further poleward and eastward and is now located between the upper-level upstream trough and downstream ridge in a position that is optimal for further baroclinic development. The 1000 hPa geopotential field is now asymmetric with a characteristic signal of a cold front. 
+
+
+The picture that is evident from these 500-hPa composite fields is that, over the course of the 4 days, downstream ridge-trough couplet amplifies while simultaneously propagating eastward. The upstream trough cyclonically wraps around the TC and the two have merged by Day 1. The geopotential gradient poleward of the storm is also enhanced, indicating a strengthening jet streak. These features are consistent the process of ET \citep[e.g.,][]{K2019}. The poleward moving TC may either interact with an existing wavepacket or perturb the extratropical flow and excite a Rossby wavepacket that disperses energy downstream \citep[e.g.,][]{RJ2014}. The outflow of the TC is a source of low potential vorticity (PV) air that further reinforces the downstream ridge \citep[e.g.,][]{RJD2008}. To further illustrate the interaction, the tracks of the TC and the 500-hPa ridge of the extratropical wavepacket  are presented in Fig. \ref{fig:tang_track}a. It can be clearly seen that the TC merges with the  extratropical stormtrack. Furthermore, the 500 hPa ridge has rapidly moved downstream during the 4 day period, indicating a very progressive pattern. The eastward phase speed of the extratropical wavepacket,  as inferred from the track of the ridge, is $\approx 7$ ms$^{-1}$. The TC speed, averaged over the same 4-day period,  is $\approx 6$ ms$^{-1}$. The close correspondence between the two and the  merger of the tracks further supports the notion that the synoptic-scale evolution during rapid acceleration cases is consistent with the canonical pattern associated with ET.
+
+On the other hand, during rapid deceleration  (right column Fig. \ref{fig:lagtang}), the composite TC remains equatorward of the extratropical wavepacket and maintains a nearly symmetric structure throughout the period.  At all times, the arrangement of the TC and the extratropical ridge directly poleward is akin to a vortex dipole. The extratropical wavepacket is not as progressive as in the rapid acceleration case. This is seen clearly from the tracks of the TC and the ridge (Fig. \ref{fig:tang_track}b). The phase speed of the extratropical wavepacket is $\approx 3$ ms$^{-1}$ while the TC speed is $\approx 1.5$ ms$^{-1}$.  The phasing of the TC and the extratropical wavepacket has led to the formation of a cyclone-anticyclone vortex dipole. While this structure is not consistent with a typical ET process, the TC and the extratropical wavepacket are certainly interacting. If viewed from a potential vorticity (PV) perspective, the induced flow from the cyclonic vortex (TC) will be westward within the poleward anticyclonic vortex (ridge). Similarly, the induced flow from the ridge will also be westward at the location of the TC. The combined effect will be a mutual slowdown as reflected in the speeds estimated from Fig. \ref{fig:tang_track}b. 
+
+
+
+%wavepacket remain nearly stationary, with little evidence of downstream development.  Thus, the near zero acceleration cases are not likely to be involved in ET. The rapid deceleration composite (right column Fig. \ref{fig:lagCompZ}) also shows that the extratropical wavepacket is poleward of the TC. However, by Day+1, there is evidence of amplification of the downstream ridge-trough couplet indicating development in the extratropical stormtrack related to the interaction with the TC.  This indicates a likelihood of ET at a later time.
+
+
+
+\subsection{Curvature Acceleration}
+
+
+\subsubsection{Day 0 (reference day) composite}
+
+As in the  previous section, Figure \ref{fig:curvComp} shows storm-centered ensemble averages for two categories of curvature acceleration. The composite for rapid acceleration (left column) shows a TC that is primarily interacting with an extratropical ridge that is poleward and downstream of it. The upstream trough in the extratropics is weaker and farther westward as compared with the rapid tangential acceleration (Fig. \ref{fig:curvComp}a). Furthermore, instead of the upstream trough wrapping cyclonically, in this case,  we see the downstream ridge wrapping anticyclonically around the TC. The composite for near-zero curvature acceleration (right column) is quite similar to the composite for rapid tangential deceleration (Fig. \ref{fig:curvComp}d--f). The extratropical wavepacket is poleward and the TC-ridge system appears as a vortex dipole. 
+
+\subsubsection{Lag Composites}
+The temporal evolution of the entire system for the two categories of curvature acceleration is shown in Fig. \ref{fig:lagcurv}. For rapid curvature acceleration, we see a TC that is moving poleward towards an extratropical ridge. During the subsequent days, the ridge moves eastward initially and begins to wrap around the TC. This arrangement promotes the curving of the TC. By Day+2, the anticyclonic wrapping and thinning has resulted in a significantly weaker ridge as compared to a few days prior. For the near-zero curvature cases ( Fig. \ref{fig:lagcurv}f--g), the initial movement of the TC is also directly poleward towards the extratropical ridge. However, in this case, the ridge remains poleward of the TC. There is also significantly less anticyclonic wrapping of ridge. The TC-ridge system takes the form of a cyclonic-anticyclonic vortex pair similar to the rapid tangential deceleration composite. 
+
+The tracks in Fig. \ref{fig:curv_track} clearly show the the propagation of the system. For rapid curvature acceleration (Fig. \ref{fig:curv_track}a), the TC track shows a recurving typhoon. The track of the ridge confirms the initial eastward motion, followed by a poleward shift after parts of it wrapped around the TC and thinned. By Day+2, we do not observe a merger of the tracks that happens in the case of rapid tangential acceleration (Fig. \ref{fig:tang_track}a). The tracks for near-zero curvature acceleration ( (Fig. \ref{fig:curv_track}a) are somewhat similar to the rapid tangential deceleration (Fig. \ref{fig:tang_track}b). The key point here is that, although the TC moves poleward, TC-ridge system is nearly stationary in the zonal direction. 
+
+
+Overall, the ensemble average composites show that when we separate TCs on the basis of their acceleration, we get two broad sets of synoptic scale patterns. In the case of rapid tangential acceleration, we recover the arrangement of the TC and a developing wavepacket that resembles the canonical ET process. For rapid deceleration and extremes of curvature acceleration, we get a starkly different pattern that takes the form of a vortex dipole. We return to this point later in the discussion section.
+
+%-------------------------------------------------------
+\section{Extratropical Transition}
+In the previous section, we showed that the composite synoptic-scale flow associated with rapidly accelerating TCs resembles a pattern that is favorable for ET.  However, this does not  imply that all storms in the composite underwent ET. Some TCs may begin the process of ET but dissipate before its completion \citep[e.g.,][]{KRT2010A}. We now consider TC motion from a different perspective by considering only those storms that completed the transformation from being tropical to extratropical.  \cite{HE2006} found that the time taken for ET completion can vary considerably. For the storms that they examined, this ranged from 12--168 hours. To get a sense of the temporal evolution relative to ET completion, we examine composite TC speed and acceleration as a function of time. For this, we only considered those Atlantic storms during 1966--2019 that were classified as \emph{tropical} at some time and subsequently underwent ET. Of the 689 candidate storms that passed the three-day threshold, 18 storms were never classified as \emph{tropical}. Of the remaining 671 storms, 274 were classified as \emph{tropical} initially and ET at a later time. This yields a climatological ET fraction of 41\%. It is slightly lower than the fraction of 44\% over 1979--2017 in \cite{BCSEH2019a}, and 46\% over 1950-1993 in  \cite{HE2001}.  The mean and median latitude of ET completion in our data set were, respectively, 40.5$^\circ$N and 41.5$^\circ$ N. This is consistent with \cite{HE2001} who found that the highest frequency of ET in the Atlantic occurs between the latitudes of 35$^o$N--45$^o$N.
+
+
+
+Fig. \ref{fig:ET_SA} shows the composite accelerations and speed relative to the time of ET. Hour 0 was defined as the first instance in the IBTrACS where the storm nature was designated as ET. We interpret this as the time of ET completion. This graph shows that forward speed of transitioning tropical storms reaches a peak around the time of ET completion. The tangential acceleration peaks about 18 hours prior to that. The curvature acceleration appears to steadily increase up to the time of ET and stabilizes thereafter. The point here is that that peak  tangential acceleration of TCs precedes ET completion. The rapid increase in the speed prior to ET completion time is a direct outcome of the interaction with the extratropical baroclinic wavepacket. 
+
+
+\section{Trends}
+
+describe the trend calculations and the significance etc. Also, the threshold values and rationale. Unless stated, instances where the storms in the IBTRaCS dataset were classified as
+
+Table \ref{tab:atl_accelTrend} presents the trends for Atlantic TCs using three different thresholds to define \emph{rapid tangential acceleration}. We show statistics for the entire basin and individual latitude bands. The key result here is that the annual mean tangential acceleration of TCs over the Atlantic shows a robust decreasing trend over the period 1966-2019. This is true for full Atlantic basin as well as for individual latitude bands. In particular, the negative trend is strongest for the P$_{90}$ and P$_{80}$thresholds within the latitude range of 20--40$^o$N. This is where which TCs are most likely to interact with extartropical wavepackets and experience ET \citep[e.g.][]{HE2001}. The P$_{60}$ threshold is mostly consistent although the trends increase with latitude. As noted earlier, this threshold being close to the median value, reflects the fact that TCs are nearly equally likely to accelerate and decelerate at lower latitudes and slighly more likely to accelerate at higher latitudes. 
+
+
+
+Figure \ref{fig:ts_speed} shows the timeseries of annual mean forward speed of tropical cyclones within the entire Atlantic basin. Two curves are shown. The purple curve includes all track points for storms in the IBTRaCS dataset with lifetime exceeding 3 days while the green curve excludes instances when storms were classified as ET or NR. Table \ref{tab:atl_sp} shows the trend and the associated P-value calculated using two different methods - (a) linear regression, and (b) the Thiel-Sen linear estimate with the Mann-Kendal significance. We note that both curves show interannual variation (Fig. \ref{fig:ts_speed}) but the trend over the period 1966--2019 in neither curve is staistically significan (Table \ref{tab:atl_sp}). For comparison, we also include in this table, the trends for all Western North Pacific storms. Here too there is no significant trend over 1966--2019. However, over 1949--2019, there is a significant slowing of TCs in this basin. We also include in the table, the trends for the latitude band 20--40$^o$N over which TCs are most likely to interact with extartropical wavepackets and experience ET \citep[e.g.][]{HE2001}. For this again, there is no significant trend in the Atlantic for either periods. A relatively more robust slowdown of TC speed is seen in the Western North Pacific over  1949--2019, with the Mann-Kendall test showing a P-value of 0.05.
+
+
+
+\section{Discussion}
+It is tempting to draw an analogy with a dipole block \citep[e.g.,][]{MCW1980,PH2003}, which is an important mode of persistent anomalies in the atmosphere. The canonical dipole block is commonly described as a vortex pair comprised of a warm anticyclone and a low-latitude cut-off cyclone \citep[e.g.,][]{MBDAGE2006}. 
+
+Energy dispersion in both sets of tang accel. comps.
+
+ This entails poleward motion of the TC and interaction with the extratropical baroclinic stormtrack.
+
+Others may decay even earlier owing to detrimental large scale shear or cooler ocean heat content. 
+
+
+From the preceding sections, it is evident that rapid changes in speed are mediated by interactions with extratropical wave
+
+Begin by noting that the rapid accel indicates a type of interaction that looks like one that favors ET irrespective of whether ET happens or not. This needs to be in the abstract as well as conclusions.
+
+
+
+
+\conclusions  %% \conclusions[modified heading if necessary]
+TEXT
+
+%% The following commands are for the statements about the availability of data sets and/or software code corresponding to the manuscript.
+%% It is strongly recommended to make use of these sections in case data sets and/or software code have been part of your research the article is based on.
+
+%\codeavailability{TEXT} %% use this section when having only software code available
+
+%\dataavailability{TEXT} %% use this section when having only data sets available
+
+
+%\codedataavailability{TEXT} %% use this section when having data sets and software code available
+
+
+%\sampleavailability{TEXT} %% use this section when having geoscientific samples available
+
+
+%\videosupplement{TEXT} %% use this section when having video supplements available
+
+
+\appendix
+\section{}    %% Appendix A
 
 
 
@@ -338,7 +381,7 @@ This work was supported by NSF award
 
 \begin{table*}[t]
   \caption{Speed (km hr$^{-1}$), tangential and curvature acceleration (km hr$^{-1}$ day$^{-1}$ ) of Atlantic TCs
-   in the IBTRaCs database as a function of latitude. Storm instances classified as ET or NR have been excluded.
+   in the IBTRaCs database as a function of latitude. Storm instances classified as ET or NR were excluded.
    N refers to number of 3-hourly track positions in each latitude-bin over the period 1966--2019. }
 \begin{tabular}{|cc|ccc|ccc|ccc|}
 \hline
@@ -357,14 +400,14 @@ Latitude & N & Mean & Median & Std Dev. & Mean & Median &  Std Dev.& Mean & Medi
 \bottomhline
 \end{tabular}
 %\belowtable{} % Table Footnotes
-\label{tab:ATLSA}
+\label{tab:distNA}
 \end{table*}
 %==================================================================================
 
 
 \begin{table*}[t]
   \caption{Trends in Speed (km hr$^{-1}$ year$^{-1}$). \emph{All storms} refers to all instances of a
-    system recorded in the IBTraCs. ET refers to storm ntaure designated as extratropical, while NR refers to instances
+    system recorded in the IBTraCs. ET refers to storm nature designated as extratropical, while NR refers to instances
     when the storm nature was not recorded. }
 
 \begin{tabular}{|c|cccc|cccc|}
@@ -373,18 +416,26 @@ Latitude & N & Mean & Median & Std Dev. & Mean & Median &  Std Dev.& Mean & Medi
 & \multicolumn{2}{c}{LR} & \multicolumn{2}{c|}{MK-TS}& \multicolumn{2}{c}{LR} & \multicolumn{2}{c|}{MK-TS}\\
 & Trend & P-value & Trend & P-value & Trend & P-value & Trend & P-value\\
 \hline
-Atlantic   &  0.029 & 0.19 &  0.028 & 0.15  & -0.016 & 0.28 & -0.016 & 0.32\\
-(All storms) & & & & & & & &  \\
+&  \multicolumn{7}{c}{\bf{Atlantic (Excluding ET,NR)}}  &   \\
+ Full basin    & -0.007 & 0.71 & -0.008 & 0.61 & -0.004 & 0.75 & -0.007 & 0.46\\
+ 20--40$^o$N         &  0.005 & 0.82 &  0.005 & 0.83 & -0.010 & 0.49 & -0.017 & 0.16\\
 \hline
-Atlantic  & -0.007 & 0.70 & -0.008 & 0.62 & -0.004 & 0.77 & -0.007 & 0.48\\
-(Excluding ET,NR)  & & & & & & & &  \\
 \hline
-W. Pacific &  0.005 & 0.67 & -0.003 & 0.88 & \bf{-0.023} & < .01 & \bf{-0.027} & <.01\\
-(All storms) & & & & & & & &  \\
+
+
+&  \multicolumn{7}{c}{\bf{Atlantic (All storms)}}  &   \\
+
+Full basin    & 0.029 & 0.18 &  0.027 & 0.16  & -0.016 & 0.27 & -0.016 & 0.31\\
+20--40$^o$N        & 0.016 & 0.50 &  0.015 & 0.37  & -0.010 & 0.50 & -0.014 & 0.30\\
+
+\hline
+&  \multicolumn{7}{c}{\bf{Western North Pacific (All storms)}}  &   \\
+Full basin    &  0.007 & 0.56 & -0.001 & 0.94 & -0.022 & 0.01 & -0.025 & < 0.01\\
+20--40$^o$N        &  0.004 & 0.87 &  0.000 & 0.99 & -0.032 & 0.06 & -0.029 & 0.05\\
 \hline
 \end{tabular}
 %\belowtable{} % Table Footnotes
-\label{tab:ATLSA}
+\label{tab:atl_sp}
 \end{table*}
 
 %==================================================================================
@@ -392,27 +443,27 @@ W. Pacific &  0.005 & 0.67 & -0.003 & 0.88 & \bf{-0.023} & < .01 & \bf{-0.027} &
 
 
 \begin{table*}[t]
-  \caption{Trends in rapid tangential acceleration (km hr$^{-1}$ day$^{-1}$ year$^{-1}$) of Atlantic tropical cyclones. Storm instances  classified as ET or NR are excluded. Three cut-offs for defining rapid are used: Values exceeeding 90th, 85th and 60th percentile of all acceleration. }
+  \caption{Trends in rapid tangential acceleration (km hr$^{-1}$ day$^{-1}$ year$^{-1}$) of Atlantic tropical cyclones over 1966--2019. Storm instances classified as ET or NR were excluded. Three cut-offs for defining rapid are used: Values exceeding 90th, 85th and 60th percentile of all acceleration. }
 
 \begin{tabular}{|c|cccc|cccc|cccc|}
 \hline
 %& \multicolumn{4}{|c|}{1966--2019}  & \multicolumn{4}{|c|}{1966--2019}\\
 & \multicolumn{4}{|c|}{ 90th percentile } & \multicolumn{4}{|c|}{80th percentile }& \multicolumn{4}{|c|}{60th percentile}\\
-Atlantic  & \multicolumn{2}{c}{LR} & \multicolumn{2}{c|}{MK-TS}& \multicolumn{2}{c}{LR} & \multicolumn{2}{c|}{MK-TS} & \multicolumn{2}{c}{LR} &  \multicolumn{2}{c|}{MK-TS}\\
-(Excluding ET,NR) & Trend & P-value & Trend & P-value & Trend & P-value & Trend & P-value & Trend & P-value & Trend & P-value\\
+\bf{Atlantic}  & \multicolumn{2}{c}{LR} & \multicolumn{2}{c|}{MK-TS}& \multicolumn{2}{c}{LR} & \multicolumn{2}{c|}{MK-TS} & \multicolumn{2}{c}{LR} &  \multicolumn{2}{c|}{MK-TS}\\
+\bf{(Excluding ET,NR)} & Trend & P-value & Trend & P-value & Trend & P-value & Trend & P-value & Trend & P-value & Trend & P-value\\
 \hline
-Full basin  & -0.097 & 0.01 & -0.091 & 0.01 & -0.088 &  <.01 & -0.084 &  <.01 & -0.051 & 0.01 & -0.050 & 0.02 \\
-	  5--25 & -0.094 & 0.00 & -0.102 & 0.00   & -0.081 & 0.00 & -0.080 & 0.00 & -0.046 & 0.01 & -0.047 & 0.02\\
-	 10--30 & -0.080 & 0.01 & -0.082 & 0.00   & -0.079 & 0.00 & -0.072 & 0.00 & -0.048 & 0.01 & -0.049 & 0.01\\
-	 15--35 & -0.086 & 0.02 & -0.079 & 0.01   & -0.084 & 0.00 & -0.079 & 0.00 & -0.043 & 0.03 & -0.045 & 0.02\\
-	 20--40 & -0.113 & 0.01 & -0.110 & 0.01   & -0.088 & 0.01 & -0.086 & 0.02 & -0.046 & 0.06 & -0.051 & 0.06\\
-	 25--45 & -0.099 & 0.08 & -0.090 & 0.05   & -0.075 & 0.10 & -0.065 & 0.11 & -0.061 & 0.07 & -0.047 & 0.10\\
-	 30--50 & -0.124 & 0.06 & -0.119 & 0.04   & -0.097 & 0.08 & -0.099 & 0.11 & -0.078 & 0.08 & -0.061 & 0.18\\
+Full basin  & -0.097 & 0.01 & -0.091 & 0.01 & -0.088 &  <0.01 & -0.084 &  <0.01 & -0.051 & 0.01 & -0.050 & 0.02 \\
+	  5--25$^o$N & -0.094 & 0.00 & -0.102 & <0.01   & -0.081 & <0.01 & -0.080 & <0.01 & -0.046 & 0.01 & -0.047 & 0.02\\
+	 10--30$^o$N & -0.080 & 0.01 & -0.082 & <0.01   & -0.079 & <0.01 & -0.072 & <0.01 & -0.048 & 0.01 & -0.049 & 0.01\\
+	 15--35$^o$N & -0.086 & 0.02 & -0.079 & 0.01   & -0.084 & <0.01 & -0.079 & <0.01 & -0.043 & 0.03 & -0.045 & 0.02\\
+	 20--40$^o$N & -0.113 & 0.01 & -0.110 & 0.01   & -0.088 & 0.01 & -0.086 & 0.02 & -0.046 & 0.06 & -0.051 & 0.06\\
+	 25--45$^o$N & -0.099 & 0.08 & -0.090 & 0.05   & -0.075 & 0.10 & -0.065 & 0.11 & -0.061 & 0.07 & -0.047 & 0.10\\
+	 30--50$^o$N & -0.124 & 0.06 & -0.119 & 0.04   & -0.097 & 0.08 & -0.099 & 0.11 & -0.078 & 0.08 & -0.061 & 0.18\\
 \hline
 \hline
 \end{tabular}
 %\belowtable{} % Table Footnotes
-\label{tab:ATLAC}
+\label{tab:atl_accelTrend}
 \end{table*}
 
 
@@ -452,11 +503,14 @@ Full basin &  -0.075 & 0.06 & -0.080 & 0.05 & -0.055 & 0.05 & -0.055 & 0.06  & -
 %========================================================
 %Figure 1
 %========================================================
+\clearpage
+
 
 \begin{figure*}[t]
-\includegraphics[width=7cm]{katrina.png}
+\includegraphics[height=6cm]{track_map_katrina.png}
+\includegraphics[height=6cm]{track_map_irma.png}
 \caption{Illustration of the circle-fit and radius of curvature calculations at
-five selected locations along the track of hurricane Katrina (2005).}\label{fig:track}
+five selected locations along the track of hurricanes Katrina (2005) and Irma (2017).}\label{fig:track}
 \end{figure*}
 %========================================================
 
@@ -472,10 +526,80 @@ five selected locations along the track of hurricane Katrina (2005).}\label{fig:
   \centering
     \includegraphics[width=.9\textwidth]{distribution_NA.png}
     \caption{Distribution of (a) Speed; (b) Tangential acceleration and (c) Curvature acceleration of
-     Atlantic TCs as a function of latitude. Data from 1966--2019 was binned within 10$^o$-wide overlapping
+     Atlantic TCs as a function of latitude. Storm instances classified as ET or NR were excluded. Data from 1966--2019 was binned within 10$^o$-wide overlapping
      latitude bins. Statistics shown are: median (horizontal line within the box), mean (dot), and 10th,
      25th, 75th and 90th percentiles.}
   \label{fig:distNA}
+\end{figure*}
+
+\clearpage
+%========================================================
+\begin{figure*}[t]
+  \centering
+    \includegraphics[width=.85\textwidth]{composite_tang_40_30_multilevel_NA.png}
+  \caption{Storm-relative composite average geopotential heights (thick orange lines) and anomalies (color shaded) for all TCs located in the latitude bin 30-40$^o$N over the Atlantic. The composite fields are shown for three levels -- 300 hPa, 500 hPa and 850 hPa. In each panel, the composite 1000 hPa anomalous geopotential is shown using thin black contours. All anomalies are defined relative to a long-term synoptic climatology. The contour intervals are: 12 dam, 6 dam and 3 dam for the three levels respectively. The shading interval in dam for the 300 hPa anomaly fields is shown in the label-bar. It is half of the value for the other two levels. The left column is for rapid tangential acceleration and the right column is for rapid tangential deceleration.}
+  \label{fig:tangComp}
+\end{figure*}
+%========================================================
+
+%========================================================
+
+\clearpage
+
+\begin{figure*}[t]
+  \centering
+    \includegraphics[width=.85\textwidth]{composite_tang_40_30_alllags_NA.png}
+  \caption{Storm-relative average 500-hPa geopotential heights (thick orange lines) and anomalies (color shaded) for all TCs located in the latitude bin 30-40$^o$N over the Atlantic. The fields are shown for lags Day-2 to Day+2. In each panel, the composite 1000 hPa anomalous geopotential is shown using thin black contours. All anomalies are defined relative to a long-term synoptic climatology. The contour interval is 6 dam and shading interval in dam is shown in the label-bar. The plus symbol shows the location of the composite TC at Day 0 and the hurricane symbol shows the approximate location at each lags. The left column is for rapid tangential acceleration and the right column is for rapid tangential deceleration}
+  \label{fig:lagtang}
+\end{figure*}
+%========================================================
+
+\clearpage
+%========================================================
+\begin{figure*}[t]
+  \centering
+    \includegraphics[width=.85\textwidth]{composite_curv_40_30_multilevel_NA.png}
+  \caption{As in Fig. \ref{fig:tangComp}, but for rapid and near-zero curvature acceleration}
+  \label{fig:curvComp}
+\end{figure*}
+%========================================================
+
+
+
+
+
+\clearpage
+%========================================================
+\begin{figure*}[t]
+  \centering
+    \includegraphics[width=.85\textwidth]{composite_curv_40_30_alllags_NA.png}
+  \caption{As in Fig. \ref{fig:lagtang}, except for rapid (left column) and near-zero (right column) curvature acceleration.}
+  \label{fig:lagcurv}
+\end{figure*}
+%========================================================
+
+\clearpage
+%========================================================
+\begin{figure*}[t]
+  \centering
+    \includegraphics[width=.45\textwidth]{tang_rapid_acel_track.png}
+     \includegraphics[width=.45\textwidth]{tang_rapid_decel_track.png}
+  \caption{}
+  \label{fig:tang_track}
+\end{figure*}
+%========================================================
+
+%========================================================
+
+\clearpage
+%========================================================
+
+\begin{figure*}[t]
+  \centering
+    \includegraphics[width=.45\textwidth]{curv_rapid_acel_track.png}
+     \includegraphics[width=.45\textwidth]{curv_low_acel_track.png}
+  \caption{}
+  \label{fig:curv_track}
 \end{figure*}
 
 
@@ -483,19 +607,20 @@ five selected locations along the track of hurricane Katrina (2005).}\label{fig:
 
 
 
-\clearpage
-
+\begin{figure*}[t]
+  \includegraphics[width=14cm]{ET_relative_accel_speed.png}
+  \caption{Composite speed and accelerations relative to time of ET. A single pass of 5-point running average was applied to the speed and tangential acceleration curves. Two passes of the same filter were applied to the curvature acceleration.}\label{fig:ET_SA}
+\end{figure*}
+%========================================================
 
 %========================================================
 %Figure 
 %========================================================
 
 \begin{figure*}[t]
-  \includegraphics[width=7cm]{atl_speed_trend.png}
-  \includegraphics[width=7cm]{wpa_speed_trend.png}
-
-\caption{Annual-mean speed of storms in the (a) North Atlantic; and (b) western North Pacific, along with the linear trend. The purple curve is for all storms while the green curve excludes instances when
-the storm was classified as ET or NR.}\label{fig:atl_speed}
+  \includegraphics[width=14cm]{atl_speed_trend.png}
+\caption{Annual-mean speed of storms in the (a) North Atlantic; and (b) western North Pacific, along with the linear trend. The purple curve is for all storms in the IBTRaCS dataset while the green curve excludes instances when
+the storm was classified as ET or NR.}\label{fig:ts_speed}
 \end{figure*}
 %========================================================
 
@@ -513,6 +638,7 @@ the storm was classified as ET or NR.}\label{fig:atl_speed}
   \caption{Annual-mean tangential acceleration exceeding thresholds of 60th, 80th and 90th percentile values for (a) Entire Atlantic; and (b) Latitude range 20-40$^o$N. Instances of storms classified as NR and ET were excluded. The linear trend for each timeseries is shown by the straight line.}\label{fig:atl_speed}
 \end{figure*}
 %========================================================
+
 
 
 
@@ -655,30 +781,40 @@ the storm was classified as ET or NR.}\label{fig:atl_speed}
 
 
 \begin{table*}[t]
-\caption{Speed (km hr$^{-1}$), tangential and curvature acceleration  (km hr$^{-1}$ day$^{-1}$ ) of all Western North Pacific non-ET storms as a function of latitude: N refers to number of 3-hourly track positions in each latitude-bin over the period 1966--2019. Storm positions corresponding to 
-nature labels "ET" and "NR" were excluded.}
+\caption{Speed (km hr$^{-1}$), tangential and curvature acceleration  (km hr$^{-1}$ day$^{-1}$ ) of all western North Pacific storms as a function of latitude: N refers to number of 3-hourly track positions in each latitude-bin over the period 1966--2019. Storm positions corresponding to 
+nature labels "ET" and "NR" were included.}
 
 \begin{tabular}{cc|ccc|ccc|ccc}
 \tophline
 & & \multicolumn{3}{|c|}{Speed} & \multicolumn{3}{c|}{Tang. Accel} & \multicolumn{3}{c}{Curv. Accel}\\
 \hline
        Latitude &     N &  Mean & Median & Std Dev. & Mean & Median &  Std Dev.& Mean & Median & Std Dev.\\
-	  5--15 & 30731 & 17.78 &  17.1 &   8.2 &  0.21 &   0.2 &  16.4 & 15.16 &   9.8 &  18.0 \\
-	 10--20 & 47338 & 17.10 &  16.4 &   7.9 &  0.14 &   0.1 &  16.3 & 15.23 &   9.9 &  17.9 \\
-	 15--25 & 45753 & 16.99 &  16.1 &   8.4 &  1.10 &   0.7 &  17.6 & 16.18 &  10.5 &  18.8 \\
-	 20--30 & 30724 & 18.96 &  17.4 &  10.4 &  2.99 &   2.0 &  20.1 & 17.83 &  11.8 &  19.7 \\
-	 25--35 & 17931 & 23.28 &  20.2 &  14.1 &  5.92 &   3.6 &  24.4 & 19.90 &  14.0 &  20.0 \\
-	 30--40 &  9655 & 30.28 &  26.1 &  18.6 &  8.36 &   5.4 &  30.4 & 23.92 &  17.2 &  23.3 \\
-	 35--45 &  4274 & 39.44 &  36.1 &  21.2 &  5.86 &   4.6 &  39.1 & 30.96 &  21.8 &  30.8 \\
-	 40--50 &  1556 & 43.48 &  39.9 &  23.1 & -1.44 &  -0.9 &  47.3 & 38.24 &  26.5 &  37.2 \\
-	 45--55 &   346 & 47.69 &  40.9 &  27.6 & -6.33 &  -3.1 &  51.3 & 41.47 &  29.3 &  39.1 \\
+ 	  5--15 & 40020 & 17.96 &  17.3 &   8.5 & 0.29 &   0.1 &  16.7 & 14.79 &   9.1 &  19.6 \\
+	 10--20 & 53917 & 17.22 &  16.5 &   8.1 &  0.12 &   0.0 &  16.6 & 15.22 &   9.7 &  19.4 \\
+	 15--25 & 49678 & 17.02 &  16.1 &   8.6 &  1.13 &   0.6 &  17.9 & 16.23 &  10.4 &  19.9 \\
+	 20--30 & 33365 & 19.15 &  17.4 &  10.9 &  3.07 &   1.9 &  20.9 & 18.11 &  11.9 &  20.9 \\
+	 25--35 & 21128 & 24.18 &  20.6 &  15.4 &  5.61 &   3.4 &  26.7 & 20.88 &  14.3 &  22.7 \\
+	 30--40 & 13286 & 31.90 &  27.4 &  20.2 &  7.01 &   4.4 &  35.0 & 26.39 &  18.2 &  28.3 \\
+	 35--45 &  8310 & 40.20 &  36.5 &  22.6 &  2.89 &   2.4 &  44.6 & 34.83 &  23.7 &  37.2 \\
+	 40--50 &  5741 & 41.00 &  37.7 &  22.7 & -3.44 &  -1.0 &  48.3 & 40.08 &  27.0 &  42.9 \\
+	 45--55 &  3516 & 37.32 &  33.7 &  21.2 & -5.78 &  -2.3 &  47.4 & 40.16 &  26.7 &  44.3 \\
 \hline
 \end{tabular}
 %\belowtable{} % Table Footnotes
-\label{tab:WPSA}
+\label{tab:distWP}
 \end{table*}
 
 
+\clearpage
 
+\begin{figure*}[t]
+  \centering
+    \includegraphics[width=.9\textwidth]{distribution_WP.png}
+    \caption{Distribution of (a) Speed; (b) Tangential acceleration and (c) Curvature acceleration of all
+     western North Pacific storms as a function of latitude. Storm instances classified as ET or NR were included. Data from 1966--2019 was binned within 10$^o$-wide overlapping
+     latitude bins. Statistics shown are: median (horizontal line within the box), mean (dot), and 10th,
+     25th, 75th and 90th percentiles.}
+  \label{fig:distWP}
+\end{figure*}
 
 \end{document}

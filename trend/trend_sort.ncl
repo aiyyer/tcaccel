@@ -21,17 +21,17 @@
 
 begin
 
-  basinAnalysis = "NA"
+  basinAnalysis = "NA" ;"WP" ;"NA"
   fileName = "../tcMotion.nc"
-  startYear = 1966
+  startYear = 1966 ; 1949 ;1966
   endYear   = 2019
   variable = (/"speed","accelSpeed","accelCurve"/)
   
-  ivar       =  1
-  threshFlag =  1
+  ivar       =  1 ;1
+  threshFlag =  1 ;1
 
   ; sfac denotes the percentile to use a threshold
-  sfac       =  .90
+  sfac       =  .80
 
   var = variable(ivar)
     
@@ -53,10 +53,10 @@ begin
   latN = latS + dlat    
   nn = 1
 
- latS = -90. ; 5.0
-  dlat =  180.  ;10. ;10.0
-  latN = latS + dlat    
-  nn = 1
+;  latS = -90. ; 5.0
+;  dlat =  180.  ;10. ;10.0
+;  latN = latS + dlat    
+;  nn = 1
   
   nYears    = endYear - startYear + 1
   print ( "Start Year = " + startYear + " end year = " + endYear + " " + nYears)
@@ -211,7 +211,7 @@ begin
                   end if ;Amax
                   
                   
-                end if ; nature
+               end if ; nature
 ;-------------------------------------------------------------------------
                 
               end if ; lat
@@ -231,9 +231,9 @@ begin
     ave =    avg(datA(0:icount-1) )
     std = stddev(datA(0:icount-1) )
     med = dim_median( datA(0:icount-1) )
+
+    print ("pre sorting")
     print ( "Lat range " + latS + " " + latN + " Mean Median Sdev = " + ave + " " + med + " " +  std)
-
-
     
     NRper = tofloat(nrCount*100)/tofloat(totCount)
     TSper = tofloat(tsCount*100)/tofloat(totCount)
@@ -251,29 +251,19 @@ begin
 ;
 ;=======================================================================================
 ;
-
-
-
-
-
-
-    
     yearlyThresh = yearly
 
 
     if ( threshFlag .ne. 0 ) then
       yearlyThresh =  yearlyThresh@_FillValue
-    end if
-    
+    end if    
     if ( threshFlag .eq. 1 ) then
+      print ("post sorting")
 
 ; lets sort the data:
       datSorted := datA(0:icount-1)
       qsort(datSorted)
       print ( "Lat range " + latS + " " + latN + " Mean = " + avg(datSorted) )
-
-
-      
       npts = tofloat(dimsizes(datSorted))
       nF  = tointeger(sfac*npts)
       thresh =  datSorted(nF)
@@ -281,15 +271,17 @@ begin
       yearlyThresh =  yearlyThresh@_FillValue
       yearlyThresh = where ( yearly .gt. thresh, yearly, yearly@_FillValue)
     end if
-    
-    if ( threshFlag .eq. -1 ) then
 
+    
+    if ( threshFlag .eq. -1 ) then      
 ; lets sort the data:
       datSorted := datA(0:icount-1)
       qsort(datSorted)
+      datSorted  := datSorted(::-1)
+      print ( datSorted(0) + " " +  datSorted(icount-1) )
       print ( "Lat range " + latS + " " + latN + " Mean = " + avg(datSorted) )
-      
       npts = tofloat(dimsizes(datSorted))
+      
       nF  = tointeger(sfac*npts)
       thresh =  datSorted(nF)
       print ( npts + " " + nF + " percentile = " + sfac + " thresh =  "+ thresh)
@@ -312,11 +304,9 @@ begin
     x    := fspan(0,nYears-1,nYears) + startYear
 
     do iy=0,nYears-1
-
       
       N = num(.not.ismissing(yearlyThresh(iy,:)))
       ;print ( iy + " " + N )
-
       
       med     =   yearlyThresh@_FillValue
       datY(iy) =  yearlyThresh@_FillValue

@@ -1,0 +1,127 @@
+\begin{thebibliography}{17}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{{\tt #1}}
+\providecommand{\urlprefix}{URL }
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{https://doi.org/\discretionary{}{}{}#1}\else
+  \providecommand{\doi}{https://doi.org/\discretionary{}{}{}\begingroup
+  \urlstyle{rm}\Url}\fi
+
+\bibitem[{{Bieli} et~al.(2019){Bieli}, {Camargo}, {Sobel}, {Evans}, and
+  {Hall}}]{BCSEH2019a}
+{Bieli}, M., {Camargo}, S.~J., {Sobel}, A.~H., {Evans}, J.~L., and {Hall}, T.:
+  {A Global Climatology of Extratropical Transition. Part I: Characteristics
+  across Basins}, Journal of Climate, 32, 3557--3582,
+  \doi{10.1175/JCLI-D-17-0518.1}, 2019.
+
+\bibitem[{{Dee} et~al.(2011){Dee}, {Uppala}, {Simmons}, {Berrisford}, {Poli},
+  {Kobayashi}, {Andrae}, {Balmaseda}, {Balsamo}, {Bauer}, {Bechtold},
+  {Beljaars}, {van de Berg}, {Bidlot}, {Bormann}, {Delsol}, {Dragani},
+  {Fuentes}, {Geer}, {Haimberger}, {Healy}, {Hersbach}, {H{\'o}lm}, {Isaksen},
+  {K{\aa}llberg}, {K{\"o}hler}, {Matricardi}, {McNally}, {Monge-Sanz},
+  {Morcrette}, {Park}, {Peubey}, {de Rosnay}, {Tavolato}, {Th{\'e}paut}, and
+  {Vitart}}]{DUS11}
+{Dee}, D.~P., {Uppala}, S.~M., {Simmons}, A.~J., {Berrisford}, P., {Poli}, P.,
+  {Kobayashi}, S., {Andrae}, U., {Balmaseda}, M.~A., {Balsamo}, G., {Bauer},
+  P., {Bechtold}, P., {Beljaars}, A.~C.~M., {van de Berg}, L., {Bidlot}, J.,
+  {Bormann}, N., {Delsol}, C., {Dragani}, R., {Fuentes}, M., {Geer}, A.~J.,
+  {Haimberger}, L., {Healy}, S.~B., {Hersbach}, H., {H{\'o}lm}, E.~V.,
+  {Isaksen}, L., {K{\aa}llberg}, P., {K{\"o}hler}, M., {Matricardi}, M.,
+  {McNally}, A.~P., {Monge-Sanz}, B.~M., {Morcrette}, J.-J., {Park}, B.-K.,
+  {Peubey}, C., {de Rosnay}, P., {Tavolato}, C., {Th{\'e}paut}, J.-N., and
+  {Vitart}, F.: {The ERA-Interim reanalysis: configuration and performance of
+  the data assimilation system}, Quart. J. Roy. Meteor. Soc., 137, 553--597,
+  \doi{10.1002/qj.828}, 2011.
+
+\bibitem[{{Emanuel}(2018)}]{E2018}
+{Emanuel}, K.: {100 Years of Progress in Tropical Cyclone Research}, vol.~59,
+  pp. 15.1--15.68, \doi{10.1175/AMSMONOGRAPHS-D-18-0016.1}, 2018.
+
+\bibitem[{{Hart}(2003)}]{Hart2003}
+{Hart}, R.~E.: {A Cyclone Phase Space Derived from Thermal Wind and Thermal
+  Asymmetry}, Monthly Weather Review, 131, 585,
+  \doi{10.1175/1520-0493(2003)131<0585:ACPSDF>2.0.CO;2}, 2003.
+
+\bibitem[{{Hart} and {Evans}(2001)}]{HE2001}
+{Hart}, R.~E. and {Evans}, J.~L.: {A Climatology of the Extratropical
+  Transition of Atlantic Tropical Cyclones.}, Journal of Climate, 14, 546--564,
+  \doi{10.1175/1520-0442(2001)014<0546:ACOTET>2.0.CO;2}, 2001.
+
+\bibitem[{{Hart} et~al.(2006){Hart}, {Evans}, and {Evans}}]{HE2006}
+{Hart}, R.~E., {Evans}, J.~L., and {Evans}, C.: {Synoptic Composites of the
+  Extratropical Transition Life Cycle of North Atlantic Tropical Cyclones:
+  Factors Determining Posttransition Evolution}, Monthly Weather Review, 134,
+  553, \doi{10.1175/MWR3082.1}, 2006.
+
+\bibitem[{{Hodanish} and {Gray}(1993)}]{Hodanish1993}
+{Hodanish}, S. and {Gray}, W.~M.: {An Observational Analysis of Tropical
+  Cyclone Recurvature}, Monthly Weather Review, 121, 2665,
+  \doi{10.1175/1520-0493(1993)121<2665:AOAOTC>2.0.CO;2}, 1993.
+
+\bibitem[{{Keller} et~al.(2019){Keller}, {Grams}, {Riemer}, {Archambault},
+  {Bosart}, {Doyle}, {Evans}, {Galarneau}, {Griffin}, {Harr}, {Kitabatake},
+  {McTaggart-Cowan}, {Pantillon}, {Quinting}, {Reynolds}, {Ritchie}, {Torn},
+  and {Zhang}}]{K2019}
+{Keller}, J.~H., {Grams}, C.~M., {Riemer}, M., {Archambault}, H.~M., {Bosart},
+  L., {Doyle}, J.~D., {Evans}, J.~L., {Galarneau}, Thomas~J., J., {Griffin},
+  K., {Harr}, P.~A., {Kitabatake}, N., {McTaggart-Cowan}, R., {Pantillon}, F.,
+  {Quinting}, J.~F., {Reynolds}, C.~A., {Ritchie}, E.~A., {Torn}, R.~D., and
+  {Zhang}, F.: {The Extratropical Transition of Tropical Cyclones. Part II:
+  Interaction with the Midlatitude Flow, Downstream Impacts, and Implications
+  for Predictability}, Monthly Weather Review, 147, 1077--1106,
+  \doi{10.1175/MWR-D-17-0329.1}, 2019.
+
+\bibitem[{{Klein} et~al.(2000){Klein}, {Harr}, and {Elsberry}}]{KHE2000}
+{Klein}, P.~M., {Harr}, P.~A., and {Elsberry}, R.~L.: {Extratropical Transition
+  of Western North Pacific Tropical Cyclones: An Overview and Conceptual Model
+  of the Transformation Stage}, Weather and Forecasting, 15, 373--396,
+  \doi{10.1175/1520-0434(2000)015<0373:ETOWNP>2.0.CO;2}, 2000.
+
+\bibitem[{{Knapp} et~al.(2010){Knapp}, {Kruk}, {Levinson}, {Diamond}, and
+  {Neumann}}]{KnappIBTRaCS}
+{Knapp}, K.~R., {Kruk}, M.~C., {Levinson}, D.~H., {Diamond}, H.~J., and
+  {Neumann}, C.~J.: {The International Best Track Archive for Climate
+  Stewardship (IBTrACS)}, Bulletin of the American Meteorological Society, 91,
+  363--376, \doi{10.1175/2009BAMS2755.1}, 2010.
+
+\bibitem[{{Kofron} et~al.(2010){Kofron}, {Ritchie}, and {Tyo}}]{KRT2010A}
+{Kofron}, D.~E., {Ritchie}, E.~A., and {Tyo}, J.~S.: {Determination of a
+  Consistent Time for the Extratropical Transition of Tropical Cyclones. Part
+  II: Potential Vorticity Metrics}, Monthly Weather Review, 138, 4344--4361,
+  \doi{10.1175/2010MWR3181.1}, 2010.
+
+\bibitem[{{McTaggart-Cowan} et~al.(2003){McTaggart-Cowan}, {Gyakum}, and
+  {Yau}}]{MGY2003}
+{McTaggart-Cowan}, R., {Gyakum}, J.~R., and {Yau}, M.~K.: {The Influence of the
+  Downstream State on Extratropical Transition: Hurricane Earl (1998) Case
+  Study}, Monthly Weather Review, 131, 1910, \doi{10.1175//2589.1}, 2003.
+
+\bibitem[{{McTaggart-Cowan} et~al.(2006){McTaggart-Cowan}, {Bosart}, {Davis},
+  {Atallah}, {Gyakum}, and {Emanuel}}]{MBDAGE2006}
+{McTaggart-Cowan}, R., {Bosart}, L.~F., {Davis}, C.~A., {Atallah}, E.~H.,
+  {Gyakum}, J.~R., and {Emanuel}, K.~A.: {Analysis of Hurricane Catarina
+  (2004)}, Monthly Weather Review, 134, 3029, \doi{10.1175/MWR3330.1}, 2006.
+
+\bibitem[{{McWilliams}(1980)}]{MCW1980}
+{McWilliams}, J.~C.: {An application of equivalent modons to atmospheric
+  blocking}, Dynamics of Atmospheres and Oceans, 5, 43--66,
+  \doi{10.1016/0377-0265(80)90010-X}, 1980.
+
+\bibitem[{{Pelly} and {Hoskins}(2003)}]{PH2003}
+{Pelly}, J.~L. and {Hoskins}, B.~J.: {A New Perspective on Blocking.}, Journal
+  of Atmospheric Sciences, 60, 743--755,
+  \doi{10.1175/1520-0469(2003)060<0743:ANPOB>2.0.CO;2}, 2003.
+
+\bibitem[{{Riemer} and {Jones}(2014)}]{RJ2014}
+{Riemer}, M. and {Jones}, S.~C.: {Interaction of a tropical cyclone with a
+  high-amplitude, midlatitude wave pattern: Waviness analysis, trough
+  deformation and track bifurcation}, Quarterly Journal of the Royal
+  Meteorological Society, 140, 1362--1376, \doi{10.1002/qj.2221}, 2014.
+
+\bibitem[{{Riemer} et~al.(2008){Riemer}, {Jones}, and {Davis}}]{RJD2008}
+{Riemer}, M., {Jones}, S.~C., and {Davis}, C.~A.: {The impact of extratropical
+  transition on the downstream flow: An idealized modelling study with a
+  straight jet}, Quarterly Journal of the Royal Meteorological Society, 134,
+  69--91, \doi{10.1002/qj.189}, 2008.
+
+\end{thebibliography}

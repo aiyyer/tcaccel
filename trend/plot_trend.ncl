@@ -10,7 +10,7 @@
 ;----------------------------------------------------------------------------
 begin
   
-  ncdf = addfile("1966/speed_WP_B.nc" ,"r")  ; open output netCDF file
+
   ncdf = addfile("dat.nc","r")
   
   startYear = ncdf->startYear
@@ -93,7 +93,7 @@ begin
 ;   end do
 ;
 
-  res@tiMainString      = "(b) Western North Pacific"
+  res@tiMainString      =" " ; "(b) Western North Pacific"
 
 
 

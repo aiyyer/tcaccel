@@ -130,6 +130,12 @@ begin
   speedET!0 = "storm"
   speedET!1 = "hour"
   speedET&hour = hours
+
+
+
+
+  latET = new(nn, typeof(Lat) )
+  lonET = new(nn, typeof(Lon) )
   
 ;  
 ;======================================================================================
@@ -150,10 +156,12 @@ begin
 ;     
       TSFlag       = 0
       BasinFlag    = 0
+      
       if (  basin(i,0) .eq. basinAnalysis ) then
         ;print ( i + " matches basin requested = " + basinAnalysis )
         BasinFlag = 1
       end if
+      
       do j = 0, numobs(i)-1
         if ( chartostring(nature(i,j,:)) .eq. "TS" ) then
           TSFlag    = 1
@@ -161,14 +169,14 @@ begin
       end do
 
 ; Now move forward with this storm
-      
+     
       if ( TSFlag .eq. 1 .and. BasinFlag .eq. 1 ) then
-        
+
+        numDays = todouble(0)
         if ( numobs(i) .ne. 0 ) then
           numDays = todouble(time(i,numobs(i)-1) - time(i,0))
         end if
 
-        
 ;storm must live at least 3 days
         if (  numDays .ge. 3 ) then          
           if ( time(i,0) .ge. startTime .and. time(i,  numobs(i)-1) .le. endTime ) then
@@ -200,10 +208,14 @@ begin
 ; apply the relevant checks
               if ( ETflag .eq. 0 ) then
                 if ( chartostring(nature(i,j,:)) .eq. "ET" ) then
+
+
+                  latET(ETCount) = Lat(i,j)
+                  lonET(ETCount) = Lon(i,j)
+                  
                   
                   ETCount   = ETCount+1
-                  
-                  
+ 
                   ETflag = 1
                    deltaDaysToEndOfTrack =  time(i,numobs(i)-1) -  time(i,j)
                    deltaDaysToBegOfTrack =  time(i,j) - time(i,0)
@@ -266,6 +278,8 @@ begin
      perET = 100.*tofloat(ETCount)/tofloat(totCount)
      print ("Percent ET = " + perET)
      print ("Storm numbers for composit= " + icount)
+     print ("Mean lat of ET = " + avg(latET(0:ETCount-1)) )
+     print ("Median lat of ET = " +dim_median(latET(0:ETCount-1)) )
      
      
 ;====================================================================================================
@@ -275,13 +289,14 @@ begin
      
 ; check how many cases accelerated prior to ET
      
-     h1 = -24
-     h2 = 0
+     h1  = -12.0
+     h2  = 0
      iP  = 0
      do i = 0,icount-1
        if(.not.all(ismissing(accelET(0,i,{h1:h2})    ))) then
-         ave = avg (accelET(0,i,{h1:h2}))
-         if ( ave .gt. 0. ) then
+         val = max (accelET(0,i,{h1:h2}))  ; avg
+         
+         if ( val .gt. 0. ) then
                                 ;print ( iP + " " +  ave)
            iP = iP + 1
          end if
@@ -290,6 +305,7 @@ begin
      end do
      perP = 100*tofloat(iP)/tofloat(ETCount)
      
+     print ("percent accel = " + perP)
      
      
      meanA   =    dim_avg_n_Wrap(accelET,1 )
@@ -336,6 +352,7 @@ begin
      resR@pmLegendWidthF         = 0.12                ; Change width and
      resR@pmLegendHeightF        = 0.10                ; height of legend.
      resR@lgPerimOn              = False               ; turn off box around
+    
      resR@lgLabelFontHeightF     = .013                 ; label font height
      resR@xyLineThicknesses      = (/8.,8./)                  ; thicker line
 
@@ -380,7 +397,7 @@ begin
     opt   = 1         
     nave  = 5
 
-    printVarSummary(meanA)
+    ;printVarSummary(meanA)
     
     meanA(0,:)  =  runave (meanA(0,:) , nave, opt)
     meanS       =  runave (meanS , nave, opt)

@@ -31,7 +31,7 @@ begin
   startYear1 = ncdf->startYear
   endYear1   = ncdf->endYear
   ave1   = ncdf->ave
-
+ 
  ; no ET NR
   ncdf = addfile(file2 ,"r")  ; open output netCDF file
   startYear2 = ncdf->startYear
@@ -114,8 +114,8 @@ begin
 
 
 
-   res@tiMainString      = "(a) North Atlantic"
-   ;res@tiMainString      = "(b) Western North Pacific"
+   res@tiMainString      = "North Atlantic"
+   ;res@tiMainString      = "Western North Pacific"
 
    res@trYMinF  = 16.0                   ; min value on y-axis
    res@trYMaxF = 28.0
