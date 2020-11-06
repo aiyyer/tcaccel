@@ -28,7 +28,7 @@
 
 \begin{document}
 
-\title{Ensemble Averaged Patterns and Long-term Trends of Acceleration of Tropical Cyclones -- A Proxy For Extratropical Interactions}
+\title{Acceleration of Tropical Cyclones As a Proxy For Extratropical Interactions: Synoptic Scale Patterns and Long-Term Trends}
 
 
 % \Author[1]{given_name}{surname}
@@ -261,11 +261,21 @@ Fig. \ref{fig:ET_SA} shows the composite accelerations and speed relative to the
 
 describe the trend calculations and the significance etc. Also, the threshold values and rationale. Unless stated, instances where the storms in the IBTRaCS dataset were classified as
 
-Table \ref{tab:atl_accelTrend} presents the trends for Atlantic TCs using three different thresholds to define \emph{rapid tangential acceleration}. We show statistics for the entire basin and individual latitude bands. The key result here is that the annual mean tangential acceleration of TCs over the Atlantic shows a robust decreasing trend over the period 1966-2019. This is true for full Atlantic basin as well as for individual latitude bands. In particular, the negative trend is strongest for the P$_{90}$ and P$_{80}$thresholds within the latitude range of 20--40$^o$N. This is where which TCs are most likely to interact with extartropical wavepackets and experience ET \citep[e.g.][]{HE2001}. The P$_{60}$ threshold is mostly consistent although the trends increase with latitude. As noted earlier, this threshold being close to the median value, reflects the fact that TCs are nearly equally likely to accelerate and decelerate at lower latitudes and slighly more likely to accelerate at higher latitudes. 
 
 
+%------------------------------------------------------------
+Table \ref{tab:trend_speed} shows trends for annual-average speed of TCs. In this table, we also include 1949--2019 and 1949--2016 in order to compare with Kossin (2018). For the same reason, we also show the trend for all storms in the IBTraCS that include instances that were classified as ET and NR as well as the trend for western North Pacific. Kossin (2018) reported a trend of -0.02 km hr$^{-1}$ year$^{-1}$ for the entire Atlantic basin over 1949--2016. Our results of -0.019 and -0.021 for the linear regression and Thiel-Sen estimate, respectively, are consistent with that. However, when we examine the trends for the same period, but after excluding ET and NR track locations, the trends become negligible. On the other hand, for the entire western North Pacific over 1949--2016, we note significant trends of  -0.025 and -0.030 km hr$^{-1}$ year$^{-1}$.  This is consistent, albeit slightly lower than what was reported in  Kossin (2018). However, the trends over the Satellite era of 1966--2019 are not statistically significant. This is also true over the same period for the latitude band 20--40$^o$N 
+
+Focusing on the Satellite era of 1966-2019,  Figure \ref{fig:trend_speed}  shows the annual-averaged TC speed for all storms (purple) and storms exclusing ET and NR instances (green). While the two timeseries show some trends, neither are statistically significant (Table \ref{tab:trend_speed}).  In fact, none of the trends in the different categories for the Atlantic -- whether the full basin or for the latitude band 20--40$^o$N -- are statistically significant. Indeed, the trend reported by Kossin (2018) for all storms in the Atlantic basin was also not statistically significant. 
 
 Figure \ref{fig:ts_speed} shows the timeseries of annual mean forward speed of tropical cyclones within the entire Atlantic basin. Two curves are shown. The purple curve includes all track points for storms in the IBTRaCS dataset with lifetime exceeding 3 days while the green curve excludes instances when storms were classified as ET or NR. Table \ref{tab:atl_sp} shows the trend and the associated P-value calculated using two different methods - (a) linear regression, and (b) the Thiel-Sen linear estimate with the Mann-Kendal significance. We note that both curves show interannual variation (Fig. \ref{fig:ts_speed}) but the trend over the period 1966--2019 in neither curve is staistically significan (Table \ref{tab:atl_sp}). For comparison, we also include in this table, the trends for all Western North Pacific storms. Here too there is no significant trend over 1966--2019. However, over 1949--2019, there is a significant slowing of TCs in this basin. We also include in the table, the trends for the latitude band 20--40$^o$N over which TCs are most likely to interact with extartropical wavepackets and experience ET \citep[e.g.][]{HE2001}. For this again, there is no significant trend in the Atlantic for either periods. A relatively more robust slowdown of TC speed is seen in the Western North Pacific over  1949--2019, with the Mann-Kendall test showing a P-value of 0.05.
+
+%------------------------------------------------------------
+
+
+We now focus on acceleration trends over 1966--2019 for Atlantic TCs after excluding instances of NR and ET. Table \ref{tab:atl_accelTrend} presents the trends using three different thresholds to define \emph{rapid tangential acceleration}. We show statistics for the entire basin and individual latitude bands. The key result here is that the annual mean tangential acceleration of TCs over the Atlantic shows a robust decreasing trend over the period 1966-2019. This is true for full Atlantic basin as well as for individual latitude bands. In particular, the negative trend is strongest for the P$_{90}$ and P$_{80}$thresholds within the latitude range of 20--40$^o$N. This is where which TCs are most likely to interact with extartropical wavepackets and experience ET \citep[e.g.][]{HE2001}. The P$_{60}$ threshold is mostly consistent although the trends increase with latitude. As noted earlier, this threshold being close to the median value, reflects the fact that TCs are nearly equally likely to accelerate and decelerate at lower latitudes and slighly more likely to accelerate at higher latitudes. 
+
+
 
 
 
@@ -410,32 +420,30 @@ Latitude & N & Mean & Median & Std Dev. & Mean & Median &  Std Dev.& Mean & Medi
     system recorded in the IBTraCs. ET refers to storm nature designated as extratropical, while NR refers to instances
     when the storm nature was not recorded. }
 
-\begin{tabular}{|c|cccc|cccc|}
+\begin{tabular}{|c|cccc|cccc|cccc|}
 \hline
-& \multicolumn{4}{|c|}{1966--2019}& \multicolumn{4}{|c|}{1949--2019}\\
-& \multicolumn{2}{c}{LR} & \multicolumn{2}{c|}{MK-TS}& \multicolumn{2}{c}{LR} & \multicolumn{2}{c|}{MK-TS}\\
-& Trend & P-value & Trend & P-value & Trend & P-value & Trend & P-value\\
-\hline
-&  \multicolumn{7}{c}{\bf{Atlantic (Excluding ET,NR)}}  &   \\
- Full basin    & -0.007 & 0.71 & -0.008 & 0.61 & -0.004 & 0.75 & -0.007 & 0.46\\
- 20--40$^o$N         &  0.005 & 0.82 &  0.005 & 0.83 & -0.010 & 0.49 & -0.017 & 0.16\\
-\hline
+& \multicolumn{4}{|c|}{1966--2019}& \multicolumn{4}{|c|}{1949--2019} &  \multicolumn{4}{|c|}{1949--2016}\\
+& \multicolumn{2}{c}{LR} & \multicolumn{2}{c|}{MK-TS}& \multicolumn{2}{c}{LR} & \multicolumn{2}{c|}{MK-TS} & \multicolumn{2}{c}{LR} & \multicolumn{2}{c|}{MK-TS}\\
+& Trend & P-value & Trend & P-value & Trend & P-value & Trend & P-value & Trend & P-value & Trend & P-value\\
 \hline
 
-
-&  \multicolumn{7}{c}{\bf{Atlantic (All storms)}}  &   \\
-
-Full basin    & 0.029 & 0.18 &  0.027 & 0.16  & -0.016 & 0.27 & -0.016 & 0.31\\
-20--40$^o$N        & 0.016 & 0.50 &  0.015 & 0.37  & -0.010 & 0.50 & -0.014 & 0.30\\
+&  \multicolumn{11}{c}{\bf{Atlantic (Excluding ET,NR)}}  &   \\
+Full basin    & -0.007 & 0.70 & -0.008 & 0.62 & -0.004 & 0.77 & -0.007 & 0.48 & -0.002 & 0.90 & -0.006 & 0.63\\
+ 20--40$^o$N   &  0.005 & 0.82 &  0.005 & 0.83 & -0.010 & 0.49 & -0.017 & 0.16 & -0.007 & 0.66 & -0.015 & 0.25\\
+\hline
+\hline
+&  \multicolumn{11}{c}{\bf{Atlantic (All storms)}}  &   \\
+Full basin    & 0.029 & 0.18 &  0.027 & 0.16  & -0.016 & 0.27 & -0.016 & 0.31 & -0.019 & 0.24 & -0.021 & 0.25\\
+20--40$^o$N   & 0.016 & 0.50 &  0.015 & 0.37  & -0.010 & 0.50 & -0.014 & 0.30 & -0.008 & 0.61 & -0.014 & 0.38\\
 
 \hline
-&  \multicolumn{7}{c}{\bf{Western North Pacific (All storms)}}  &   \\
-Full basin    &  0.007 & 0.56 & -0.001 & 0.94 & -0.022 & 0.01 & -0.025 & < 0.01\\
-20--40$^o$N        &  0.004 & 0.87 &  0.000 & 0.99 & -0.032 & 0.06 & -0.029 & 0.05\\
+&  \multicolumn{11}{c}{\bf{Western North Pacific (All storms)}}  &   \\
+Full basin    &  0.007 & 0.56 & -0.001 & 0.94 & -0.022 & 0.01 & -0.025 & < 0.01  & -0.025 & 0.01 & -0.030 & <0.01 \\ 
+20--40$^o$N   &  0.004 & 0.87 &  0.000 & 0.99 & -0.032 & 0.06 & -0.029 & 0.05 & -0.033 & 0.07 & -0.033 & 0.09\\
 \hline
 \end{tabular}
 %\belowtable{} % Table Footnotes
-\label{tab:atl_sp}
+\label{tab:trend_speed}
 \end{table*}
 
 %==================================================================================
@@ -617,10 +625,32 @@ five selected locations along the track of hurricanes Katrina (2005) and Irma (2
 %Figure 
 %========================================================
 
+
+\clearpage
+
+%========================================================
+%Figure 
+%========================================================
+
+\begin{figure*}[t]
+  \includegraphics[width=5cm]{cdf_tang_atlWide.png}
+  \includegraphics[width=5cm]{cdf_tang_eq_20N.png}
+  \includegraphics[width=5cm]{cdf_tang_20_40N.png}
+
+  \caption{CDF}\label{fig:tang_cdf}
+\end{figure*}
+%========================================================
+
+
+
+
+
+
+
 \begin{figure*}[t]
   \includegraphics[width=14cm]{atl_speed_trend.png}
 \caption{Annual-mean speed of storms in the (a) North Atlantic; and (b) western North Pacific, along with the linear trend. The purple curve is for all storms in the IBTRaCS dataset while the green curve excludes instances when
-the storm was classified as ET or NR.}\label{fig:ts_speed}
+the storm was classified as ET or NR.}\label{fig:trend_speed}
 \end{figure*}
 %========================================================
 

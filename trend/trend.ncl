@@ -12,21 +12,28 @@
 ;======================================================================
 ; Last Update Sep 21, 2020
 ;             -Some more testing to confirm results of trends
-;----------------------------------------------------------------------------
-
-
+;----------------------------------------------------------------------
+;
+;
+; Some Notes:
+; Nov 5, 2020
+; This code matches results of Kossin (2018) nearly idententically
+;
+;
+;
+;======================================================================
 
 begin
 
   basinAnalysis = "NA"
   fileName = "../tcMotion.nc"
-  startYear = 1966
-  endYear   = 2019
+  startYear = 1949
+  endYear   = 2016
   variable = (/"speed","accelSpeed","accelCurve"/)
 
-  ivar       =  1
-  threshFlag =  1; -1
-  sfac       =  1.
+  ivar       =  0 ;1
+  threshFlag =  0 ;1; -1
+  sfac       =  0. ;1.
 
 
   var = variable(ivar)
@@ -39,18 +46,18 @@ begin
   latN = latS + dlat    
   nn   = 6
 
-; entire basin 
-  latS = -90. ; 5.0
-  dlat =  180.  ;10. ;10.0
-  latN = latS + dlat    
-  nn = 1
+
 
   latS = 20. ; 5.0
   dlat = 25.  ;10. ;10.0
   latN = latS + dlat    
   nn = 1
 
-
+; entire basin 
+  latS = -90. ; 5.0
+  dlat =  180.  ;10. ;10.0
+  latN = latS + dlat    
+  nn = 1
   
   nYears    = endYear - startYear + 1
   print ( "Start Year = " + startYear + " end year = " + endYear + " " + nYears)
@@ -181,31 +188,29 @@ begin
                   if ( chartostring(nature(i,j,:)) .eq. "NR" .or. chartostring(nature(i,j,:)) .eq. "MX") then
                     nrCount = nrCount + 1
                   end if
-
-                  
                   if ( chartostring(nature(i,j,:)) .eq. "ET" ) then
                     etCount = etCount + 1
                   end if
                   
 ;-------------------------------------------------------------------------                
-              if ( chartostring(nature(i,j,:)) .ne. "ET" .and.  chartostring(nature(i,j,:)) .ne. "NR" ) then
-
-                  if (.not.ismissing(A) ) ;;;.and. abs(A) .le. Amax ) then
-
-                    ;print ( i + " " + j + icount + " " + A(icount) )
-                    tsCount        = tsCount + 1
-                    datA(icount)   = A
-                    icount = icount + 1
-                    date=cd_calendar(time(i,j),-5)
-                    iy = date(0,0)-startYear                   
-                    ii = ycount(iy)
-                    yearly(iy,ii) = A
-                    ycount(iy) =  ycount(iy) + 1
+                 ;; if ( chartostring(nature(i,j,:)) .ne. "ET" .and.  chartostring(nature(i,j,:)) .ne. "NR" ) then
                     
-                  end if ;Amax
+                    if (.not.ismissing(A) ) ;;;.and. abs(A) .le. Amax ) then
+                      
+                                ;print ( i + " " + j + icount + " " + A(icount) )
+                      tsCount        = tsCount + 1
+                      datA(icount)   = A
+                      icount = icount + 1
+                      date=cd_calendar(time(i,j),-5)
+                      iy = date(0,0)-startYear                   
+                      ii = ycount(iy)
+                      yearly(iy,ii) = A
+                      ycount(iy) =  ycount(iy) + 1
+                      
+                    end if ;Amax
+                    
                   
-                  
-          end if ; nature
+                  ;;end if ; nature
 ;-------------------------------------------------------------------------
                   
                end if ; lat

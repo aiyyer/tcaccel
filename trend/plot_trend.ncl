@@ -100,6 +100,9 @@ begin
    res@trYMinF  = 10.0                   ; min value on y-axis
    res@trYMaxF  = 60.0                   ; max value on y-axis
    
+   res@trYMinF  = 5.0                   ; min value on y-axis
+   res@trYMaxF  = 35.0                   ; max value on y-axis
+   
    ;plot1  = gsn_csm_xy (wks,x,dat(0,:),res)           ; create plot
    ;plot2  = gsn_csm_xy (wks,x,dat(1,:),res)           ; create plot
 

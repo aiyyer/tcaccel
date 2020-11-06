@@ -23,7 +23,7 @@ begin
 
   basinAnalysis = "NA" ;"WP" ;"NA"
   fileName = "../tcMotion.nc"
-  startYear = 1966 ; 1949 ;1966
+  startYear = 1966
   endYear   = 2019
   variable = (/"speed","accelSpeed","accelCurve"/)
   
@@ -48,15 +48,18 @@ begin
 ;  latN = latS + dlat    
 ;  nn = 1
 
+
   latS = 20. ; 5.0
   dlat = 20.  ;10. ;10.0
   latN = latS + dlat    
   nn = 1
 
-;  latS = -90. ; 5.0
-;  dlat =  180.  ;10. ;10.0
-;  latN = latS + dlat    
-;  nn = 1
+
+  latS = -90. ; 5.0
+  dlat =  180.  ;10. ;10.0
+  latN = latS + dlat    
+  nn = 1
+
   
   nYears    = endYear - startYear + 1
   print ( "Start Year = " + startYear + " end year = " + endYear + " " + nYears)
@@ -194,8 +197,8 @@ begin
 ;-------------------------------------------------------------------------                
                   if ( chartostring(nature(i,j,:)) .ne. "ET" .and.  chartostring(nature(i,j,:)) .ne. "NR" ) then
                     
-                    if (.not.ismissing(A) .and. abs(A) .le. Amax ) then
-                                ;print ( i + " " + j + icount + " " + A(icount) )
+                    if (.not.ismissing(A)) ;;; .and. abs(A) .le. Amax ) then
+                      ;print ( i + " " + j + icount + " " + A(icount) )
                       tsCount        = tsCount + 1
                       datA(icount)   = A
                       icount = icount + 1
@@ -211,7 +214,7 @@ begin
                   end if ;Amax
                   
                   
-               end if ; nature
+                end if ; nature
 ;-------------------------------------------------------------------------
                 
               end if ; lat
