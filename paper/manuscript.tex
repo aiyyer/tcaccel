@@ -69,6 +69,10 @@
 
 
 \begin{abstract}
+
+  change tense to present...
+
+  
   It is well known that rapid changes in tropical cyclone (TC) motion occur during interaction with extratropical wavetrains. While the forward speed of TCs has received much attention in the past, acceleration has not. Using a large data sample, we formally examined the synoptic-scale patterns associated with  tangential and normal components of TC acceleration. During rapid acceleration, a developing wavepacket in the extratropics is present and the TC ?????? with the TC straddled by an upstream trough and downstream ridge. This pattern is consistent with the process of extratropical transition (ET) of TCs. In contrast, during near-zero or rapid deceleration, the extratropical wavepacket remains poleward, with a ridge  located directly north of the storm center.  On average, the tangential acceleration peaks about 18 hours prior to the ET designation. The curvature acceleration increases before ET and stabilizes thereafter.
 %
  We also find a robust decrease in the annually averaged values of rapid acceleration over the past 38 years within the latitude band most commonly associated with ET over the Atlantic. Consequently, we hypothesize that trends in rapid acceleration can be used as an independent metric to assess changes in the extratropical stormtrack activity that mediate ET.
@@ -259,7 +263,11 @@ Fig. \ref{fig:ET_SA} shows the composite accelerations and speed relative to the
 
 \section{Trends}
 
-describe the trend calculations and the significance etc. Also, the threshold values and rationale. Unless stated, instances where the storms in the IBTRaCS dataset were classified as
+Figure \ref{fig:tang_cdf} compares the cumulative probability distribution (CDF) of tangential accelerations over two 10-year periods: 1966--1975 and 2010--2019. Three latitude bands are shown - the entire Atlantic,  0--30$^o$N, and 20--40$^o$N. The CDFs show that the median value of tangential accelertion does not change much between the two decades. Notably, however, there is a clear reduction in the frequency of rapid acceleration and deceleration. Figure \ref{fig:curv_cdf} shows CDFs for curvature acceleration. Here too, there is a similar shift towards less frequent rapid acceleration in the past decade compared to 1966--1975. There is a small compensating increase in frequency of relatively less rapid acceleration values. In the case of  0--20$^o$N, the increase is seen for values below the 90$^\text{th}$\% while for 20--40$^o$N, it is seen for values below the median.
+
+In the preceding sections, we showed that rapid acceleration or deceleration of a TC is typically associated with an interaction with extratropical stormtrack. It is of interest to see if the difference in the CDF is related to a long-term trend in TC accleration. The motivation being that it can inform us regarding potential trends in the nature of TC-baroclinic stormtrack interaction. For this, we consider rapid acceleration and deceleration separately. We do this for two reasons. First, as seen in Fig.  \ref{fig:tang_cdf}, the median acceleration does not change significantly and this is also the case for the mean acceleration (not shown). Second, the synoptic patterns associated with rapid acceleration and rapid deceleration of TCs are entirely different. We consider three threshold values to calculate trends. These are 90$^\text{th}$\%, 80$^\text{th}$\% and 60$^\text{th}$\% values of both categories. The trends over 1966--2019 are calculated using the annual-average acceleration exceeding these threhsolds for for Atlantic TCs after excluding instances of NR and ET. The trends and the associated P-value calculated using two different methods - (a) linear regression, and (b) the Thiel-Sen linear estimate with the Mann-Kendal significance.
+
+Table \ref{tab:atl_accelTrend} presents the trends for the entire basin and individual latitude bands. The key result here is that the annual mean tangential acceleration of TCs over the Atlantic shows a robust decreasing trend over the period 1966-2019. This is true for full Atlantic basin as well as for individual latitude bands. In particular, the negative trend is strongest for the P$_{90}$ and P$_{80}$thresholds within the latitude range of 20--40$^o$N. This is where which TCs are most likely to interact with extartropical wavepackets and experience ET \citep[e.g.][]{HE2001}. The P$_{60}$ threshold is mostly consistent although the trends increase with latitude. As noted earlier, this threshold being close to the median value, reflects the fact that TCs are nearly equally likely to accelerate and decelerate at lower latitudes and slighly more likely to accelerate at higher latitudes. 
 
 
 
@@ -271,11 +279,6 @@ Focusing on the Satellite era of 1966-2019,  Figure \ref{fig:trend_speed}  shows
 Figure \ref{fig:ts_speed} shows the timeseries of annual mean forward speed of tropical cyclones within the entire Atlantic basin. Two curves are shown. The purple curve includes all track points for storms in the IBTRaCS dataset with lifetime exceeding 3 days while the green curve excludes instances when storms were classified as ET or NR. Table \ref{tab:atl_sp} shows the trend and the associated P-value calculated using two different methods - (a) linear regression, and (b) the Thiel-Sen linear estimate with the Mann-Kendal significance. We note that both curves show interannual variation (Fig. \ref{fig:ts_speed}) but the trend over the period 1966--2019 in neither curve is staistically significan (Table \ref{tab:atl_sp}). For comparison, we also include in this table, the trends for all Western North Pacific storms. Here too there is no significant trend over 1966--2019. However, over 1949--2019, there is a significant slowing of TCs in this basin. We also include in the table, the trends for the latitude band 20--40$^o$N over which TCs are most likely to interact with extartropical wavepackets and experience ET \citep[e.g.][]{HE2001}. For this again, there is no significant trend in the Atlantic for either periods. A relatively more robust slowdown of TC speed is seen in the Western North Pacific over  1949--2019, with the Mann-Kendall test showing a P-value of 0.05.
 
 %------------------------------------------------------------
-
-
-We now focus on acceleration trends over 1966--2019 for Atlantic TCs after excluding instances of NR and ET. Table \ref{tab:atl_accelTrend} presents the trends using three different thresholds to define \emph{rapid tangential acceleration}. We show statistics for the entire basin and individual latitude bands. The key result here is that the annual mean tangential acceleration of TCs over the Atlantic shows a robust decreasing trend over the period 1966-2019. This is true for full Atlantic basin as well as for individual latitude bands. In particular, the negative trend is strongest for the P$_{90}$ and P$_{80}$thresholds within the latitude range of 20--40$^o$N. This is where which TCs are most likely to interact with extartropical wavepackets and experience ET \citep[e.g.][]{HE2001}. The P$_{60}$ threshold is mostly consistent although the trends increase with latitude. As noted earlier, this threshold being close to the median value, reflects the fact that TCs are nearly equally likely to accelerate and decelerate at lower latitudes and slighly more likely to accelerate at higher latitudes. 
-
-
 
 
 
@@ -397,7 +400,8 @@ This work was supported by NSF award
 \hline
 & & \multicolumn{3}{|c|}{Speed} & \multicolumn{3}{c|}{Tang. Accel} & \multicolumn{3}{c|}{Curv. Accel}\\
 \hline
-Latitude & N & Mean & Median & Std Dev. & Mean & Median &  Std Dev.& Mean & Median & Std Dev.\\
+Latitude        & N     & Mean   & Median & Std Dev. & Mean & Median &  Std Dev.& Mean & Median & Std Dev.\\
+Full Basin      & 38822 &  20.85 & 18.87 &  12.2 &   2.27 &  0.68 &  19.5 &  16.42 & 10.88 &  19.0 \\
 	  5--15 &  5870 & 23.53 &  23.4 &   9.4 &  0.18 &   0.0 &  14.7 & 11.65 &   8.2 &  13.1 \\
 	 10--20 & 13087 & 21.10 &  20.6 &   9.3 & -0.13 &  -0.0 &  15.3 & 12.29 &   8.5 &  13.3 \\
 	 15--25 & 13656 & 18.66 &  18.1 &   8.6 &  0.26 &  -0.0 &  16.0 & 13.90 &   9.4 &  15.6 \\
@@ -482,18 +486,22 @@ Full basin  & -0.097 & 0.01 & -0.091 & 0.01 & -0.088 &  <0.01 & -0.084 &  <0.01 
 
 
 \begin{table*}[t]
-  \caption{Trends in rapid tangential acceleration (km hr$^{-1}$ day$^{-1}$ year$^{-1}$) of Atlantic tropical cyclones. All storm instance, including classified as NR and ET are considered here. Three cut-offs for defining rapid are used: Values exceeeding 90th, 85th and 60th percentile of all acceleration. }
+  \caption{Trends in rapid tangential deceleration (km hr$^{-1}$ day$^{-1}$ year$^{-1}$) of Atlantic tropical cyclones. All storm instance, including classified as NR and ET are considered here. Three cut-offs for defining rapid are used: Values exceeeding 90th, 85th and 60th percentile of all acceleration. }
 
 \begin{tabular}{|c|cccc|cccc|cccc|}
 \hline
 %& \multicolumn{4}{|c|}{1966--2019}  & \multicolumn{4}{|c|}{1966--2019}\\
-& \multicolumn{4}{|c|}{ 90th percentile } & \multicolumn{4}{|c|}{80th percentile }& \multicolumn{4}{|c|}{60th percentile}\\
+& \multicolumn{4}{|c|}{90th percentile} & \multicolumn{4}{|c|}{80th percentile }& \multicolumn{4}{|c|}{60th percentile}\\
 Atlantic  & \multicolumn{2}{c}{LR} & \multicolumn{2}{c|}{MK-TS}& \multicolumn{2}{c}{LR} & \multicolumn{2}{c|}{MK-TS} & \multicolumn{2}{c}{LR} &  \multicolumn{2}{c|}{MK-TS}\\
 (Excluding ET,NR) & Trend & P-value & Trend & P-value & Trend & P-value & Trend & P-value & Trend & P-value & Trend & P-value\\
 \hline
-Full basin &  -0.075 & 0.06 & -0.080 & 0.05 & -0.055 & 0.05 & -0.055 & 0.06  & -0.026 & 0.22 & -0.024 & 0.32\\
-
-
+Full basin &  0.078 & 0.01 &  0.075 & 0.02&  0.070 & 0.00 &  0.069 & 0.00 &  0.040 & 0.00 &  0.041 & 0.00\\
+	  5--25 &  0.103 & 0.00 &  0.108 & 0.00 &  0.086 & 0.00 &  0.093 & 0.00 &  0.067 & 0.00 &  0.073 & 0.00\\
+	 10--30 &  0.087 & 0.01 &  0.082 & 0.00 &  0.078 & 0.00 &  0.080 & 0.00 &  0.052 & 0.00 &  0.049 & 0.00\\
+	 15--35 &  0.077 & 0.02 &  0.071 & 0.02 & 0.067  & 0.00 &  0.066 & 0.01 &  0.032 & 0.03 &  0.027 & 0.04\\
+	 20--40 &  0.064 & 0.03 &  0.068 & 0.04 & 0.054  & 0.01 &  0.051 & 0.02 &  0.014 & 0.29 &  0.015 & 0.31\\
+	 25--45 &  0.054 & 0.23 &  0.052 & 0.22 &  0.050 & 0.10 &  0.040 & 0.13 &  0.007 & 0.70 & -0.002 & 0.92\\
+	 30--50 &  0.081 & 0.20 &  0.062 & 0.23 &  0.044 & 0.26 &  0.022 & 0.52 &  0.002 & 0.91 &  0.003 & 0.95\\
 \hline
 \hline
 \end{tabular}
@@ -633,11 +641,24 @@ five selected locations along the track of hurricanes Katrina (2005) and Irma (2
 %========================================================
 
 \begin{figure*}[t]
-  \includegraphics[width=5cm]{cdf_tang_atlWide.png}
-  \includegraphics[width=5cm]{cdf_tang_eq_20N.png}
-  \includegraphics[width=5cm]{cdf_tang_20_40N.png}
+  \includegraphics[width=6cm]{cdf_tang_atlWide.png}
+  \includegraphics[width=6cm]{cdf_tang_eq_20N.png}
+  \includegraphics[width=6cm]{cdf_tang_20_40N.png}
 
   \caption{CDF}\label{fig:tang_cdf}
+\end{figure*}
+
+
+%========================================================
+%Figure 
+%========================================================
+
+\begin{figure*}[t]
+  \includegraphics[width=6cm]{cdf_curv_atlWide.png}
+  \includegraphics[width=6cm]{cdf_curv_eq_20N.png}
+  \includegraphics[width=6cm]{cdf_curv_20_40N.png}
+  
+  \caption{CDF}\label{fig:curv_cdf}
 \end{figure*}
 %========================================================
 

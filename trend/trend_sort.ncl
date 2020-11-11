@@ -27,21 +27,16 @@ begin
   endYear   = 2019
   variable = (/"speed","accelSpeed","accelCurve"/)
   
-  ivar       =  1 ;1
-  threshFlag =  1 ;1
+  ivar       =   1 
+  threshFlag =  -1 
 
   ; sfac denotes the percentile to use a threshold
-  sfac       =  .80
+  sfac       =  .60
 
   var = variable(ivar)
     
 ; choose the latitude band
-  
-  latS =   5. ; 5.0
-  dlat =  20.  ;10. ;10.0
-  latN = latS + dlat    
-  nn   = 6
-
+ 
 ; entire basin 
 ;  latS = -90. ; 5.0
 ;  dlat =  180.  ;10. ;10.0
@@ -54,11 +49,15 @@ begin
   latN = latS + dlat    
   nn = 1
 
-
   latS = -90. ; 5.0
   dlat =  180.  ;10. ;10.0
   latN = latS + dlat    
   nn = 1
+ 
+  latS =   5. ; 5.0
+  dlat =  20.  ;10. ;10.0
+  latN = latS + dlat    
+  nn   = 6
 
   
   nYears    = endYear - startYear + 1
@@ -276,15 +275,18 @@ begin
     end if
 
     
-    if ( threshFlag .eq. -1 ) then      
+    if ( threshFlag .eq. -1 ) then
+
+      print ( "threshFlag = -1 " )
+
+      
 ; lets sort the data:
       datSorted := datA(0:icount-1)
       qsort(datSorted)
       datSorted  := datSorted(::-1)
-      print ( datSorted(0) + " " +  datSorted(icount-1) )
+      print ("data sorted first and last values  = " +  datSorted(0) + " " +  datSorted(icount-1) )
       print ( "Lat range " + latS + " " + latN + " Mean = " + avg(datSorted) )
       npts = tofloat(dimsizes(datSorted))
-      
       nF  = tointeger(sfac*npts)
       thresh =  datSorted(nF)
       print ( npts + " " + nF + " percentile = " + sfac + " thresh =  "+ thresh)

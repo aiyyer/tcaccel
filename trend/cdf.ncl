@@ -12,14 +12,37 @@ begin
   endYear   = 2019
   variable = (/"speed","accelSpeed","accelCurve"/)
   ivar       =  1
+  accTitle = "Tangential Acceleration"
+  ;accTitle = "Curvature Acceleration"
+  
   var = variable(ivar)
-    
+
+
+  sfac = .9
+
+;titleString = "Entire Atlantic"
+  
+
+  
 ; choose the latitude band
   latS = 0. 
   latN = 90.
-  sfac = .9
+  leftTitle   = "(a) Entire Atlantic"
 
-  
+
+
+; choose the latitude band
+  latS = 20. 
+  latN = 40.
+  sfac = .9
+  leftTitle   = "(c) 20-40N"
+
+; choose the latitude band
+  latS = 0. 
+  latN = 20.
+  leftTitle   = "(b) 0-20N"
+
+
   nYears    = endYear - startYear + 1
   print ( "Start Year = " + startYear + " end year = " + endYear + " " + nYears)
   
@@ -134,8 +157,7 @@ begin
                      ycount(iy) =  ycount(iy) + 1
                    else
                      date=cd_calendar(time(i,j),-5)
-                     print ( i + " " + j + " " +  A + " " + date(0,0))
-                     
+                     print ( i + " " + j + " " +  A + " " + date(0,0))                     
                    end if ;Amax
                                      
                  end if ; nature
@@ -233,10 +255,19 @@ begin
   if ( ivar .eq. 0 ) then    
     opt@bin_min = 0.
     opt@bin_max = 80.
-  else        
+  end if
+  
+  if ( ivar .eq. 1 ) then    
     opt@bin_min = -120.
     opt@bin_max =  120.
   end if
+
+  if ( ivar .eq. 2 ) then    
+    opt@bin_min =  0.
+    opt@bin_max =  120.
+  end if
+
+  
   
   opt@nbins   = nbins
   ic = 0
@@ -263,21 +294,13 @@ begin
 ;=================================================================================
 ; NOw pdf of selected epochs
 
-  nY = 3
-  dat2D = new( (/nbins,nY/), typeof(yearly) )
-  dat2D@_FillValue = yearly@_FillValue
-  dat2D = dat2D@_FillValue
-
-
-
-
-
   dY = 9
-   yearToConsider = (/0,(nYears-dY-1)/) 
+  yearToConsider = (/1966,1988,2010/)
+  yearToConsider = yearToConsider - 1966
   labels = (startYear + yearToConsider) + "-" +  (startYear + yearToConsider + dY)
   print (labels)
   
-  do imain = 0,1
+  do imain = 0,2
 
     ii = 0
     iy1 = yearToConsider(imain)
@@ -305,7 +328,7 @@ begin
 
   datCU = datTS
   datCU = datC@_FillValue
-  do k = 0,1
+  do k = 0,2
     datCU(k,0) = datTS(k,0)    
     do ibin = 1,nbins-1
       datCU(k,ibin) = sum( datTS(k,0:ibin) )
@@ -315,13 +338,20 @@ begin
   
   wks  = gsn_open_wks ("png","pdf")             ; send graphics to PNG file
   res  = True
+  res@gsnLeftString   =  leftTitle             ; add the gsn titles
+
+  ;res@tiMainString           = titleString
   res@tiYAxisString          = "Cumulative Probability"
-  res@tiXAxisString          = "Tangential Acceleration"
+  res@tiXAxisString          = accTitle
   res@xyExplicitLegendLabels = labels
   res@pmLegendDisplayMode    = "Always"            ; turn on legend
-  res@pmLegendSide           = "Top"               ; Change location of 
+  res@pmLegendSide           = "Top"               ; Change location of
+  
   res@pmLegendParallelPosF   = .22                  ; move units right
-  res@pmLegendOrthogonalPosF = -0.18                ; move units down
+  ;res@pmLegendParallelPosF   = .82                  ; move units right
+
+
+  res@pmLegendOrthogonalPosF = -0.24                ; move units down
   res@pmLegendWidthF         = 0.12                ; Change width and
   res@pmLegendHeightF        = 0.10                ; height of legend.
   res@lgPerimOn              = False               ; turn off box around
@@ -329,11 +359,14 @@ begin
   res@xyLineColors= (/"red", "purple"/)        ; set polymarker color
   res@xyLineThicknessF = 4.0                       ; thickness of lines
 
+  res@trXMinF  = -80.0                   ; min value on y-axis
+  res@trXMaxF  =  80.0                   ; max value on y-axis
+
 
 
   
   ;plot = gsn_csm_xy (wks, dpdf@bin_center, datTS, res)
-  plot = gsn_csm_xy (wks, dpdf@bin_center, datCU(0:1,:), res)
+  plot = gsn_csm_xy (wks, dpdf@bin_center, datCU(0:2,:), res)
 
 
 ;=================================================================================
