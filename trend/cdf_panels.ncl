@@ -11,8 +11,26 @@ begin
   startYear = 1966 
   endYear   = 2019
 
+
+  
   mon1 = 8
   mon2 = 8
+  rightTitle = "August"
+  label  = (/"(a)","(b)","(c)"/)
+
+
+  mon1 = 9
+  mon2 = 9
+  rightTitle = "September"
+  label  = (/"(d)","(e)","(f)"/)
+
+
+  mon1 = 10
+  mon2 = 10
+  rightTitle = "October"
+  label  = (/"(g)","(h)","(i)"/)
+
+
   
   variable = (/"speed","accelSpeed","accelCurve"/)
   sfac = .9
@@ -129,7 +147,7 @@ begin
 ; choose the latitude band
       latS = 0. 
       latN = 90.
-      leftTitle   = "(a) Entire Atlantic"
+      leftTitle   = label(iPlot) + " Entire Atlantic"
        yaxisTitle = "Cumulative Probability"
     end if
 
@@ -138,7 +156,7 @@ begin
 ; choose the latitude band
       latS = 0. 
       latN = 20.
-      leftTitle   = "(b) 0-20N"
+      leftTitle   =  label(iPlot) +  " 0-20N"
     end if
     
     if ( iPlot .eq. 2 ) then
@@ -146,7 +164,7 @@ begin
       latS = 20. 
       latN = 40.
       sfac = .9
-      leftTitle   = "(c) 20-40N"
+      leftTitle   =  label(iPlot) +  " 20-40N"
     end if
 
     print ("---------------------------------------------------------------")
@@ -403,8 +421,9 @@ begin
 
 
     res@xyExplicitLegendLabels = labels  
-    res@tiYAxisString  =  yaxisTitle
-    res@gsnLeftString   =  leftTitle             ; add the gsn titles
+    res@tiYAxisString    =  yaxisTitle
+    res@gsnLeftString    =  leftTitle             ; add the gsn titles
+    res@gsnRightString   =  rightTitle            ; add the gsn titles
 
     ;histogram
                                 ;plot(iPlot)  = gsn_csm_xy (wks, dpdf@bin_center, datTS(0:2,:), res)

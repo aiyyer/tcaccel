@@ -1,8 +1,8 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2020.6.19)  6 NOV 2020 23:21
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2020.6.19)  12 NOV 2020 11:05
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**manuscript.tex
+**manuscript
 (./manuscript.tex
 LaTeX2e <2018-12-01>
 (./copernicus.cls
@@ -3152,20 +3152,22 @@ LaTeX Font Info:    Font shape `T1/phv/m/n' will be
 
 {/usr/share/texlive/texmf-dist/fonts/map/pdftex/updmap/pdftex.map}] [2] [3] [4]
  [5] [6] [7]
-[8]
+[8] [9]
 
-LaTeX Warning: Reference `fig:ts_speed' on page 9 undefined on input line 279.
-
-
-LaTeX Warning: Reference `tab:atl_sp' on page 9 undefined on input line 279.
+LaTeX Warning: Reference `fig:ts_speed' on page 10 undefined on input line 283.
 
 
-LaTeX Warning: Reference `fig:ts_speed' on page 9 undefined on input line 279.
+
+LaTeX Warning: Reference `tab:atl_sp' on page 10 undefined on input line 283.
 
 
-LaTeX Warning: Reference `tab:atl_sp' on page 9 undefined on input line 279.
+LaTeX Warning: Reference `fig:ts_speed' on page 10 undefined on input line 283.
 
-[9] [10] (./manuscript.bbl [11]
+
+
+LaTeX Warning: Reference `tab:atl_sp' on page 10 undefined on input line 283.
+
+[10] (./manuscript.bbl [11]
 Underfull \hbox (badness 3492) in paragraph at lines 75--79
 []\T1/ptm/m/n/9 Klein, P. M., Harr, P. A., and Els-berry, R. L.: Ex-tra-t-rop-i
 -cal Tran-si-tion of West-ern North Pa-cific Trop-i-cal Cy-clones: An
@@ -3173,179 +3175,200 @@ Underfull \hbox (badness 3492) in paragraph at lines 75--79
 
 [12]) [13]
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <9> not available
-(Font)              Font shape `T1/ptm/b/n' tried instead on input line 398.
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 404.
 
-Overfull \hbox (31.3305pt too wide) in paragraph at lines 460--479
+Overfull \hbox (31.3305pt too wide) in paragraph at lines 466--485
  []$[]$ 
  []
 
 
-Overfull \hbox (17.46146pt too wide) in paragraph at lines 491--510
+Overfull \hbox (17.46146pt too wide) in paragraph at lines 497--516
  []$[]$ 
  []
 
 [14] [15]
-<track_map_katrina.png, id=265, 618.31pt x 456.70625pt>
+<track_map_katrina.png, id=267, 618.31pt x 456.70625pt>
 File: track_map_katrina.png Graphic file (type png)
 <use track_map_katrina.png>
-Package pdftex.def Info: track_map_katrina.png  used on input line 526.
+Package pdftex.def Info: track_map_katrina.png  used on input line 532.
 (pdftex.def)             Requested size: 231.12035pt x 170.71652pt.
-<track_map_irma.png, id=266, 618.31pt x 455.7025pt>
+<track_map_irma.png, id=268, 618.31pt x 455.7025pt>
 File: track_map_irma.png Graphic file (type png)
 <use track_map_irma.png>
-Package pdftex.def Info: track_map_irma.png  used on input line 527.
+Package pdftex.def Info: track_map_irma.png  used on input line 533.
 (pdftex.def)             Requested size: 231.63924pt x 170.71652pt.
  [16 <./track_map_katrina.png> <./track_map_irma.png>]
-<distribution_NA.png, id=271, 997.7275pt x 331.2375pt>
+<distribution_NA.png, id=273, 997.7275pt x 331.2375pt>
 File: distribution_NA.png Graphic file (type png)
 <use distribution_NA.png>
-Package pdftex.def Info: distribution_NA.png  used on input line 543.
+Package pdftex.def Info: distribution_NA.png  used on input line 549.
 (pdftex.def)             Requested size: 453.24931pt x 150.47574pt.
  [17 <./distribution_NA.png>]
-<composite_tang_40_30_multilevel_NA.png, id=276, 1027.84pt x 1027.84pt>
+<tang_mon_climo.png, id=278, 873.2625pt x 595.22375pt>
+File: tang_mon_climo.png Graphic file (type png)
+<use tang_mon_climo.png>
+Package pdftex.def Info: tang_mon_climo.png  used on input line 567.
+(pdftex.def)             Requested size: 226.62465pt x 154.46388pt.
+<curv_mon_climo.png, id=279, 860.21375pt x 595.22375pt>
+File: curv_mon_climo.png Graphic file (type png)
+<use curv_mon_climo.png>
+Package pdftex.def Info: curv_mon_climo.png  used on input line 568.
+(pdftex.def)             Requested size: 226.62465pt x 156.80714pt.
+ [18 <./tang_mon_climo.png> <./curv_mon_climo.png>]
+<composite_tang_40_30_multilevel_NA.png, id=284, 1027.84pt x 1027.84pt>
 File: composite_tang_40_30_multilevel_NA.png Graphic file (type png)
 <use composite_tang_40_30_multilevel_NA.png>
 Package pdftex.def Info: composite_tang_40_30_multilevel_NA.png  used on input 
-line 555.
+line 581.
 (pdftex.def)             Requested size: 428.07477pt x 428.08264pt.
- [18 <./composite_tang_40_30_multilevel_NA.png>]
-<composite_tang_40_30_alllags_NA.png, id=281, 1027.84pt x 1027.84pt>
+ [19 <./composite_tang_40_30_multilevel_NA.png>]
+<composite_tang_40_30_alllags_NA.png, id=290, 1027.84pt x 1027.84pt>
 File: composite_tang_40_30_alllags_NA.png Graphic file (type png)
 <use composite_tang_40_30_alllags_NA.png>
 Package pdftex.def Info: composite_tang_40_30_alllags_NA.png  used on input lin
-e 567.
+e 593.
 (pdftex.def)             Requested size: 428.07477pt x 428.08264pt.
- [19 <./composite_tang_40_30_alllags_NA.png>]
-<composite_curv_40_30_multilevel_NA.png, id=287, 1027.84pt x 1027.84pt>
+ [20 <./composite_tang_40_30_alllags_NA.png>]
+<composite_curv_40_30_multilevel_NA.png, id=295, 1027.84pt x 1027.84pt>
 File: composite_curv_40_30_multilevel_NA.png Graphic file (type png)
 <use composite_curv_40_30_multilevel_NA.png>
 Package pdftex.def Info: composite_curv_40_30_multilevel_NA.png  used on input 
-line 577.
+line 603.
 (pdftex.def)             Requested size: 428.07477pt x 428.08264pt.
- [20 <./composite_curv_40_30_multilevel_NA.png>]
-<composite_curv_40_30_alllags_NA.png, id=293, 1027.84pt x 1027.84pt>
+
+[21 <./composite_curv_40_30_multilevel_NA.png>]
+<composite_curv_40_30_alllags_NA.png, id=301, 1027.84pt x 1027.84pt>
 File: composite_curv_40_30_alllags_NA.png Graphic file (type png)
 <use composite_curv_40_30_alllags_NA.png>
 Package pdftex.def Info: composite_curv_40_30_alllags_NA.png  used on input lin
-e 591.
+e 617.
 (pdftex.def)             Requested size: 428.07477pt x 428.08264pt.
-
-[21 <./composite_curv_40_30_alllags_NA.png>]
-<tang_rapid_acel_track.png, id=299, 667.49374pt x 461.725pt>
+ [22 <./composite_curv_40_30_alllags_NA.png>]
+<tang_rapid_acel_track.png, id=307, 667.49374pt x 461.725pt>
 File: tang_rapid_acel_track.png Graphic file (type png)
 <use tang_rapid_acel_track.png>
-Package pdftex.def Info: tang_rapid_acel_track.png  used on input line 601.
+Package pdftex.def Info: tang_rapid_acel_track.png  used on input line 627.
 (pdftex.def)             Requested size: 226.62465pt x 156.75897pt.
-<tang_rapid_decel_track.png, id=300, 667.49374pt x 461.725pt>
+<tang_rapid_decel_track.png, id=308, 667.49374pt x 461.725pt>
 File: tang_rapid_decel_track.png Graphic file (type png)
 <use tang_rapid_decel_track.png>
-Package pdftex.def Info: tang_rapid_decel_track.png  used on input line 602.
+Package pdftex.def Info: tang_rapid_decel_track.png  used on input line 628.
 (pdftex.def)             Requested size: 226.62465pt x 156.75897pt.
- [22 <./tang_rapid_acel_track.png> <./tang_rapid_decel_track.png>]
-<curv_rapid_acel_track.png, id=305, 667.49374pt x 461.725pt>
+ [23 <./tang_rapid_acel_track.png> <./tang_rapid_decel_track.png>]
+<curv_rapid_acel_track.png, id=313, 667.49374pt x 461.725pt>
 File: curv_rapid_acel_track.png Graphic file (type png)
 <use curv_rapid_acel_track.png>
-Package pdftex.def Info: curv_rapid_acel_track.png  used on input line 615.
+Package pdftex.def Info: curv_rapid_acel_track.png  used on input line 641.
 (pdftex.def)             Requested size: 226.62465pt x 156.75897pt.
-<curv_low_acel_track.png, id=306, 667.49374pt x 461.725pt>
+<curv_low_acel_track.png, id=314, 667.49374pt x 461.725pt>
 File: curv_low_acel_track.png Graphic file (type png)
 <use curv_low_acel_track.png>
-Package pdftex.def Info: curv_low_acel_track.png  used on input line 616.
+Package pdftex.def Info: curv_low_acel_track.png  used on input line 642.
 (pdftex.def)             Requested size: 226.62465pt x 156.75897pt.
-<ET_relative_accel_speed.png, id=307, 1027.84pt x 1027.84pt>
+<ET_relative_accel_speed.png, id=315, 1027.84pt x 1027.84pt>
 File: ET_relative_accel_speed.png Graphic file (type png)
 <use ET_relative_accel_speed.png>
-Package pdftex.def Info: ET_relative_accel_speed.png  used on input line 627.
-(pdftex.def)             Requested size: 398.33858pt x 398.34662pt.
- [23 <./curv_rapid_acel_track.png> <./curv_low_acel_track.png>] [24 <./ET_relat
-ive_accel_speed.png>]
-<cdf_tang_atlWide.png, id=316, 1027.84pt x 1027.84pt>
-File: cdf_tang_atlWide.png Graphic file (type png)
-<use cdf_tang_atlWide.png>
-Package pdftex.def Info: cdf_tang_atlWide.png  used on input line 644.
-(pdftex.def)             Requested size: 170.71652pt x 170.7155pt.
-<cdf_tang_eq_20N.png, id=317, 1027.84pt x 1027.84pt>
-File: cdf_tang_eq_20N.png Graphic file (type png)
-<use cdf_tang_eq_20N.png>
-Package pdftex.def Info: cdf_tang_eq_20N.png  used on input line 645.
-(pdftex.def)             Requested size: 170.71652pt x 170.7155pt.
-<cdf_tang_20_40N.png, id=318, 1027.84pt x 1027.84pt>
-File: cdf_tang_20_40N.png Graphic file (type png)
-<use cdf_tang_20_40N.png>
-Package pdftex.def Info: cdf_tang_20_40N.png  used on input line 646.
-(pdftex.def)             Requested size: 170.71652pt x 170.7155pt.
-<cdf_curv_atlWide.png, id=319, 1027.84pt x 1027.84pt>
-File: cdf_curv_atlWide.png Graphic file (type png)
-<use cdf_curv_atlWide.png>
-Package pdftex.def Info: cdf_curv_atlWide.png  used on input line 657.
-(pdftex.def)             Requested size: 170.71652pt x 170.7155pt.
-<cdf_curv_eq_20N.png, id=320, 1027.84pt x 1027.84pt>
-File: cdf_curv_eq_20N.png Graphic file (type png)
-<use cdf_curv_eq_20N.png>
-Package pdftex.def Info: cdf_curv_eq_20N.png  used on input line 658.
-(pdftex.def)             Requested size: 170.71652pt x 170.7155pt.
-<cdf_curv_20_40N.png, id=321, 1027.84pt x 1027.84pt>
-File: cdf_curv_20_40N.png Graphic file (type png)
-<use cdf_curv_20_40N.png>
-Package pdftex.def Info: cdf_curv_20_40N.png  used on input line 659.
-(pdftex.def)             Requested size: 170.71652pt x 170.7155pt.
-<atl_speed_trend.png, id=322, 1027.84pt x 1027.84pt>
-File: atl_speed_trend.png Graphic file (type png)
-<use atl_speed_trend.png>
-Package pdftex.def Info: atl_speed_trend.png  used on input line 672.
-(pdftex.def)             Requested size: 398.33858pt x 398.34662pt.
- [25 <./cdf_tang_atlWide.png> <./cdf_tang_eq_20N.png> <./cdf_tang_20_40N.png>] 
-[26 <./cdf_curv_atlWide.png> <./cdf_curv_eq_20N.png> <./cdf_curv_20_40N.png>] [
-27 <./atl_speed_trend.png>]
-<atl_tang_no_etnr.png, id=336, 768.8725pt x 796.9775pt>
-File: atl_tang_no_etnr.png Graphic file (type png)
-<use atl_tang_no_etnr.png>
-Package pdftex.def Info: atl_tang_no_etnr.png  used on input line 686.
-(pdftex.def)             Requested size: 199.16928pt x 206.44312pt.
-<atl_tang_20_40_no_etnr.png, id=337, 768.8725pt x 796.9775pt>
+Package pdftex.def Info: ET_relative_accel_speed.png  used on input line 653.
+(pdftex.def)             Requested size: 341.43306pt x 341.431pt.
+[24 <./curv_rapid_acel_track.png> <./curv_low_acel_track.png> <./ET_relative_ac
+cel_speed.png>]
+<tangential_cdf.png, id=320, 1027.84pt x 349.305pt>
+File: tangential_cdf.png Graphic file (type png)
+<use tangential_cdf.png>
+Package pdftex.def Info: tangential_cdf.png  used on input line 669.
+(pdftex.def)             Requested size: 398.33858pt x 135.3756pt.
+<aug_cdf_atl.png, id=321, 1027.84pt x 349.305pt>
+File: aug_cdf_atl.png Graphic file (type png)
+<use aug_cdf_atl.png>
+Package pdftex.def Info: aug_cdf_atl.png  used on input line 679.
+(pdftex.def)             Requested size: 398.33858pt x 135.3756pt.
+<sep_cdf_atl.png, id=322, 1027.84pt x 349.305pt>
+File: sep_cdf_atl.png Graphic file (type png)
+<use sep_cdf_atl.png>
+Package pdftex.def Info: sep_cdf_atl.png  used on input line 680.
+(pdftex.def)             Requested size: 398.33858pt x 135.3756pt.
+<oct_cdf_atl.png, id=323, 1027.84pt x 349.305pt>
+File: oct_cdf_atl.png Graphic file (type png)
+<use oct_cdf_atl.png>
+Package pdftex.def Info: oct_cdf_atl.png  used on input line 681.
+(pdftex.def)             Requested size: 398.33858pt x 135.3756pt.
+<curv_cdf.png, id=324, 1027.84pt x 347.2975pt>
+File: curv_cdf.png Graphic file (type png)
+<use curv_cdf.png>
+Package pdftex.def Info: curv_cdf.png  used on input line 695.
+(pdftex.def)             Requested size: 398.33858pt x 134.59758pt.
+ [25 <./tangential_cdf.png>] [26 <./aug_cdf_atl.png> <./sep_cdf_atl.png> <./oct
+_cdf_atl.png>] [27 <./curv_cdf.png>]
+
+LaTeX Warning: File `atl_tang_no_etnr.png' not found on input line 709.
+
+
+! Package pdftex.def Error: File `atl_tang_no_etnr.png' not found: using draft 
+setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.709 ...graphics[width=7cm]{atl_tang_no_etnr.png}
+                                                  
+? 
+LaTeX Font Info:    Try loading font information for T1+pcr on input line 709.
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1pcr.fd
+File: t1pcr.fd 2001/06/04 font definitions for T1/pcr.
+)
+<atl_tang_20_40_no_etnr.png, id=339, 768.8725pt x 796.9775pt>
 File: atl_tang_20_40_no_etnr.png Graphic file (type png)
 <use atl_tang_20_40_no_etnr.png>
-Package pdftex.def Info: atl_tang_20_40_no_etnr.png  used on input line 687.
+Package pdftex.def Info: atl_tang_20_40_no_etnr.png  used on input line 710.
 (pdftex.def)             Requested size: 199.16928pt x 206.44312pt.
-[28 <./atl_tang_no_etnr.png> <./atl_tang_20_40_no_etnr.png>]pdfTeX warning (ext
-4): destination with the same identifier (name{appendix.A}) has been already us
-ed, duplicate ignored
+<atl_speed_trend.png, id=340, 768.8725pt x 796.9775pt>
+File: atl_speed_trend.png Graphic file (type png)
+<use atl_speed_trend.png>
+Package pdftex.def Info: atl_speed_trend.png  used on input line 722.
+(pdftex.def)             Requested size: 398.33858pt x 412.91057pt.
+ [28 <./atl_tang_20_40_no_etnr.png>] [29 <./atl_speed_trend.png>]pdfTeX warning
+ (ext4): destination with the same identifier (name{appendix.A}) has been alrea
+dy used, duplicate ignored
 <to be read again> 
                    \relax 
-l.820 \appendixfigures
+l.855 \appendixfigures
                         %% needs to be added in front of appendix figurespdfTeX
  warning (ext4): destination with the same identifier (name{appendix.A}) has be
 en already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.831 \appendixtables
+l.866 \appendixtables
                         %% needs to be added in front of appendix tables
-[29]
-<distribution_WP.png, id=347, 997.7275pt x 331.2375pt>
+[30]
+<distribution_WP.png, id=356, 997.7275pt x 331.2375pt>
 File: distribution_WP.png Graphic file (type png)
 <use distribution_WP.png>
-Package pdftex.def Info: distribution_WP.png  used on input line 863.
+Package pdftex.def Info: distribution_WP.png  used on input line 898.
 (pdftex.def)             Requested size: 453.24931pt x 150.47574pt.
- [30 <./distribution_WP.png>]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 871.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 871.
+ [31 <./distribution_WP.png>]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 906.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 906.
  (./manuscript.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 871.
-Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 871.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 906.
+Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 906.
 
 
 LaTeX Warning: There were undefined references.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 871.
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 906.
  ) 
 Here is how much of TeX's memory you used:
- 12941 strings out of 492671
- 167182 string characters out of 6134270
- 336155 words of memory out of 5000000
- 16520 multiletter control sequences out of 15000+600000
- 48528 words of font info for 79 fonts, out of 8000000 for 9000
+ 12978 strings out of 492671
+ 167578 string characters out of 6134270
+ 336469 words of memory out of 5000000
+ 16548 multiletter control sequences out of 15000+600000
+ 49149 words of font info for 81 fonts, out of 8000000 for 9000
  1137 hyphenation exceptions out of 8191
- 43i,10n,40p,1633b,524s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 43i,10n,40p,1629b,524s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texliv
 e/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texlive/texm
 f-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist
@@ -3357,14 +3380,14 @@ s/cm/cmr6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr
 7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/s
 hare/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/te
-xlive/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share/texlive/texmf-
-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type
-1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utm
-ri8a.pfb>
-Output written on manuscript.pdf (30 pages, 1984310 bytes).
+xlive/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texlive/texmf-d
+ist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share/texlive/texmf-dist/fonts/ty
+pe1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/u
+tmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on manuscript.pdf (31 pages, 1952325 bytes).
 PDF statistics:
- 424 PDF objects out of 1000 (max. 8388607)
- 351 compressed objects within 4 object streams
- 102 named destinations out of 1000 (max. 500000)
+ 439 PDF objects out of 1000 (max. 8388607)
+ 364 compressed objects within 4 object streams
+ 105 named destinations out of 1000 (max. 500000)
  111 words of extra memory for PDF output out of 10000 (max. 10000000)
 
