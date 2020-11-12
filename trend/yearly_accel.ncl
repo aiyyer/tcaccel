@@ -75,7 +75,7 @@ begin
 ;===================================================================== 
 ; first establish some basic stats for this lat-bin
 ; create array to store all accel data for some more stats
-  datA     := new (700000,"double")
+  datA     := new (25000,"double")
   datA@_FillValue = dat@_FillValue
   
   icount    = 0
@@ -84,8 +84,10 @@ begin
   tsCount   = 0
   etCount   = 0
   
-  datA = datA@_FillValue
-  
+  datA   = datA@_FillValue
+  dateA  = datA
+
+
   yearly := new((/nYears,20000/),"double")
   ycount := new((/nYears/),"integer")
   yearly@_FillValue = dat@_FillValue
@@ -133,6 +135,7 @@ begin
                       ;print ( i + " " + j + icount + " " + A(icount) )
                       tsCount        = tsCount + 1
                       datA(icount)   = A
+                      dateA(icount)  = time(i,j)
                       icount = icount + 1
                       date=cd_calendar(time(i,j),-5)
                       iy = date(0,0)-startYear                   
@@ -188,6 +191,26 @@ begin
   
   ycount!0    = "year"
   ycount&year = x
+
+
+
+  N = sum(ycount)
+  print ("N = " + N)
+  
+  accel = new(N,"float")
+  years = new(N,"float")
+ 
+
+  
+ i=0
+ do iy =0,nYears-1
+   do j=0,ycount(iy)-1
+     accel(i) = tofloat(yearly(iy,j))
+     years(i) = x(iy)
+     i = i + 1
+   end do
+ end do
+
   
   print (" " )
   print (" " )
@@ -200,8 +223,16 @@ begin
   ncdf->endYear=endYear
   ncdf->latS=latS
   ncdf->latN=latN
-  ncdf->yearly=yearly
-  ncdf->ycount=ycount
 
+
+  
+ ; ncdf->years=years
+ ; ncdf->accel=accel
+
+  
+  ncdf->accel=(/datA(0:icount-1)/)
+  ncdf->years=(/dateA(0:icount-1)/)
+
+  print (dateA(0:icount-1)  + " " + datA(0:icount-1))
 end
 

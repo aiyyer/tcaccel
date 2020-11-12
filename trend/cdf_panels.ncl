@@ -10,10 +10,14 @@ begin
   fileName = "../tcMotion.nc"
   startYear = 1966 
   endYear   = 2019
+
+  mon1 = 8
+  mon2 = 8
+  
   variable = (/"speed","accelSpeed","accelCurve"/)
   sfac = .9
   titleString = " " 
-  ivar       =  2
+  ivar       =  1
   
   var = variable(ivar)
 
@@ -21,9 +25,8 @@ begin
     accTitle = "Tangential Acceleration"
     minX = -80.
     maxX =  80.
-    LegParPos = 0.22
-    LegOrtPos = -0.24 
-
+    LegParPos =  0.22
+    LegOrtPos = -0.30
   end if
     
   if ( ivar .eq. 2 ) then
@@ -32,7 +35,6 @@ begin
     maxX = 80.
     LegParPos = 0.80  
     LegOrtPos = -1.1
-
   end if
 
 
@@ -175,6 +177,7 @@ begin
       
       if ( numobs(i) .gt. 0 ) then
         if ( time(i,0) .ge. startTime .and. time(i,numobs(i)-1) .le. endTime ) then
+         
           numDays = todouble(time(i,numobs(i)-1) - time(i,0))        
           
 ;   storm must live at least 3 days
@@ -182,7 +185,11 @@ begin
             stormCount = stormCount + 1
             
             do j = 0, numobs(i)-1
+              date=cd_calendar(time(i,j),-5)
               
+              month = date(0,1)
+
+              if (month .ge. mon1 .and. month .le. mon2 ) then
               if ( basin(i,j) .eq. basinAnalysis ) then
                 A = dat(i,j)              
 ; apply the relevant checks
@@ -205,14 +212,12 @@ begin
                       tsCount        = tsCount + 1
                       datA(icount)   = A
                       icount = icount + 1
-                      date=cd_calendar(time(i,j),-5)
+                     
                       iy = date(0,0)-startYear                   
                       ii = ycount(iy)
                       yearly(iy,ii) = A
                       ycount(iy) =  ycount(iy) + 1
-                    else
-                      ;date=cd_calendar(time(i,j),-5)
-                      ;print ( i + " " + j + " " +  A + " " + date(0,0))                     
+                 
                     end if ;Amax
                     
                   end if ; nature
@@ -221,7 +226,7 @@ begin
                 end if ; lat
                 
               end if  ;basin
-              
+              end if
               
             end do ; j
           end if ;numdays
@@ -325,14 +330,16 @@ begin
     
     
     opt@nbins   = nbins
-    ic = 0
+    firstTime = True
     do j = 0,nYears-1
-      if ( ic .eq. 0 )
-        tempDat := yearly(j,0:ycount(j)-1)
-      else
-        temDat :=   array_append_record(tempDat,yearly(j,0:ycount(j)-1),1)
+      if ( ycount(j) .ne. 0 ) then
+        if (firstTime) then
+          tempDat := yearly(j,0:ycount(j)-1)
+          firstTime = False
+        else
+          temDat :=   array_append_record(tempDat,yearly(j,0:ycount(j)-1),1)
+        end if
       end if
-      ic = ic + 1
     end do
     dpdf       := pdfx(tempDat,nbins,opt)
     
@@ -358,12 +365,16 @@ begin
       ii = 0
       iy1 = yearToConsider(imain)
       iy2 = iy1 + dY
-      ic = 0
+      firstTime = True
+
       do j = iy1,iy2
-        if ( ic .eq. 0 )
-          tempdat := yearly(j,0:ycount(j)-1)
-        else
-          tempdat :=   array_append_record(tempdat,yearly(j,0:ycount(j)-1),1)
+        if ( ycount(j) .ne. 0 ) then
+          if (firstTime) then
+            tempdat := yearly(j,0:ycount(j)-1)
+            firstTime = False
+          else
+            tempdat :=   array_append_record(tempdat,yearly(j,0:ycount(j)-1),1)
+          end if
         end if
         ic = ic + 1
       end do
