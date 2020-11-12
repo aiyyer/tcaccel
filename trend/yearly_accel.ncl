@@ -18,8 +18,8 @@ begin
 
 ;=============================================================================    
   ivar       =   1 
-  latS = 20.
-  latN = 40.
+  latS = 0.  ;20.
+  latN = 90. ;40.
   mon1 = 8
   mon2 = 10
 
@@ -79,7 +79,7 @@ begin
 ;===================================================================== 
 ; first establish some basic stats for this lat-bin
 ; create array to store all accel data for some more stats
-  datA     := new (25000,"double")
+  datA     := new (40000,"double")
   datA@_FillValue = dat@_FillValue
   
   icount    = 0
@@ -92,7 +92,7 @@ begin
   dateA  = datA
 
 
-  yearly := new((/nYears,1000/),"double")
+  yearly := new((/nYears,3000/),"double")
   ycount := new((/nYears/),"integer")
   yearly@_FillValue = dat@_FillValue
   ycount = 0
