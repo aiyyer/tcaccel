@@ -14,15 +14,16 @@ begin
 
   dir = "1966/"
 
-  file1 = dir + "speed_NA_B.nc"
-  file2 = dir + "speed_NA_A.nc"
+  file1 = dir + "speed_NA_20_40_B.nc"
+  file2 = dir + "speed_NA_20_40_A.nc"
+
+  file1 = dir + "speed_NA_0_90_B.nc"
+  file2 = dir + "speed_NA_0_90_A.nc"
 
 
-;  file1 = dir + "speed_WP_B.nc"
-;  file2 = dir + "speed_WP_B.nc"
-  
   vari = "Speed"
-  ;vari = "Tangential Acceleration"
+  
+                                ;vari = "Tangential Acceleration"
 
 
 
@@ -88,7 +89,7 @@ begin
    res@xyMarkerSizeF       = 0.005                  ; Marker size (default 0.01)
    res@tmYLFormat          = "f"                    ; not necessary but nicer labels 
    res@tiMainString        = " "  ; title
-   res@xyLineColors= (/"purple", "orange","black","red"/)        ; set polymarker color
+   res@xyLineColors= (/"grey", "orange","black","red"/)        ; set polymarker color
    res@xyExplicitLegendLabels = (/"ALL","NO ET,NR","Trend ALL", "Trend NO ET,NR"/)
    
    res@pmLegendDisplayMode    = "Always"            ; turn on legend
@@ -114,11 +115,15 @@ begin
 
 
 
-   res@tiMainString      = "North Atlantic"
+   res@tiMainString      = "(a) Entire North Atlantic"
+   ;res@tiMainString      = "(b) [20-40 N] North Atlantic"
+
+
+   
    ;res@tiMainString      = "Western North Pacific"
 
-   res@trYMinF  = 16.0                   ; min value on y-axis
-   res@trYMaxF = 28.0
+   res@trYMinF  = 14.0                   ; min value on y-axis
+   res@trYMaxF  = 28.0
    res@xyDashPatterns      = (/0,0,0,0/)                    ; solid line
    res@xyDashPatterns      = (/2,2,2,2/)                    ; solid line
       

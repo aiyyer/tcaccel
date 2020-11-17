@@ -226,8 +226,6 @@ begin
       else
         outputText(i,ivar) = sprintf("%5.2f",ave(i)) + " & " +  sprintf("%5.1f",xmed)  + " & " +  sprintf("%5.1f",sdev)
       end if
-
-      
       hist(i,:) = (/dat(x10),dat(x25),xmed,dat(x75),dat(x90)/)      
     end do
     

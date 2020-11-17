@@ -27,8 +27,8 @@ begin
   endYear   = 2019
   variable = (/"speed","accelSpeed","accelCurve"/)
   
-  ivar       =   1 
-  threshFlag =  -1 
+  ivar       =   0 
+  threshFlag =   0 
 
   ; sfac denotes the percentile to use a threshold
   sfac       =  .60
@@ -44,6 +44,13 @@ begin
 ;  nn = 1
 
 
+ 
+  latS =   5. ; 5.0
+  dlat =  20.  ;10. ;10.0
+  latN = latS + dlat    
+  nn   = 6
+
+  
   latS = 20. ; 5.0
   dlat = 20.  ;10. ;10.0
   latN = latS + dlat    
@@ -53,11 +60,6 @@ begin
   dlat =  180.  ;10. ;10.0
   latN = latS + dlat    
   nn = 1
- 
-  latS =   5. ; 5.0
-  dlat =  20.  ;10. ;10.0
-  latN = latS + dlat    
-  nn   = 6
 
   
   nYears    = endYear - startYear + 1
@@ -213,7 +215,7 @@ begin
                   end if ;Amax
                   
                   
-                end if ; nature
+               end if ; nature
 ;-------------------------------------------------------------------------
                 
               end if ; lat
@@ -228,28 +230,30 @@ begin
     end if ;numobs 
   end do ;i
   
-
-    print ( "icount = " + icount)
-    ave =    avg(datA(0:icount-1) )
-    std = stddev(datA(0:icount-1) )
-    med = dim_median( datA(0:icount-1) )
-
-    print ("pre sorting")
-    print ( "Lat range " + latS + " " + latN + " Mean Median Sdev = " + ave + " " + med + " " +  std)
-    
-    NRper = tofloat(nrCount*100)/tofloat(totCount)
-    TSper = tofloat(tsCount*100)/tofloat(totCount)
-    ETper = tofloat(etCount*100)/tofloat(totCount)
-    
-    print ( "tot count=" + totCount + " NR count="+nrCount + " NR per="+ NRper)
-    print ( "tot count=" + totCount + " TS count="+tsCount + " ts per="+ TSper)
-    print ( "tot count=" + totCount + " ET count="+etCount + " ET per="+ ETper)
-    sumP = TSper+NRper+ETper
-    print ( "Sum should be 100 " +sumP ) 
-    latAve(imain)   = ave
-    latMed(imain)   = med
-    latSD(imain)    = std
-    latCount(imain) = icount
+  print ( "Track points that met threhsolds = " + icount)
+  print ( "Min Max " + min(datA(0:icount-1)) + " " + max (datA(0:icount-1)) )
+  
+  
+  ave =    avg(datA(0:icount-1) )
+  std = stddev(datA(0:icount-1) )
+  med = dim_median( datA(0:icount-1) )
+  
+  print ("pre sorting")
+  print ( "Lat range " + latS + " " + latN + " Mean Median Sdev = " + ave + " " + med + " " +  std)
+  
+  NRper = tofloat(nrCount*100)/tofloat(totCount)
+  TSper = tofloat(tsCount*100)/tofloat(totCount)
+  ETper = tofloat(etCount*100)/tofloat(totCount)
+  
+  print ( "tot count=" + totCount + " NR count="+nrCount + " NR per="+ NRper)
+  print ( "tot count=" + totCount + " TS count="+tsCount + " ts per="+ TSper)
+  print ( "tot count=" + totCount + " ET count="+etCount + " ET per="+ ETper)
+  sumP = TSper+NRper+ETper
+  print ( "Sum should be 100 " +sumP ) 
+  latAve(imain)   = ave
+  latMed(imain)   = med
+  latSD(imain)    = std
+  latCount(imain) = icount
 ;
 ;=======================================================================================
 ;

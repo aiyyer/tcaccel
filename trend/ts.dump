@@ -1,0 +1,25 @@
+ Copyright (C) 1995-2019 - All Rights Reserved
+ University Corporation for Atmospheric Research
+ NCAR Command Language Version 6.6.2
+ The use of this software is governed by a License Agreement.
+ See http://www.ncl.ucar.edu/ for more details.
+(0)	Start Year = 1966 end year = 2019 54
+(0)	---------------------------------------------
+(0)	Track points that met threhsolds = 23837
+(0)	Min Max 0 111.2198184967118
+(0)	pre sorting
+(0)	Lat range 20 40 Mean Median Sdev = 19.09420194165067 17.24105098648059 11.30514866944036
+(0)	tot count=25418 NR count=141 NR per=0.554725
+(0)	tot count=25418 TS count=23837 ts per=93.78
+(0)	tot count=25418 ET count=1440 ET per=5.66528
+(0)	Sum should be 100 100
+(0)	icount = 23837 23837 455148.491683127
+(0)	mean = 19.37030409019336 19.37030409019336
+(0)	MK trend and prob dat = 0.005171145761466032 0.8345331354502842
+(0)	rc trend and prob = 0.004907374369906702 0.8317496662738292 df = 54
+(0)	 
+(0)	 
+(0)	 20--40 & 23837 &  19.09 & 17.24 &  11.3\\
+(0)	 
+(0)	 
+(0)	 20--40 &  0.005 & 0.83 &  0.005 & 0.83\\
