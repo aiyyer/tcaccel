@@ -31,7 +31,7 @@ begin
   LatS =  30
   LatN =  40
   basinAnalysis = "NA" 
-  accelType     = "tang" ;"curv" ;"tang"
+  accelType     = "curv" ;"tang"
  
 ;  iA = 0
 ;  iB = 2
@@ -91,9 +91,9 @@ iB = 2
     end if
    
     outFile = "/lotus/projects/data/tcaccel/dat/one/laggedComp_" + accelType + "_"  + type  + "_" + LatN + "_" + LatS+"_"+ basinAnalysis + ".nc"
-    system( "rm " + outFile )
-    setfileoption("nc", "format", "NETCDF4") 
-    ncdf = addfile(outFile ,"c")  ; open output netCDF file
+  ; system( "rm " + outFile )
+  ; setfileoption("nc", "format", "NETCDF4") 
+    ncdf = addfile(outFile ,"w")  ; open output netCDF file
     
     DateUnits = RecDate@units
 ;-------------------------------------------------------------------------
@@ -164,7 +164,7 @@ iB = 2
     
     
     vars := (/"Z", "U", "V", "T","Q"/)
-    do imain = 0,0
+    do imain = 1,2
       print ( "*****" + vars(imain) + " " + type )
       count  = 0.
       firstTime = 1
