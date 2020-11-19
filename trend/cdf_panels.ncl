@@ -11,34 +11,43 @@ begin
   startYear = 1966 
   endYear   = 2019
 
-
-  
   mon1 = 8
   mon2 = 8
   rightTitle = "August"
   label  = (/"(a)","(b)","(c)"/)
-
-
   mon1 = 9
   mon2 = 9
   rightTitle = "September"
   label  = (/"(d)","(e)","(f)"/)
-
-
   mon1 = 10
   mon2 = 10
   rightTitle = "October"
   label  = (/"(g)","(h)","(i)"/)
 
 
+
+
+  mon1 = 1
+  mon2 = 12
+  rightTitle = " "
+  label  = (/"(a)","(b)","(c)"/)
+
+
   
   variable = (/"speed","accelSpeed","accelCurve"/)
   sfac = .9
   titleString = " " 
-  ivar       =  1
+  ivar       =  0
   
   var = variable(ivar)
 
+  if ( ivar .eq. 0 ) then
+    accTitle = "Translation Speed"
+    minX =  0.
+    maxX =  80.
+    LegParPos =  0.22
+    LegOrtPos = -0.30
+  end if
   if ( ivar .eq. 1 ) then
     accTitle = "Tangential Acceleration"
     minX = -80.
@@ -46,7 +55,7 @@ begin
     LegParPos =  0.22
     LegOrtPos = -0.30
   end if
-    
+        
   if ( ivar .eq. 2 ) then
     accTitle = "Curvature Acceleration"
     minX = 0.
