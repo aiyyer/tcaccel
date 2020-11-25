@@ -27,9 +27,9 @@ begin
 
 
 
-  mon1 = 1
-  mon2 = 12
-  rightTitle = " "
+  mon1 = 7
+  mon2 = 10
+  rightTitle = "JASO"
   label  = (/"(a)","(b)","(c)"/)
 
 
@@ -37,7 +37,7 @@ begin
   variable = (/"speed","accelSpeed","accelCurve"/)
   sfac = .9
   titleString = " " 
-  ivar       =  0
+  ivar       =  1
   
   var = variable(ivar)
 
@@ -63,10 +63,6 @@ begin
     LegParPos = 0.80  
     LegOrtPos = -1.1
   end if
-
-
-
-
 
   nYears    = endYear - startYear + 1
   print ( "Start Year = " + startYear + " end year = " + endYear + " " + nYears)
@@ -164,16 +160,16 @@ begin
     if ( iPlot .eq. 1 ) then
 ; choose the latitude band
       latS = 0. 
-      latN = 20.
-      leftTitle   =  label(iPlot) +  " 0-20N"
+      latN = 25.
+      leftTitle   =  label(iPlot) +  " 0-25N"
     end if
     
     if ( iPlot .eq. 2 ) then
 ; choose the latitude band
-      latS = 20. 
-      latN = 40.
+      latS = 25. 
+      latN = 45.
       sfac = .9
-      leftTitle   =  label(iPlot) +  " 20-40N"
+      leftTitle   =  label(iPlot) +  " 25-45N"
     end if
 
     print ("---------------------------------------------------------------")
@@ -351,7 +347,7 @@ begin
     
     if ( ivar .eq. 2 ) then    
       opt@bin_min =  0.
-      opt@bin_max =  120.
+      opt@bin_max =  80.
     end if
     
     
@@ -435,7 +431,7 @@ begin
     res@gsnRightString   =  rightTitle            ; add the gsn titles
 
     ;histogram
-                                ;plot(iPlot)  = gsn_csm_xy (wks, dpdf@bin_center, datTS(0:2,:), res)
+    ;plot(iPlot)  = gsn_csm_xy (wks, dpdf@bin_center, datTS(0:2,:), res)
 
     ; CDF
     plot(iPlot) = gsn_csm_xy (wks, dpdf@bin_center, datCU(0:2,:), res)
