@@ -31,9 +31,9 @@ begin
   endYear   = 2019
   variable = (/"speed","accelSpeed","accelCurve"/)
 
-  ivar       =  1    ;1
-  threshFlag =  1    ;1; -1
-  sfac       =  1.5  ;1.
+  ivar       =  0    ;1
+  threshFlag =  0    ;1; -1
+  sfac       =  0  ;1.
 
 
   var = variable(ivar)
@@ -54,10 +54,10 @@ begin
 
 
 ; choose the latitude band  
-  latS =   5. ; 5.0
-  dlat =  20.  ;10. ;10.0
-  latN = latS + dlat*.5    
-  nn   = 6
+;  latS =   5. ; 5.0
+;  dlat =  20.  ;10. ;10.0
+;  latN = latS + dlat*.5    
+;  nn   = 6
   
   nYears    = endYear - startYear + 1
   print ( "Start Year = " + startYear + " end year = " + endYear + " " + nYears)
