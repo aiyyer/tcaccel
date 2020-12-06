@@ -27,8 +27,8 @@ begin
 
   basinAnalysis = "NA"
   fileName = "../tcMotion.nc"
-  startYear = 1966
-  endYear   = 2019
+  startYear = 1949
+  endYear   = 2016
   variable = (/"speed","accelSpeed","accelCurve"/)
 
   ivar       =  0    ;1
@@ -38,11 +38,10 @@ begin
 
   var = variable(ivar)
   
-  
-
+ 
 
   latS = 20. ; 5.0
-  dlat = 25.  ;10. ;10.0
+  dlat = 30.  ;10. ;10.0
   latN = latS + dlat    
   nn = 1
 
@@ -52,7 +51,7 @@ begin
   latN = latS + dlat    
   nn = 1
 
-
+  
 ; choose the latitude band  
 ;  latS =   5. ; 5.0
 ;  dlat =  20.  ;10. ;10.0
@@ -171,7 +170,7 @@ begin
         if ( time(i,0) .ge. startTime .and. time(i,numobs(i)-1) .le. endTime ) then
           numDays = todouble(time(i,numobs(i)-1) - time(i,0))        
           
-;   storm must live at least 1 days
+;   storm must live at least 3 days
           if (  numDays .ge. 3 ) then          
             stormCount = stormCount + 1
             ;print ( i + " " + stormCount + " " +  numobs(i) + " " +  cd_calendar(time(i,0),-3) + " " +  cd_calendar(time(i,numobs(i)-1),-3) )
@@ -193,7 +192,7 @@ begin
                   end if
                   
 ;-------------------------------------------------------------------------                
-                 ;; if ( chartostring(nature(i,j,:)) .ne. "ET" .and.  chartostring(nature(i,j,:)) .ne. "NR" ) then
+                 if ( chartostring(nature(i,j,:)) .ne. "ET" .and.  chartostring(nature(i,j,:)) .ne. "NR" ) then
                     
                     if (.not.ismissing(A) ) ;;;.and. abs(A) .le. Amax ) then
                       
@@ -210,7 +209,7 @@ begin
                     end if ;Amax
                     
                   
-                  ;;end if ; nature
+                  end if ; nature
 ;-------------------------------------------------------------------------
                   
                end if ; lat
