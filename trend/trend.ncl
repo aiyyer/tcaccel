@@ -27,19 +27,16 @@ begin
 
   basinAnalysis = "NA"
   fileName = "../tcMotion.nc"
-  startYear = 1949
-  endYear   = 2016
+  startYear = 1966
+  endYear   = 2019
   variable = (/"speed","accelSpeed","accelCurve"/)
 
   ivar       =  0    ;1
   threshFlag =  0    ;1; -1
   sfac       =  0  ;1.
 
-
   var = variable(ivar)
   
- 
-
   latS = 20. ; 5.0
   dlat = 30.  ;10. ;10.0
   latN = latS + dlat    
