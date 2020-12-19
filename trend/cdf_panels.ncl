@@ -25,9 +25,32 @@ begin
   label  = (/"(g)","(h)","(i)"/)
 
 
+  mon1 = 1
+  mon2 = 12
+  rightTitle = "ALL Months"
+  label  = (/"(a)","(b)","(c)"/)
+  mon1 = 8
+  mon2 = 8
+  rightTitle = "Aug"
+  label  = (/"(a)","(b)","(c)"/)
 
+  mon1 = 9
+  mon2 = 9
+  rightTitle = "Sep"
+  label  = (/"(a)","(b)","(c)"/)
+
+  mon1 = 10
+  mon2 = 10
+  rightTitle = "Oct"
+  label  = (/"(a)","(b)","(c)"/)
 
   mon1 = 7
+  mon2 = 7
+  rightTitle = "Jul"
+  label  = (/"(a)","(b)","(c)"/)
+
+  
+  mon1 = 7 
   mon2 = 10
   rightTitle = "JASO"
   label  = (/"(a)","(b)","(c)"/)
@@ -37,7 +60,7 @@ begin
   variable = (/"speed","accelSpeed","accelCurve"/)
   sfac = .9
   titleString = " " 
-  ivar       =  1
+  ivar       =  2
   
   var = variable(ivar)
 
@@ -160,16 +183,16 @@ begin
     if ( iPlot .eq. 1 ) then
 ; choose the latitude band
       latS = 0. 
-      latN = 25.
-      leftTitle   =  label(iPlot) +  " 0-25N"
+      latN = 20.
+      leftTitle   =  label(iPlot) +  " 0-20N"
     end if
     
     if ( iPlot .eq. 2 ) then
 ; choose the latitude band
-      latS = 25. 
-      latN = 45.
+      latS = 20. 
+      latN = 50.
       sfac = .9
-      leftTitle   =  label(iPlot) +  " 25-45N"
+      leftTitle   =  label(iPlot) +  " 20-50N"
     end if
 
     print ("---------------------------------------------------------------")

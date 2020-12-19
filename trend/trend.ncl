@@ -189,7 +189,7 @@ begin
                   end if
                   
 ;-------------------------------------------------------------------------                
-                 if ( chartostring(nature(i,j,:)) .ne. "ET" .and.  chartostring(nature(i,j,:)) .ne. "NR" ) then
+                if ( chartostring(nature(i,j,:)) .ne. "ET" .and.  chartostring(nature(i,j,:)) .ne. "NR" ) then
                     
                     if (.not.ismissing(A) ) ;;;.and. abs(A) .le. Amax ) then
                       
@@ -206,7 +206,7 @@ begin
                     end if ;Amax
                     
                   
-                  end if ; nature
+               end if ; nature
 ;-------------------------------------------------------------------------
                   
                end if ; lat

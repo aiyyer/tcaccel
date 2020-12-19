@@ -1,5 +1,5 @@
 ;============================================================================================
-; a program to: read the speed acceleration data and plot Cumulative distributions
+; a program to: read the speed and acceleration data and plot Cumulative distributions
 ; in a multipanel format
 ;
 ;

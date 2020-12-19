@@ -26,11 +26,11 @@ begin
   variable = (/"speed","accelSpeed","accelCurve"/)
 ;=============================================================================    
 ; some user inputs
-  ivar = 2
+  ivar = 1
   latS = 20.
-  latN = 50.
-  mon1 = 8
-  mon2 = 9
+  latN = 90.
+  mon1 = 7
+  mon2 = 10
 ;=============================================================================  
 
   var = variable(ivar)  
