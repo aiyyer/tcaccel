@@ -21,16 +21,24 @@
 begin
   basinAnalysis = "NA" 
   fileName = "../tcMotion.nc"
-  startYear = 1966
-  endYear   = 2019
+  startYear = 1949 ; 1966
+  endYear   = 2016 ;2019
   variable = (/"speed","accelSpeed","accelCurve"/)
 ;=============================================================================    
 ; some user inputs
-  ivar = 1
+  ivar = 0
   latS = 20.
   latN = 90.
   mon1 = 7
   mon2 = 10
+
+  
+  latS = 0.
+  latN = 90.
+  mon1 = 1
+  mon2 = 12
+
+  
 ;=============================================================================  
 
   var = variable(ivar)  
@@ -91,10 +99,12 @@ begin
 ;===================================================================== 
 ; first establish some basic stats for this lat-bin
 ; create array to store all accel data for some more stats
-  Data        := new (40000,typeof(dat))
+
+  Nmax = 80000
+  Data        := new (Nmax,typeof(dat))
   Data@_FillValue = dat@_FillValue
   copy_VarAtts(dat,Data)
-  Dates       := new (40000,typeof(time))
+  Dates       := new (Nmax,typeof(time))
   Dates@units = time@units 
   Data = Data@_FillValue 
   
@@ -136,7 +146,7 @@ begin
                     end if
                     
 ;-------------------------------------------------------------------------                
-                    if ( chartostring(nature(i,j,:)) .ne. "ET" .and.  chartostring(nature(i,j,:)) .ne. "NR" ) then
+                  if ( chartostring(nature(i,j,:)) .ne. "ET" .and.  chartostring(nature(i,j,:)) .ne. "NR" ) then
                       
                       if (.not.ismissing(A)) 
                         tsCount         = tsCount + 1
@@ -145,7 +155,7 @@ begin
                         icount = icount + 1
                       end if ;Amax
                                             
-                    end if ; nature
+                   end if ; nature
 ;-------------------------------------------------------------------------
                     
                   end if ; lat                  

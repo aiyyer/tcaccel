@@ -190,20 +190,83 @@ end if
     
     
     print ( "icount, NTHU, NTHL =  " + icount + " " + NTHU + " " + NTHL)
-                                ; lets get the bottom percentile 
+                                ; lets get the bottom percentile
+
+
+
+
+; along with separating the cases for the composites, we will also
+; check how many of the member storms became ET
+    indexJ = new(500,"integer")
+    indexI = new(500,"integer")
+    indexJ = -9
+    indexI = -9
+    
     iLow = 0
     do iSort = 0,NTHL
       ii = datSortedIndex(iSort)
       i = tointeger(datA(2,ii))
       j = tointeger(datA(3,ii))
       ;print (iSort + " " +  datA(0,ii) + " " +  dat(i,j)  +  " " + cd_calendar(time(i,j),-3) + " " + cd_calendar(datA(1,ii),-3) )
+
+      ;print ( iSort + " " + i + " " + j + " " +  dat(i,j) )
       accelLow(iLow)   =  dat(i,j)
       LatLow(iLow)     =  Lat(i,j)
       LonLow(iLow)     =  Lon(i,j)
       timeLow(iLow)    = time(i,j)
+      indexI(iLow)     = i
+      indexJ(iLow)     = j
       iLow = iLow + 1
     end do
+  
+    indsUnique = get_unique_values( indexI(0:iLow-1)  )
+    etCount = 0
+    do k=0,dimsizes(indsUnique)-1
+      indsk := ind(indexI.eq.indsUnique(k))      
+      etFlag = 0
+      do itimes = 0,dimsizes(indsk)-1
+        ii = indsk(itimes)
+        i = indexI(ii)
+        j = indexJ(ii)
+                                ;print ( k + " " +indsUnique(k) + " " +  dimsizes(indsk) + " " + )
+                                ;print ( k + " " + i + " " + j  + " " +  cd_calendar(time(i,j),-3) + " " + time(i,j))
+        
+; now check if this storm underwent ET
+        
+        do m = j, numobs(i)-1
+          deltaDays =time(i,m)- time(i,j) 
+                                ;print (  cd_calendar(time(i,j),-3) + " " +  cd_calendar(time(i,m),-3) + " " + chartostring(nature(i,m,:)) + " " + deltaDays)
+          
+          if ( deltaDays .le. 3.0 ) then
+            if (  chartostring(nature(i,m,:)) .eq. "ET" ) then
+              etFlag = 1
+            end if
+          end if
+        end do
+      end do
+
+      
+      if ( etFlag .eq. 1 ) then
+                                ;print ("OK ET" )
+        etCount = etCount + 1
+      end if
+      
+    end do
     
+    uniqCount = count_unique_values( indexI(0:iLow-1) ) 
+    print ( "Unique storms in LOW = " + uniqCount)
+    print ( "Number of ET  in LOW = " + etCount )
+
+    percent = tofloat(etCount)*100./tofloat(uniqCount)
+    print ( "Percent              = " + percent )
+
+;
+;=============================================================================================
+;    
+    indexJ := new(500,"integer")
+    indexI := new(500,"integer")
+    indexJ = -9
+    indexI = -9    
     iHigh=0
     do iSort = NTHU-1,icount-1
       ii = datSortedIndex(iSort)
@@ -214,10 +277,55 @@ end if
       LatHigh(iHigh)     =  Lat(i,j)
       LonHigh(iHigh)     =  Lon(i,j)
       timeHigh(iHigh)    = time(i,j)
-      iHigh = iHigh + 1  
+      ;print (iHigh + " " + iSort)
+      indexI(iHigh)     = i
+      indexJ(iHigh)     = j
+      iHigh             = iHigh + 1  
     end do
 
+    indsUnique := get_unique_values( indexI(0:iHigh-1)  )
+    etCount = 0
+    
+    do k=0,dimsizes(indsUnique)-1
+      indsk := ind(indexI.eq.indsUnique(k))      
+      etFlag = 0
+      
+      do itimes = 0,dimsizes(indsk)-1
+        ii = indsk(itimes)
+        i  = indexI(ii)
+        j  = indexJ(ii)
+                                ;print ( k + " " +indsUnique(k) + " " +  dimsizes(indsk) + " " + )
+                                ;print ( k + " " + i + " " + j  + " " +  cd_calendar(time(i,j),-3) + " " + time(i,j))      
+; now check if this storm underwent ET
+        do m = j, numobs(i)-1
+          deltaDays =time(i,m)- time(i,j) 
+                                ;print (  cd_calendar(time(i,j),-3) + " " +  cd_calendar(time(i,m),-3) + " " + chartostring(nature(i,m,:)) + " " + deltaDays)
+          if ( deltaDays .le. 3.0 ) then
+            if (  chartostring(nature(i,m,:)) .eq. "ET" ) then
+              etFlag = 1
+            end if
+          end if
+        end do
+      end do        
+      if ( etFlag .eq. 1 ) then
+        ;print ("OK ET "  + etCount + " " + k + " " + itimes )
+        etCount = etCount + 1
+      end if
+      
+      
+    end do
+    
+    uniqCount = count_unique_values( indexI(0:iHigh-1) ) 
+    print ( "Unique storms in High = " + uniqCount)
+    print ( "Number of ET  in High = " + etCount )
 
+    percent = tofloat(etCount)*100./tofloat(uniqCount)
+    print ( "Percent              = " + percent )
+   
+;
+;=============================================================================================
+;    
+    
     iZero = 0
     do iSort = 0,icount-1
 
