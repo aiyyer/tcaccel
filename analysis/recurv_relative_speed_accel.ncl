@@ -106,7 +106,7 @@ begin
   end if
 
 
-; go 72 hours prior to 48 hours post ET
+; go 72 hours prior to 48 hours post Recurv
   lagM = -72
   lagP =  48
   dh   =  3   ; data is 3 hourly
@@ -153,47 +153,27 @@ begin
 ;loop over storms  
     do i = 0,nStorms-1
 
-;
-;-----discard non TS storms and storms that form in basins other than what was requested.
-;     
-      TSFlag       = 0
-      BasinFlag    = 0
-      
-      if (  basin(i,0) .eq. basinAnalysis ) then
-        ;print ( i + " matches basin requested = " + basinAnalysis )
-        BasinFlag = 1
+      numDays = todouble(0)
+      if ( numobs(i) .ne. 0 ) then
+        numDays = todouble(time(i,numobs(i)-1) - time(i,0))
       end if
       
-      do j = 0, numobs(i)-1
-        if ( chartostring(nature(i,j,:)) .eq. "TS" ) then
-          TSFlag    = 1
-        end if
-      end do
-
-; Now move forward with this storm
-     
-      if ( TSFlag .eq. 1 .and. BasinFlag .eq. 1 ) then
-
-        numDays = todouble(0)
-        if ( numobs(i) .ne. 0 ) then
-          numDays = todouble(time(i,numobs(i)-1) - time(i,0))
-        end if
-
 ;storm must live at least 3 days
-        if (  numDays .ge. 3 ) then          
-          if ( time(i,0) .ge. startTime .and. time(i,  numobs(i)-1) .le. endTime ) then
-            
+      if ( basin(i,0) .eq. basinAnalysis .and.  numDays .ge. 3 ) then          
+        if ( time(i,0) .ge. startTime .and. time(i,  numobs(i)-1) .le. endTime ) then
+          
+          
             totCount = totCount + 1
-
-
+            
+            
             print ( "OK working on storm # " + i)
-       
-
-
-
-
-
-
+            
+            
+            
+            
+            
+            
+            
             
 ; temporarily store the speed and accel for this TC in ; new arrays          
             speedAccel := accelS(i,0:numobs(i)-1)    ;accel for this track
@@ -217,131 +197,81 @@ begin
             ntimes     = numobs(i)    
     
      
-            do j = 0, numobs(i)-1
-              print ( j + " " + cd_calendar(time(i,j),-3) + " " + Lat(i,j) + " " + Lon(i,j))
-            end do
-
-
+           ; do j = 0, numobs(i)-1
+           ;   print ( j + " " + cd_calendar(time(i,j),-3) + " " + Lat(i,j) + " " + Lon(i,j))
+           ; end do
             
             jRecurv = locateRecurv(Lat(i,:),Lon(i,:),ntimes,LonSign)
-            print ( "jRecurv = " + jRecurv)
-
-
-            
-            exit
 
 
 
 
 
+            do imain = 0,9  ; hard-coded for max 10 recurv points
 
 
-            
-            
-                                ; now loop over all track points                    
-            do j = 0, numobs(i)-1
               
-; apply the relevant checks
-              if ( ETflag .eq. 0 ) then
-                if ( chartostring(nature(i,j,:)) .eq. "ET" ) then
+              if ( jRecurv(imain) .ne. -9 ) then
+                j =  jRecurv(imain)
+                print ( "------------")
+                print ( "icount = " + icount + " jRecurv = " + j )
 
+                latET(icount) =  Lat(i,j)
+                lonET(icount) =  Lon(i,j)
 
-                  latET(ETCount) = Lat(i,j)
-                  lonET(ETCount) = Lon(i,j)
-                  
-                  
-                  ETCount   = ETCount+1
- 
-                  ETflag = 1
-                   deltaDaysToEndOfTrack =  time(i,numobs(i)-1) -  time(i,j)
-                   deltaDaysToBegOfTrack =  time(i,j) - time(i,0)
-                   
-                   
-; now that we have found the ET, lets take each dh hour period spannning lagH hours before and after
-; and record the speed/accel
-                   
 ; lets make sure that we have TC data after ET
-                   
-                   
                    deltaDaysToEndOfTrack =  time(i,numobs(i)-1) -  time(i,j)
                    deltaDaysToBegOfTrack =  time(i,j) - time(i,0)
-                   
-                   ;if (  deltaDaysToEndOfTrack .ge.  2. .and. deltaDaysToBegOfTrack .ge.  3. ) then
-                     
                      do ih = lagM,lagP,dh
-                       
                        ah    = tofloat(ih)/24.  ;in days, this is the lag relative to ET designation
                        date := dates(j)   ;the reference date at ET designation
                        date  = date + ah  ;the date corresponding to the lag ah
-                       
 ; check that we are not running into the track begin/end                        
                        if ( date .ge. dates(0) .and.  date .le. dates(numobs(i)-1))
                          accelET(0,icount,{ih})  = (/speedAccel({date})/)
                          accelET(1,icount,{ih})  = (/curvAccel({date})/)
                          speedET(  icount,{ih})    = (/stormSpeed({date})/)
+
+                         ;print ( ih  + " " +   accelET(0,icount,{ih}) + " " +  accelET(1,icount,{ih})  + " " + speedET(  icount,{ih}) )
+
                        end if
-                       
-                       
                      end do  ;ih
-                     
+
+
+
                      icount=icount+1
-                     
-                     
-                   ;end if
-                   
-                   
-                   
-                 end if
-               end if
-               
-               
-             end do ;j
-             
-             
-             
+
+                
+              end if
+            end do
+
+            
+
+
+
+            
+           
+
              
              
              
            end if ;time
          end if ; numdays
-       end if ; TSflag
        
        
      end do ;i
      
-     print ("Qual Storm numbers = " + totCount)
-     print ("ET Storm numbers = " + ETCount)
-     perET = 100.*tofloat(ETCount)/tofloat(totCount)
-     print ("Percent ET = " + perET)
+     ;print ("Qual Storm numbers = " + totCount)
+     ;print ("ET Storm numbers = " + ETCount)
+     ;perET = 100.*tofloat(ETCount)/tofloat(totCount)
+     ;print ("Percent ET = " + perET)
      print ("Storm numbers for composit= " + icount)
-     print ("Mean lat of ET = " + avg(latET(0:ETCount-1)) )
-     print ("Median lat of ET = " +dim_median(latET(0:ETCount-1)) )
+     print ("Mean lat of recurv        = " + avg(latET(0:icount-1)) )
+     print ("Med  lat of recurv      = " +   dim_median(latET(0:icount-1)) )
      
      
 ;====================================================================================================
      
-     
-     
-     
-; check how many cases accelerated prior to ET
-     
-     h1  = -12.0
-     h2  = 0
-     iP  = 0
-     do i = 0,icount-1
-       if(.not.all(ismissing(accelET(0,i,{h1:h2})    ))) then
-         val = max (accelET(0,i,{h1:h2}))  ; avg
-         
-         if ( val .gt. 0. ) then
-                                ;print ( iP + " " +  ave)
-           iP = iP + 1
-         end if
-       else
-       end if
-     end do
-     perP = 100*tofloat(iP)/tofloat(ETCount)
-     
-     print ("percent accel = " + perP)
      
      
      meanA   =    dim_avg_n_Wrap(accelET,1 )
@@ -352,13 +282,13 @@ begin
      yMin = -20.
      yMax =  20.
      
-     wks = gsn_open_wks("png", "ET_relative_accel_speed")                ; create postscript file
+     wks = gsn_open_wks("png", "Rec_relative_accel_speed")                ; create postscript file
      
 ; resources for "left" variable
      resL                        = True 
      resL@xyLineThicknesses      = (/8.,8./)                  ; thicker line
      resL@tiYAxisString = "Acceleration (km/hr/day)"
-     resL@tiXAxisString = "Hour Relative to ET"
+     resL@tiXAxisString = "Hour Relative to Recurvature"
      resL@gsnDraw   = False                             ; don't draw yet
      resL@gsnFrame  = False                             ; don't advance yet
      resL@xyExplicitLegendLabels = (/"Tangential Acceleration","Curvature Acceleration "/)         ; create explicit labels
@@ -421,7 +351,7 @@ begin
     resp                  = True                      ; polyline mods desired
     resp@gsLineColor      = "red"                     ; color of lines
     resp@gsLineThicknessF = 3.0                       ; thickness of lines
-    resp@gsLineLabelString= "ET"                      ; adds a line label string
+    resp@gsLineLabelString= "RECURV"                      ; adds a line label string
     
       
     resL@xyLineColors= (/"red", "blue"/)        ; set polymarker color
@@ -452,7 +382,7 @@ begin
     resp                  = True                      ; polyline mods desired
     resp@gsLineColor      = "red"                     ; color of lines
     resp@gsLineThicknessF = 2.0                       ; thickness of lines
-    resp@gsLineLabelString= "ET"                    ; adds a line label string
+    resp@gsLineLabelString= "Recurv"                    ; adds a line label string
     xx = (/ 0., 0./)
     yy = (/-20., 50. /)
     dum=gsn_add_polyline(wks,plot,xx,yy,resp)      

@@ -2,17 +2,17 @@
  "cells": [
   {
    "cell_type": "code",
-   "execution_count": 28,
+   "execution_count": 1,
    "metadata": {},
    "outputs": [
     {
      "name": "stdout",
      "output_type": "stream",
      "text": [
-      "sed 's/\\\\/\\&/g' np_tang_ALL_0_90.txt>file1B\n",
-      "cut -c7-80 np_tang_JASO_20_50.txt>file2B\n",
+      "sed 's/\\\\/\\&/g' np_curv_ALL_0_90.txt>file1B\n",
+      "cut -c7-80 np_curv_JASO_20_50.txt>file2B\n",
       "sed -i 's/\\\\/\\&/g' file2B\n",
-      "cut -c7-80 np_tang_AS_20_50.txt>file3B\n",
+      "cut -c7-80 np_curv_AS_20_50.txt>file3B\n",
       "sed -i 's/\\\\/\\\\\\\\/g' file3B\n",
       "paste file1B file2B file3B > out.txt\n"
      ]
@@ -23,7 +23,7 @@
        "0"
       ]
      },
-     "execution_count": 28,
+     "execution_count": 1,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -46,8 +46,9 @@
     "file2 = 'np_tang_JASO_20_50.txt'\n",
     "file3 = 'np_tang_AS_20_50.txt'\n",
     "\n",
-    "\n",
-    "\n",
+    "file1 = 'np_curv_ALL_0_90.txt'\n",
+    "file2 = 'np_curv_JASO_20_50.txt'\n",
+    "file3 = 'np_curv_AS_20_50.txt'\n",
     "\n",
     "string = \"sed 's/\\\\\\/\\\\&/g' \" + file1 + \">file1B\"\n",
     "print(string)\n",
