@@ -37,8 +37,8 @@ begin
 
   var = variable(ivar)
   
-  latS = 20. ; 5.0
-  dlat = 30.  ;10. ;10.0
+  latS = 0. ; 5.0
+  dlat = 90.  ;10. ;10.0
   latN = latS + dlat    
   nn = 1
 
@@ -203,7 +203,7 @@ begin
                       yearly(iy,ii) = A
                       ycount(iy) =  ycount(iy) + 1
                       
-                    end if ;Amax
+                   end if ;Amax
                     
                   
                end if ; nature

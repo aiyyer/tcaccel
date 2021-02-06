@@ -302,6 +302,9 @@ begin
   pltarry   := new ( (/2,nYears/), typeof(y), y@_FillValue)
   pltarry(0,:) = y                                 ; use markers
   pltarry(1,:) = rc*x + rc@yintercept              ; use solid line
+
+
+  
   perChange = 100.*(pltarry(1,nYears-1)-pltarry(1,0))/pltarry(1,0)
   ave = avg(y)
   print ("ave = " + ave + "  change % = " + perChange)

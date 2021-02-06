@@ -382,7 +382,7 @@ begin
     ; draw a vertical line to mark ET which is x=0 line
     resp                  = True                      ; polyline mods desired
     resp@gsLineColor      = "red"                     ; color of lines
-    resp@gsLineThicknessF = 2.0                       ; thickness of lines
+    resp@gsLineThicknessF = 3.0                       ; thickness of lines
     resp@gsLineLabelString= "Recurv"                    ; adds a line label string
     xx = (/ 0., 0./)
     yy = (/-20., 50. /)

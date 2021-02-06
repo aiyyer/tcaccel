@@ -17,10 +17,9 @@
 ; Nov 28, 2019
 ; Oct 04, 2020: Now we demand that each storm lives at least 3 days
 ;
-; Jan 10: Newer version (see old version: et_stats_ver1.ncl)
-;         changes: for basin, we only check the basin of formation now
-;                  removed the speed threshold
 ;
+;
+
 ;----------------------------------------------------------------------------
 ; Does a storm undergo ET? This is a tricky question. The numbers can be
 ; slightly different if:
@@ -54,7 +53,7 @@ begin
   lat         = fileIn->lat
   lon         = fileIn->lon  
   numobs      = toint(short2flt(fileIn->numobs))
-  basin       = chartostring(fileIn->basin)
+  basin       = fileIn->basin
   nature      = fileIn->nature
   wmo_wind    = fileIn->usa_wind ;use usa instead of wmo for ATL
 ;--------------------------------------------------------------------------        
@@ -87,56 +86,42 @@ begin
   
   ETLat = new(N,"float") ;keep track of latitudes of each ET event
 ; a counter to keep track of ETs for filling the ETLat array
-  iET   = 0   ; counter that tracks TS->ET
-  iETA = 0   ; counter that tracks TS or ST ->ET
+  iET =0
   ires = 0
 ;--------------------------------------------------------------------------
 
-
-  totCount=0
-
-  
   print ( "nStorms  " + nStorms)
   
 ; loop over each storm in ibtracs
   do i = 0, nStorms-1
+      
+; storm must fall within the user defined date range    
+    if ( time(i,0) .ge. startTime .and. time(i,numobs(i)-1) .le. endTime ) then
+      basinId =  chartostring(basin(i,0,:))
 
-;
-;-----discard non TS storms and storms that form in basins other than what was requested.
-;     
-    TSFlag       = 0
-    BasinFlag    = 0      
-    if (  basin(i,0) .eq. basinAnalysis ) then
-                                ;print ( i + " matches basin requested = " + basinAnalysis )
-      BasinFlag = 1
-    end if
-    do j = 0, numobs(i)-1
-      if ( chartostring(nature(i,j,:)) .eq. "TS" ) then
-        TSFlag    = 1
-      end if
-    end do
-    
-    
-; Now move forward with this storm
-    
-    if ( TSFlag .eq. 1 .and. BasinFlag .eq. 1 ) then
-      
-      
-      numDays = todouble(0)
-      if ( numobs(i) .ne. 0 ) then
-        numDays = todouble(time(i,numobs(i)-1) - time(i,0))
-      end if
-      
-;storm must live at least 3 days
-      if (  numDays .ge. 3 ) then          
-        if ( time(i,0) .ge. startTime .and. time(i,  numobs(i)-1) .le. endTime ) then
-          
-          
-          totCount = totCount + 1
-          
+      if ( basinId .eq. basinAnalysis) then
+
+; optional filter based on peak wind speed
+        flag = 1
+        maxSpeed = max(wmo_wind(i,:))
+        if ( ismissing(maxSpeed) ) then
+          flag = 0
+          print ("missing max speed  " + i )
+        else
+          if ( maxSpeed .lt. WindThresh ) then
+            flag = 0
+          end if
+        end if
+        
+; override max wind threshold. comment this line if you wish to exclude depressions
+        flag = 1
+; storm must live at least N days
+        
+        numDays = tofloat(time(i,numobs(i)-1) - time(i,0))
+        if ( flag .eq. 1 .and.  numDays .ge. 3 ) then 
           
           stormFlag = 1  ; this storm is good to go for our stats
-          
+
           j=3 ;use j=3 to get just one point along the track
           date=cd_calendar(time(i,j),-5)
 ; define the year by the first data in the track
@@ -150,34 +135,69 @@ begin
           ETj = -9
           SSj = -9
           
-          
-          
-          
-          
 ;.........................................................................
 ; loop over each track point      
           do j = 0, numobs(i)-1          
+            
             date=cd_calendar(time(i,j),-5)
-            iy = date(0,0)            
+            iy = date(0,0)
+            
             StypeA = chartostring(nature(i,j,:))
-
-
             if ( StypeA .eq. "ET" .and. ETFlag .eq. 0) then
               ETFlag = 1
               ETj    = j
             end if
+
+;---------------------------------------------------------------------------
+;  strict restriction
+;
+;           
+;           if ( StypeA .eq. "TS" .and. TSFlag .eq. 0) then
+;             TSFlag = 1
+;             TSj    = j
+;           end if
+;            
+; if the TS was classified as a sub-tropical storm any time
+;            if ( StypeA .eq. "SS" ) then
+;              SSFlag = 1
+;              SSj    = j
+;            end if
+; Now first we check whether a storm was classified as SS but never as TS
+; If so, we will omit this storm from our stats       
+          
+          ;if ( SSFlag .eq. 1 .and. TSFlag .eq. 0 ) then
+          ;  stormFlag = 0
+          ;  ETFlag    = 0
+          ;end if      
+; Include this storm as a legit TS->ET case only if it was designated as a TS
+; prior to being classified as ET. This happens for i=9092, 13207 for example.
+; at least 15-20 such cases found.
+          
+;          if ( ETFlag .eq. 1 ) then
+;            if (  TSj .lt. ETj ) then
+;              yearlyETCount(k) = yearlyETCount(k) + 1
+;              ETLat(iET) =  lat(i,ETj)
+;              iET = iET + 1
+;            else
+;              print ("ET before TS? " + i )
+;              ires  = ires + 1
+;            end if
+;          end if
+;----------------------------------------------------------------------------------------
+
+; looser restricion. 
+;             
             if ( StypeA .ne. "ET" .and. TSFlag .eq. 0) then
               TSFlag = 1
               TSj    = j
-            end if            
+            end if
           end do ;j`end loop over each track
-          
+            
 ; Include this storm as a legit TS->ET case only if it was designated as a TS
 ; prior to being classified as ET. 
 ; at least 15-20 such cases found.
           
           if ( ETFlag .eq. 1 ) then
-            iETA = iETA + 1
             if (  TSj .lt. ETj ) then
               yearlyETCount(k) = yearlyETCount(k) + 1
               ETLat(iET) =  lat(i,ETj)
@@ -193,50 +213,19 @@ begin
             yearlyStormCount(k) = yearlyStormCount(k) + 1
           end if
           
-;.........................................................................
-          
-          
-          
-          
-        end if ;time
-      end if   ;numdays
-      
-      
-      
-      
-    end if   ;TSFlag, BasinFlag
-    
-    
-    
-  end do ;i
-  
-  
-
-
-
-
-
-
-
-;=====================================
-;====================================
-;=====================================
-;=====================================
-
+        end if
+;===================================================================================    
+      end if
+    end if
+  end do ; i
 
 
 ;.........................................................................
 ; The total number of ET cases found = iET
   N = iET
-  
-  print ("Qual Storm numbers = " + totCount)
-  perET = 100.*tofloat(iET)/tofloat(totCount)
-  perETA = 100.*tofloat(iETA)/tofloat(totCount)
 
-  print ("total number of TS to ET cases found= "    + iET + " Percent = " + perET)
-  print ("total number of TS,ST to ET cases found= " + iETA+ " Percent = " + perETA)
-  print ("ires = " + ires)
-  
+  print ("total number of ET cases found= " + iET)
+  exit
   
 ; print ( ETLat(0:N-1) )
 

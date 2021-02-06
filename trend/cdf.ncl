@@ -28,9 +28,7 @@ begin
   latS = 0. 
   latN = 90.
   leftTitle   = "(a) Entire Atlantic"
-
-
-
+  
 ; choose the latitude band
   latS = 20. 
   latN = 40.

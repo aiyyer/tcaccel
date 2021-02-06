@@ -56,18 +56,11 @@ begin
   label  = (/"(a)","(b)","(c)"/)
 
 
-  mon1 = 7 
-  mon2 = 9
-  rightTitle = "JAS"
-  label  = (/"(a)","(b)","(c)"/)
-
-
-  
   
   variable = (/"speed","accelSpeed","accelCurve"/)
   sfac = .9
   titleString = " " 
-  ivar       =  1
+  ivar       =  2
   
   var = variable(ivar)
 
@@ -183,7 +176,7 @@ begin
       latS = 0. 
       latN = 90.
       leftTitle   = label(iPlot) + " Entire Atlantic"
-      yaxisTitle = "Cumulative Probability"
+       yaxisTitle = "Cumulative Probability"
     end if
 
 
@@ -192,8 +185,6 @@ begin
       latS = 0. 
       latN = 20.
       leftTitle   =  label(iPlot) +  " 0-20N"
-
-      
     end if
     
     if ( iPlot .eq. 2 ) then

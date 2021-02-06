@@ -348,7 +348,7 @@ begin
      resR@pmLegendDisplayMode    = "Always"            ; turn on legend
      resR@pmLegendSide           = "Top"               ; Change location of 
      resR@pmLegendParallelPosF   = .87                  ; move units right
-     resR@pmLegendOrthogonalPosF = -0.15                ; move units down
+     resR@pmLegendOrthogonalPosF = -0.18                ; move units down
      resR@pmLegendWidthF         = 0.12                ; Change width and
      resR@pmLegendHeightF        = 0.10                ; height of legend.
      resR@lgPerimOn              = False               ; turn off box around
@@ -405,9 +405,11 @@ begin
       nave  = 5
       meanA(1,:)  =  runave (meanA(1,:) , nave, opt)
     end do
+    resR@gsnLeftString   = "(a)"               ; add the gsn titles
 
     
     plot = gsn_csm_xy2(wks,hours,meanA,meanS,resL,resR)
+    
     ;plot = gsn_csm_xy2(wks,hours,medianA,medianS,resL,resR)
 
     ; plot = gsn_csm_xy(wks,hours,meanS,resR)
@@ -415,7 +417,7 @@ begin
     ; draw a vertical line to mark ET which is x=0 line
     resp                  = True                      ; polyline mods desired
     resp@gsLineColor      = "red"                     ; color of lines
-    resp@gsLineThicknessF = 2.0                       ; thickness of lines
+    resp@gsLineThicknessF = 3.0                       ; thickness of lines
     resp@gsLineLabelString= "ET"                    ; adds a line label string
     xx = (/ 0., 0./)
     yy = (/-20., 50. /)
