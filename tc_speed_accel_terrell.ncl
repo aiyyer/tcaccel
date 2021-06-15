@@ -165,7 +165,6 @@ begin
       
       print (cd_calendar(time(i,0),-3) + " " + name(i) )
 
-
 ; loop over each track point      
       do j = 1,ntimes-2
         curTime = cd_calendar(stormTime(j),-5)

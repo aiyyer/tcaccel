@@ -19,7 +19,7 @@ begin
   fileIn = addfile( fileName, "r" )
   
   variable = (/"speed","accelSpeed","accelCurve"/)
-  basinAnalysis = "WP" 
+  basinAnalysis = "NA" 
   startYear = 1966
   endYear   = 2019
 ;  
@@ -155,7 +155,7 @@ begin
                 
                 A= dat(i,j)
                 
-               ;; if ( chartostring(nature(i,j,:)) .ne. "ET" .and. chartostring(nature(i,j,:)) .ne. "NR" ) then
+                if ( chartostring(nature(i,j,:)) .ne. "ET" .and. chartostring(nature(i,j,:)) .ne. "NR" ) then
                   
                   if ( (Lat(i,j) .ge. latS) .and. (Lat(i,j) .le. latN) ) 
                     
@@ -182,7 +182,7 @@ begin
                     
                   end if ;lat
                   
-               ;;end if ; nat
+                end if ; nat
 
               end if ;basin
             

@@ -9,9 +9,13 @@
 ; procedure to calculate the radius of curvature and center point of the
 ; fitted circle to each point along a TC track
 ;
-;
+; Returns radius of curvature in m
 ;
 ; Based on Terrell Wade's formula
+;
+; In this version we retain the arcsin() while calculating Rad of curvature
+; This means that the radius of curvature is a curved line on the surface of
+; The sphere
 ;
 ; Reference:
 ;           
@@ -21,7 +25,8 @@ undef ("rad_curv")
 
 function rad_curv(Lat,Lon,N)
 
-begin 
+begin
+
   Rearth = todouble(6.3781e6)  ;in m
   pi     = 4.0*atan(todouble(1.))
   pideg = todouble(180.0)
@@ -84,9 +89,10 @@ begin
       
       if ( Term2 .ne. 0. ) then
         temp = sqrt(Term1/Term2)
+        
         if ( abs(temp) .le. 1.0) then
-          R = Rearth*asin(temp)
-        end if
+           R = Rearth*asin(temp)
+         end if
       end if
       
       
@@ -119,6 +125,9 @@ end
 ;****************************************************************************************
 ; this function returns the radius of curvature and the center of the
 ; fitted circle
+;
+;Returns radius of curvature in m and center of circle in degrees
+;
 ;-------------------------------------------------------------------------
 ;-------------------------------------------------------------------------
 undef ("rad_curv_circle")
@@ -189,7 +198,10 @@ begin
       if ( Term2 .ne. 0. ) then
         temp = sqrt(Term1/Term2)
         if ( abs(temp) .le. 1.0) then
+
+; version 1 that was first submitted in the paper has the arcsin          
           R = Rearth*asin(temp)
+          
         end if
       end if
       

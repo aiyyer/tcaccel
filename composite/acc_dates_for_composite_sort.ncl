@@ -23,7 +23,7 @@ begin
 ;---------------------------------------------------------------------------  
 ; user inputs
 
-  accelType = 1; 1 = tang 2 = curv
+  accelType = 2; 1 = tang 2 = curv
 
   startYear = 1980
   endYear   = 2016
