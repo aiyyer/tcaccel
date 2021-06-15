@@ -61,7 +61,7 @@ begin
 
 ;---Set some text resources
   txres               = True
-  txres@txFontHeightF = 0.01
+  txres@txFontHeightF = 0.015
   txres@txPosXF       = 0.1
 ;
 ; Loop through lat values, and attach labels to the left and
@@ -162,7 +162,7 @@ begin
 ;***************************************************************
 
   flag = 1 ; for tang
-  flag = 2 ; for curv
+;  flag = 2 ; for curv
   LatS =  30
   LatN =  40
   basinAnalysis = "NA" 
@@ -266,7 +266,7 @@ begin
 
   minlat             =  20.                ; min lat to mask
   maxlat             =  60.                ; max lat to mask
-  minlon             = -30.                ; min lon to mask
+  minlon             = -20.                ; min lon to mask
   maxlon             =  30.                ; max lon to mask
 
   resAnom@mpProjection          = "LambertConformal"; choose projection
@@ -278,6 +278,8 @@ begin
   resAnom@mpOutlineOn           = False 
   resAnom@mpFillOn              = False
   resAnom@lbLabelBarOn = False
+  resAnom@mpGridSpacingF         = 10.
+
   
                                 ; resAnom@lbOrientation        = "vertical"   ; vertical label barb's
                                 ; resAnom@lbLabelFontHeightF   = 0.012        ; change font size
@@ -521,8 +523,8 @@ begin
 
 
 ;---Attach latitude labels
-      lat_spacing = 5   ; use integers here
-      lon_spacing = 5
+      lat_spacing = 10   ; use integers here
+      lon_spacing = 10
   
  ;    gsn_polymarker(wks,plot1,cenLon,cenLat,gsres)
       
@@ -579,7 +581,7 @@ begin
 
 
   
-  resAnom@gsnLeftString          = "(a)"
+  resAnom@gsnLeftString          = "(b)"
 
   resAnom@mpGridAndLimbOn        = True               ; turn on grid lines
 
